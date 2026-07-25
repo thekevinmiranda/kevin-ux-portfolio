@@ -14,11 +14,12 @@
   --paper:      #F4F1E8;   /* main light bg */
   --paper-2:    #ECE7D9;   /* alt light bg / cards */
   --paper-line: #DCD6C6;   /* hairlines on light */
-  --marigold:   #E6A017;   /* accent */
-  --marigold-d: #C0810A;   /* accent hover / darker */
+  --marigold:   #E6A017;   /* accent — backgrounds, icons, borders, on-dark text only */
+  --marigold-d: #C0810A;   /* accent hover / darker — same usage rule as above */
   --marigold-t: #F6E4B4;   /* accent tint */
+  --marigold-text: #8A600D; /* accent as TEXT on light backgrounds — meets 4.5:1 on --paper/--paper-2 (marigold/marigold-d don't) */
   --clay:       #B0512C;   /* rare secondary warm accent */
-  --sage:       #6E8377;   /* muted green-grey text (light bg) */
+  --sage:       #58685F;   /* muted green-grey text (light bg) — darkened from #6E8377 to meet 4.5:1 on --paper */
   --sage-d:     #A9BBAF;   /* muted text on dark bg */
 
   --ink-on-light: #22322A;
@@ -112,7 +113,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   font-size: .78rem;
   letter-spacing: .22em;
   text-transform: uppercase;
-  color: var(--marigold-d);
+  color: var(--marigold-text);
   display: inline-flex;
   align-items: center;
   gap: .6rem;
@@ -423,7 +424,7 @@ main { display: block; }
   font-family: var(--f-display);
   font-weight: 800;
   font-size: 1.8rem;
-  color: var(--marigold);
+  color: var(--marigold-text);
   line-height: 1;
 }
 .hero-chip .lbl { font-size: .78rem; line-height: 1.25; color: var(--sage-d); }
@@ -521,7 +522,7 @@ main { display: block; }
   line-height: 1;
   letter-spacing: -0.03em;
 }
-.stat .num .suffix { color: var(--marigold); }
+.stat .num .suffix { color: var(--marigold-text); }
 .stat .lbl { font-size: .9rem; color: var(--sage); margin-top: .4rem; }
 
 /* ----------------------------------------------------------- services --- */
@@ -564,8 +565,15 @@ main { display: block; }
 .filter-bar {
   display: flex;
   flex-wrap: wrap;
-  gap: .5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
   margin-bottom: 2.25rem;
+}
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
 }
 .filter-btn {
   font-family: var(--f-body);
@@ -581,6 +589,16 @@ main { display: block; }
 }
 .filter-btn:hover { color: var(--ink); border-color: var(--ink); }
 .filter-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+.filter-bar .btn2 {
+  padding: .55rem 1.2rem;
+  font-size: .92rem;
+  flex-shrink: 0;
+}
+@media (max-width: 560px) {
+  .filter-bar { flex-direction: column; align-items: stretch; }
+  .filter-bar .btn2 { justify-content: center; }
+}
 
 .work-grid {
   display: grid;

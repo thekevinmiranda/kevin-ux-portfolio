@@ -167,8 +167,12 @@
     buttons.forEach(function (btn) {
       btn.addEventListener("click", function () {
         var filter = btn.getAttribute("data-filter");
-        buttons.forEach(function (b) { b.classList.remove("active"); });
+        buttons.forEach(function (b) {
+          b.classList.remove("active");
+          b.setAttribute("aria-pressed", "false");
+        });
         btn.classList.add("active");
+        btn.setAttribute("aria-pressed", "true");
         cards.forEach(function (card) {
           var match = filter === "all" || card.getAttribute("data-cat") === filter;
           card.classList.toggle("is-hidden", !match);
@@ -242,6 +246,7 @@
     var setInvalid = function (input, bad) {
       var field = input.closest(".field") || (input.parentNode && input.parentNode.closest(".field"));
       if (field) field.classList.toggle("invalid", bad);
+      input.setAttribute("aria-invalid", bad ? "true" : "false");
     };
 
     var validateEmail = function (v) {
@@ -273,7 +278,10 @@
     // clear invalid state as the user fixes fields
     form.addEventListener("input", function (e) {
       var field = e.target.closest && e.target.closest(".field.invalid");
-      if (field) field.classList.remove("invalid");
+      if (field) {
+        field.classList.remove("invalid");
+        e.target.setAttribute("aria-invalid", "false");
+      }
     });
   }
 

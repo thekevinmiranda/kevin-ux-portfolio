@@ -1,0 +1,435 @@
+/* ==========================================================================
+   Projects page — extends style.css, doesn't modify it.
+   Reuses the site's existing tokens (--ink, --forest, --marigold, --paper,
+   --sage, --f-display, --f-body, --r, --shadow, --wrap) defined in style.css.
+   ========================================================================== */
+
+/* --------------------------------------------------------- page intro --- */
+.proj-hero {
+  padding-top: clamp(7rem, 12vw, 9.5rem);
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+.proj-hero .section-head { margin-bottom: clamp(1.5rem, 3vw, 2.25rem); }
+
+.proj-note {
+  max-width: 62rem;
+  border: 1px dashed var(--paper-line);
+  background: var(--paper-2);
+  border-radius: var(--r);
+  padding: 1.1rem 1.4rem;
+  font-size: .92rem;
+  color: var(--ink-on-light);
+}
+.proj-note b { color: var(--ink); }
+
+/* ---------------------------------------------------------- group tag --- */
+.proj-group {
+  display: none;
+  align-items: center;
+  gap: 1rem;
+  margin: clamp(3rem, 6vw, 4.5rem) 0 clamp(1.5rem, 3vw, 2.25rem);
+}
+.proj-group.is-visible { display: flex; }
+.proj-group:first-of-type { margin-top: 0; }
+.proj-group h2 {
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--marigold-d);
+  white-space: nowrap;
+}
+.proj-group::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--paper-line);
+}
+.section--forest .proj-group::after { background: var(--forest-line); }
+.section--forest .proj-group h2 { color: var(--marigold); }
+
+/* --------------------------------------------------------- project entry --- */
+.proj-entry {
+  padding: clamp(1.5rem, 3vw, 2rem) 0 clamp(2.25rem, 4vw, 3rem);
+  display: none;
+}
+.proj-entry.is-active {
+  display: block;
+  animation: projFadeIn .25s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .proj-entry.is-active { animation: none; }
+}
+@keyframes projFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.proj-head { display: flex; gap: 1.1rem; align-items: baseline; flex-wrap: wrap; }
+.proj-num {
+  font-family: var(--f-body);
+  font-weight: 800;
+  font-size: .85rem;
+  letter-spacing: .06em;
+  color: var(--marigold-d);
+  flex-shrink: 0;
+}
+.proj-head h3 { font-size: clamp(1.5rem, 2.6vw, 2rem); margin: 0; }
+.proj-tagline { font-weight: 600; color: var(--sage); font-size: .98rem; margin: .3rem 0 0; }
+.proj-oneliner { max-width: 52rem; margin: .85rem 0 0; font-size: 1.02rem; }
+
+.proj-callout {
+  margin-top: 1.15rem;
+  padding: .9rem 1.2rem;
+  border-radius: var(--r);
+  font-size: .92rem;
+  max-width: 52rem;
+}
+.proj-callout.is-amber { background: var(--marigold-t); border: 1px solid var(--marigold); color: var(--ink-on-light); }
+.proj-callout.is-red { background: #F6DFD5; border: 1px solid var(--clay); color: var(--ink-on-light); }
+
+/* ------------------------------------------------------------ subsection --- */
+.proj-sub { margin-top: 1.5rem; max-width: 54rem; }
+.proj-sub h4 {
+  font-family: var(--f-body);
+  font-weight: 700;
+  font-size: .74rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin: 0 0 .55rem;
+}
+.proj-sub p, .proj-sub li { font-size: .96rem; line-height: 1.65; margin: 0 0 .6rem; }
+.proj-sub ul, .proj-sub ol { padding-left: 1.15rem; margin: 0; }
+.proj-sub li:last-child { margin-bottom: 0; }
+.proj-sub strong { color: var(--ink); }
+
+.proj-fillin {
+  display: inline-block;
+  font-family: var(--f-body);
+  font-weight: 700;
+  font-size: .74rem;
+  letter-spacing: .03em;
+  color: var(--marigold-d);
+  background: var(--marigold-t);
+  border: 1px dashed var(--marigold-d);
+  border-radius: 5px;
+  padding: .05rem .5rem;
+}
+
+.proj-tag {
+  display: inline-block;
+  font-weight: 700;
+  font-size: .68rem;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  padding: .1rem .5rem;
+  border-radius: 5px;
+  margin-right: .35rem;
+  white-space: nowrap;
+}
+.proj-tag.is-verified { color: #285242; background: #E1EEE5; border: 1px solid #8FBBA0; }
+.proj-tag.is-gemini   { color: #6A4A9A; background: #ECE3F7; border: 1px solid #C6ADE6; }
+
+/* ---------------------------------------------------------------- quote --- */
+.proj-quote {
+  margin: .9rem 0 0;
+  padding: 1.1rem 1.35rem;
+  background: var(--paper-2);
+  border-left: 3px solid var(--marigold);
+  border-radius: 0 var(--r) var(--r) 0;
+}
+.proj-quote p { font-style: italic; font-size: 1rem; margin: 0 0 .5rem; }
+.proj-quote cite { font-style: normal; font-size: .84rem; color: var(--sage); font-weight: 600; }
+
+/* ----------------------------------------------------------- link chips --- */
+.proj-links { margin-top: .9rem; display: flex; flex-wrap: wrap; gap: .55rem; }
+.proj-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-weight: 600;
+  font-size: .84rem;
+  color: var(--ink-on-light);
+  background: #fff;
+  border: 1.5px solid var(--paper-line);
+  border-radius: 30px;
+  padding: .38rem .85rem;
+  transition: border-color .16s ease, color .16s ease, transform .16s ease;
+}
+.proj-chip:hover { border-color: var(--marigold); color: var(--marigold-d); transform: translateY(-1px); }
+
+/* ------------------------------------------------------------- sub-project --- */
+.proj-subcard {
+  margin-top: 2rem;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  background: var(--paper-2);
+  border: 1px solid var(--paper-line);
+  border-radius: var(--r-lg);
+}
+.proj-subcard .proj-eyebrow-sm {
+  display: block;
+  font-weight: 700;
+  font-size: .74rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--marigold-d);
+  margin-bottom: .4rem;
+}
+.proj-subcard h4.proj-subtitle { font-family: var(--f-display); font-size: 1.4rem; margin: 0 0 .3rem; }
+.proj-subcard .proj-oneliner { margin-top: 0; }
+
+@media (max-width: 640px) {
+  .proj-head { flex-direction: column; gap: .25rem; }
+}
+
+/* ==========================================================================
+   Sidebar + browsing layout
+   --header-h is set at runtime by js/projects.js (measures the real height
+   of #siteHeader), so this stays correct even if the header wraps to a
+   second line on narrow widths or its height shifts on font load.
+   ========================================================================== */
+:root { --header-h: 84px; } /* fallback before JS runs */
+
+.proj-body { padding-bottom: clamp(3rem, 6vw, 5rem); }
+
+.proj-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+.proj-sidebar {
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+  max-height: calc(100vh - var(--header-h) - 48px);
+  overflow-y: auto;
+  padding-right: .25rem;
+}
+.proj-sidebar::-webkit-scrollbar { width: 5px; }
+.proj-sidebar::-webkit-scrollbar-thumb { background: var(--paper-line); border-radius: 3px; }
+
+.proj-nav-toggle {
+  display: none;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border: 1.5px solid var(--paper-line);
+  border-radius: var(--r-sm);
+  padding: .65rem .9rem;
+  font-weight: 600;
+  font-size: .92rem;
+  color: var(--ink);
+  cursor: pointer;
+  margin-bottom: .75rem;
+}
+
+.proj-nav-label {
+  font-weight: 700;
+  font-size: .7rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin: 1.3rem 0 .5rem;
+}
+.proj-nav-label:first-child { margin-top: 0; }
+
+.proj-nav-list ul { list-style: none; margin: 0 0 .25rem; padding: 0; }
+
+.proj-nav-link {
+  display: flex;
+  gap: .55rem;
+  align-items: baseline;
+  font-size: .89rem;
+  font-weight: 600;
+  color: var(--ink-on-light);
+  padding: .4rem .55rem;
+  margin: 0 -.55rem;
+  border-radius: 7px;
+  transition: background .15s ease, color .15s ease;
+}
+.proj-nav-link:hover { background: var(--paper-2); }
+.proj-nav-link.active { background: var(--paper-2); color: var(--ink); }
+.proj-nav-link.active .n { color: var(--marigold-d); }
+.proj-nav-link .n { font-size: .8rem; color: var(--sage); flex-shrink: 0; }
+.proj-nav-link.is-sub { padding-left: 1.6rem; font-weight: 500; font-size: .85rem; color: var(--sage); }
+
+/* Every scroll target gets breathing room above it equal to the fixed
+   header's real height, so clicking a sidebar link never leaves the
+   top of the section hidden behind the header. */
+.proj-entry, .proj-subcard { scroll-margin-top: calc(var(--header-h) + 20px); }
+
+@media (max-width: 900px) {
+  .proj-layout { grid-template-columns: 1fr; }
+  .proj-sidebar {
+    position: relative;
+    top: auto;
+    max-height: none;
+    overflow: visible;
+  }
+  .proj-nav-toggle { display: flex; }
+  .proj-nav-list { max-height: 0; overflow: hidden; visibility: hidden; transition: max-height .25s ease, visibility 0s linear .25s; }
+  .proj-nav-list.is-open { max-height: 2000px; visibility: visible; transition: max-height .25s ease, visibility 0s linear; }
+}
+
+/* ==========================================================================
+   Per-project photo galleries — each project's own "Photos" subsection.
+   Uses auto-fill/minmax so it adapts cleanly to however many images a
+   given project has (1, 2, 4, whatever) without needing breakpoint-specific
+   column counts — a project with 1 photo just shows one tile; a project
+   with 6 wraps naturally across as many rows as it needs.
+   ========================================================================== */
+.proj-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: .75rem;
+}
+
+.photo-card {
+  margin: 0;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  background: var(--paper-2);
+  box-shadow: var(--shadow-sm);
+}
+.photo-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  transition: transform .35s ease;
+}
+.photo-card:hover img { transform: scale(1.04); }
+
+.photo-card figcaption {
+  padding: .55rem .75rem;
+  font-weight: 600;
+  font-size: .8rem;
+  color: var(--ink);
+  border-top: 1px solid var(--paper-line);
+}
+
+@media (max-width: 480px) {
+  .proj-photo-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+}
+
+/* ==========================================================================
+   Photo trigger — resets the <button> wrapping each thumbnail so it looks
+   identical to a plain image, but is properly focusable/clickable to open
+   the lightbox.
+   ========================================================================== */
+.photo-trigger {
+  all: unset;
+  display: block;
+  width: 100%;
+  cursor: zoom-in;
+}
+.photo-trigger img { display: block; }
+.photo-trigger:focus-visible {
+  outline: 3px solid var(--marigold);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Inline editorial image — a full-width image embedded within a project's
+   body copy (inside .proj-sub), newspaper-article style: image spans the
+   text column, with a small caption line underneath.
+   ========================================================================== */
+.proj-inline-figure {
+  margin: 1.5rem 0;
+  max-width: 54rem;
+}
+.proj-inline-figure .photo-trigger {
+  border-radius: var(--r);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.proj-inline-figure img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  transition: transform .35s ease;
+}
+.proj-inline-figure:hover img { transform: scale(1.02); }
+.proj-inline-figure figcaption {
+  margin-top: .6rem;
+  font-family: var(--f-display);
+  font-style: italic;
+  font-size: .92rem;
+  color: var(--sage);
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   Lightbox — single reusable overlay for every clickable image on the page
+   (thumbnail galleries and inline editorial images alike). Vanilla JS,
+   no libraries; see js/lightbox.js.
+   ========================================================================== */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 5vw, 3rem);
+  background: rgba(20, 35, 28, .92);
+}
+.lightbox.is-open { display: flex; flex-direction: column; }
+
+.lightbox-figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+  max-height: 100%;
+}
+.lightbox-img {
+  max-width: 88vw;
+  max-height: 78vh;
+  width: auto;
+  height: auto;
+  border-radius: var(--r);
+  box-shadow: 0 30px 70px -20px rgba(0,0,0,.6);
+  background: var(--paper-2);
+}
+.lightbox-caption {
+  margin-top: 1rem;
+  color: var(--soft-on-dark);
+  font-size: .92rem;
+  text-align: center;
+  max-width: 60ch;
+}
+
+.lightbox-close,
+.lightbox-nav {
+  all: unset;
+  position: fixed;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.12);
+  color: #fff;
+  cursor: pointer;
+  transition: background .18s ease;
+}
+.lightbox-close:hover,
+.lightbox-nav:hover { background: rgba(255,255,255,.24); }
+.lightbox-close:focus-visible,
+.lightbox-nav:focus-visible { outline: 3px solid var(--marigold); outline-offset: 2px; }
+
+.lightbox-close { top: clamp(1rem, 4vw, 2rem); right: clamp(1rem, 4vw, 2rem); font-size: 1.4rem; }
+.lightbox-prev { left: clamp(.5rem, 3vw, 2rem); top: 50%; transform: translateY(-50%); font-size: 1.6rem; }
+.lightbox-next { right: clamp(.5rem, 3vw, 2rem); top: 50%; transform: translateY(-50%); font-size: 1.6rem; }
+.lightbox-nav[hidden] { display: none; }
+
+@media (max-width: 640px) {
+  .lightbox-close { width: 40px; height: 40px; }
+  .lightbox-nav { width: 38px; height: 38px; }
+}

@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Favicon block -->
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+
+<title>Kevin Miranda — UI/UX &amp; Interaction Designer in Chennai</title>
+<meta name="description" content="Kevin Miranda is a Senior UI/UX & Interaction Designer based in Chennai, India.">
+<meta name="author" content="Kevin Miranda">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kevin Miranda — Projects">
+<meta property="og:description" content="Thirteen in-depth UX case studies from Kevin Miranda's work at FourKites.">
+<meta property="og:image" content="img/hero2.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/vendor/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/projects.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ============================================================ HEADER -->
+<header class="site-header" id="siteHeader">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html" aria-label="Kevin Miranda — home">
+      <img src="img/logo.svg" alt="Kevin Miranda logo" width="48" height="48" style="border-radius: 6px;"/>
+      <span>Kevin&nbsp;Miranda<small>UI/UX &amp; Interaction Designer</small></span>
+    </a>
+
+    <nav class="nav" id="primaryNav" aria-label="Primary">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="index.html#voices">Voices</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>      
+    </nav>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav">
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ======================================================= PROJECTS HERO -->
+  <section class="section proj-hero" aria-labelledby="proj-h">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">FourKites UX Case Studies</span>
+        <h1 id="proj-h">Thirteen projects, in depth.</h1>
+        <p>A collection of UX case studies from my time at FourKites — spanning design systems, AI product design, navigation architecture, and customer-driven feature work. Each one reflects real customer feedback, real product decisions, and real outcomes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= PROJECTS BODY -->
+  <section class="proj-body">
+    <div class="wrap proj-layout">
+
+      <!-- --------------------------------------------------- SIDEBAR -->
+      <nav class="proj-sidebar" id="projSidebar" aria-label="Project index">
+        <button class="proj-nav-toggle" id="projNavToggle" aria-expanded="false" aria-controls="projNavList">
+          Select a project <span aria-hidden="true">▾</span>
+        </button>
+
+        <div class="proj-nav-list" id="projNavList">
+          <p class="proj-nav-label">Flagship Projects</p>
+          <ul>
+            <li><a class="proj-nav-link" href="#p1"><span class="n">01</span>Elemental Design System</a></li>
+            <li><a class="proj-nav-link" href="#p2"><span class="n">02</span>My Workspace</a></li>
+            <li><a class="proj-nav-link" href="#p3"><span class="n">03</span>FourKites Redesign</a></li>
+            <li><a class="proj-nav-link is-sub" href="#p3-saved-views">↳ Saved Views</a></li>
+            <li><a class="proj-nav-link" href="#p4"><span class="n">04</span>FourSight AI</a></li>
+            <li><a class="proj-nav-link" href="#p5"><span class="n">05</span>Address Manager</a></li>
+            <li><a class="proj-nav-link" href="#p6"><span class="n">06</span>Unified User Management</a></li>
+          </ul>
+
+          <p class="proj-nav-label">Additional Projects</p>
+          <ul>
+            <li><a class="proj-nav-link" href="#p7"><span class="n">07</span>FourKites Connect</a></li>
+            <li><a class="proj-nav-link" href="#p8"><span class="n">08</span>Developer Portal</a></li>
+            <li><a class="proj-nav-link" href="#p9"><span class="n">09</span>Intelligent Control Tower</a></li>
+            <li><a class="proj-nav-link" href="#p10"><span class="n">10</span>Global Map View</a></li>
+            <li><a class="proj-nav-link" href="#p11"><span class="n">11</span>Booking Connect</a></li>
+            <li><a class="proj-nav-link" href="#p12"><span class="n">12</span>Platform IA &amp; Reco Engine</a></li>
+            <li><a class="proj-nav-link" href="#p13"><span class="n">13</span>Vibe-Coding with Claude</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- ----------------------------------------------------- MAIN LIST -->
+      <div class="proj-main">
+
+        <div class="proj-group" data-group="flagship"><h2>Flagship Projects</h2></div>
+
+        <!-- 01 — ELEMENTAL DESIGN SYSTEM -->
+        <article class="proj-entry" id="p1" data-group="flagship">
+          <div class="proj-head"><span class="proj-num">01</span><h3>Elemental Design System</h3></div>
+          <p class="proj-oneliner">FourKites' company-wide design system — a shared foundation of colors, typography, grids, and components built to unify the look and feel across the entire product portfolio.</p>
+
+          <div class="proj-sub"><h4>Context &amp; Problem Statement</h4>
+            <p>Built as a collective effort between the UX and Engineering teams, to standardize the look and feel across FourKites' entire product portfolio — replacing what had been an inconsistent, product-by-product visual language.</p>
+          </div>
+          <div class="proj-sub"><h4>My Role</h4>
+            <p>Owned and maintained the system across multiple years — auditing components, fixing accessibility and interaction issues, and keeping the library current as the product evolved. Also drove adoption by raising awareness across engineering teams and establishing a consistent process for using the system.</p>
+          </div>
+          <div class="proj-sub"><h4>Design Strategy</h4>
+            <p>Three pillars: color (a consistent tint/shade formula derived from a primary color), typography (a single standard typeface across the whole product), and a shared layout/grid system — all built on WCAG accessibility minimums and a component-reuse philosophy.</p>
+
+            <figure class="proj-inline-figure">
+              <button class="photo-trigger" type="button" aria-label="View larger: Color and typography foundations">
+                <img src="https://placehold.co/1200x675?text=Color+%26+Typography+Foundations" alt="Color and typography foundations — placeholder image" loading="lazy" width="1200" height="675">
+              </button>
+              <figcaption>The color and typography foundations underpinning every component in the system.</figcaption>
+            </figure>
+          </div>
+          <div class="proj-sub"><h4>Process</h4>
+            <p>Built in phases — foundational styles first, then input controls, then full components — including a complete migration of the design library to Figma.</p>
+          </div>
+          <div class="proj-sub"><h4>Key Artifacts</h4>
+            <p>A living component library in Figma, plus internal documentation covering foundations and usage guidelines.</p>
+          </div>
+          <div class="proj-sub"><h4>Impact &amp; Outcome</h4>
+            <p>No exact adoption metrics are available externally, but the system continues to be actively maintained and used across every FourKites product team.</p>
+          </div>
+                  <div class="proj-sub">
+            <h4>Photos</h4>
+            <div class="proj-photo-grid">
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p1" aria-label="View larger: Color Tokens">
+                    <img src="https://placehold.co/600x400?text=Color+Tokens" alt="Color Tokens — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p1" aria-label="View larger: Typography Scale">
+                    <img src="https://placehold.co/600x400?text=Typography+Scale" alt="Typography Scale — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p1" aria-label="View larger: Component Library">
+                    <img src="https://placehold.co/600x400?text=Component+Library" alt="Component Library — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p1" aria-label="View larger: Button States">
+                    <img src="https://placehold.co/600x400?text=Button+States" alt="Button States — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+            </div>
+          </div>
+        </article>
+
+        <!-- 02 — MY WORKSPACE -->
+        <article class="proj-entry" id="p2" data-group="flagship">
+          <div class="proj-head">
+            <span class="proj-num">02</span>
+            <h3>My Workspace</h3>
+          </div>
+          <p class="proj-tagline">Driving Higher Engagement &amp; Upsell Opportunities Through an Integrated Ecosystem</p>
+          <p class="proj-oneliner">A scalable landing page that gives FourKites customers a daily, one-page view of performance, risk, and cross-sell opportunities across every licensed product.</p>
+
+          <div class="proj-sub">
+            <h4>Context &amp; Business Challenge</h4>
+            <ul>
+              <li><strong>Limited product visibility:</strong> customers were unaware of the full range of products &amp; solutions available to them.</li>
+              <li><strong>Missed opportunities:</strong> leadership flagged this as lost cross-sell and upsell potential.</li>
+              <li><strong>Core challenges:</strong> siloed products prevented users from discovering solutions they already had access to; there was no bird's-eye view for executives.</li>
+            </ul>
+          </div>
+
+          <div class="proj-sub">
+            <h4>My Role</h4>
+            <p>As Senior Designer: led solution design of the scalable Workspace landing page; partnered closely with engineering, data science, and product to ensure feasibility and timely release; personally ran validation calls with members of an Executive Customer Advisory Board — including a Technology Director of Logistics at Dow — synthesizing widget-level feedback into prioritized design changes.</p>
+          </div>
+
+          <div class="proj-sub">
+            <h4>Design Strategy</h4>
+            <ul>
+              <li><strong>Reusable design library:</strong> shared components to reduce design debt.</li>
+              <li><strong>Habit-forming patterns:</strong> a repeated, learnable interaction pattern driving consistent daily engagement.</li>
+              <li><strong>Interoperability:</strong> dashboards link seamlessly to other licensed products.</li>
+              <li><strong>Data at a glance:</strong> crisp, contextual summaries readable within seconds.</li>
+              <li><strong>Role-based personalization:</strong> distinct views for executive vs. operational users.</li>
+            </ul>
+          </div>
+
+          <div class="proj-sub">
+            <h4>Process</h4>
+            <ul>
+              <li>Ran structured validation calls with 8 named executives across 7 companies — including TJX, Trane Technologies, Frito-Lay, Coca-Cola Consolidated, 3M, Eastman Chemical, and Dow — over a focused three-week period.</li>
+              <li>Collected feedback through a widget-by-widget rating exercise, split separately across executive and operational persona views.</li>
+              <li>Consolidated feedback into prioritized themes — drill-down by lane/carrier, share &amp; export, international coverage, date filtering, and weather alerts were all incorporated.</li>
+              <li>A defined six-phase process governed how new dashboards were added: design discussion → wireframe walkthrough → engineering discussion → build → release → post-release monitoring, with usability sign-off required before every release.</li>
+            </ul>
+
+            <figure class="proj-inline-figure">
+              <button class="photo-trigger" type="button" aria-label="View larger: Executive Customer Advisory Board validation session">
+                <img src="https://placehold.co/1200x675?text=E-CAB+Validation+Session" alt="Executive Customer Advisory Board validation session — placeholder image" loading="lazy" width="1200" height="675">
+              </button>
+              <figcaption>A validation session with Executive Customer Advisory Board members, reviewing widget-level feedback.</figcaption>
+            </figure>
+          </div>
+
+          <div class="proj-sub">
+            <h4>Key Artifacts</h4>
+            <div class="proj-links">
+              <a class="proj-chip" href="https://www.figma.com/proto/jIJe7iqJkO1KDz0jXBMMeY/FK-Workspace-Concept?page-id=1917%3A135931&node-id=1977-140629" target="_blank" rel="noopener">Figma prototype ↗</a>
+            </div>
+          </div>
+
+          <div class="proj-sub">
+            <h4>Impact &amp; Outcome</h4>
+            <ul>
+              <li>Unveiled at FourKites' Visibility Conference 2023 in Chicago — became the event's highlight.</li>
+              <li>Executive usage increased 18% within three months.</li>
+              <li>46% increase in upsells; 100+ new product leads generated; first upsell closed within one month.</li>
+              <li>Executive NPS grew 32 points.</li>
+              <li>Helped reposition FourKites from "visibility provider" to "Control Tower ecosystem player."</li>
+            </ul>
+          </div>
+
+          <div class="proj-sub">
+            <h4>Customer Testimonials</h4>
+            <div class="proj-quote"><p>"The concept is great, I liked the quick access to the aggregated data... YOU GUYS NAILED IT WITH THE UI."</p><cite>Laura Ensell — Technology Director, Logistics, Dow</cite></div>
+            <div class="proj-quote"><p>"My Workspace has truly changed the way we interact with our supply chain data. It's become a daily habit."</p><cite>Mari Roberts — VP of Transportation, Frito-Lay</cite></div>
+            <div class="proj-quote"><p>"The centralised landing page having all relevant information in one place means we no longer waste time searching across different platforms."</p><cite>Tom Morton — VP of Global Supply Chain &amp; Quality, Eastman Chemical</cite></div>
+            <div class="proj-quote"><p>"The flexibility to customize the dashboard based on our personas is fantastic."</p><cite>Joe Garvin — Director of Global Logistics, 3M</cite></div>
+            <div class="proj-quote"><p>"Having all of FourKites' offerings consolidated into a single location is a game-changer."</p><cite>Raina Avalon — Chief Logistics Officer, TJX</cite></div>
+          </div>
+
+          <div class="proj-sub">
+            <h4>Press &amp; Recognition</h4>
+            <div class="proj-links">
+              <a class="proj-chip" href="https://www.fourkites.com/press/fourkites-launches-my-workspace-to-empower-customers-with-instant-customizable-supply-chain-insights/" target="_blank" rel="noopener">FourKites launch ↗</a>
+              <a class="proj-chip" href="https://www.sdcexec.com/software-technology/supply-chain-visibility/news/22872109/fourkites-fourkites-my-workspace-dashboard-to-centralize-customizable-supply-chain-insights" target="_blank" rel="noopener">SDC Executive ↗</a>
+              <a class="proj-chip" href="https://www.businesswire.com/news/home/20230906812738/en/" target="_blank" rel="noopener">Business Wire ↗</a>
+            </div>
+          </div>
+                  <div class="proj-sub">
+            <h4>Photos</h4>
+            <div class="proj-photo-grid">
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p2" aria-label="View larger: Landing Page">
+                    <img src="https://placehold.co/600x400?text=Landing+Page" alt="Landing Page — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p2" aria-label="View larger: Widget Detail">
+                    <img src="https://placehold.co/600x400?text=Widget+Detail" alt="Widget Detail — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p2" aria-label="View larger: Executive View">
+                    <img src="https://placehold.co/600x400?text=Executive+View" alt="Executive View — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p2" aria-label="View larger: Operational View">
+                    <img src="https://placehold.co/600x400?text=Operational+View" alt="Operational View — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+            </div>
+          </div>
+        </article>
+
+        <!-- 03 — FOURKITES REDESIGN + SAVED VIEWS -->
+        <article class="proj-entry" id="p3" data-group="flagship">
+          <div class="proj-head"><span class="proj-num">03</span><h3>FourKites Redesign</h3></div>
+          <p class="proj-oneliner">Ground-up redesign of FourKites' core shipment-tracking experience.</p>
+
+          <div class="proj-sub"><h4>Context &amp; Problem Statement</h4>
+            <p>Leadership identified the need for a single, connected experience for tracking shipments across every mode of transport, replacing a fragmented set of legacy tools — and to invest in better self-service tools as the platform scaled.</p>
+          </div>
+          <div class="proj-sub"><h4>My Role</h4>
+            <p>Served as a primary UX reviewer for the redesigned tracking experience, resolving real-world issues reported by enterprise customers — including SC Johnson, Henkel, and others — across filters, list views, and shipment detail pages.</p>
+          </div>
+          <div class="proj-sub"><h4>Design Strategy / Process</h4>
+            <p>Component-level design audits against the design system, with fixes prioritized by customer impact — increasingly supported by AI-assisted development to ship fixes faster (see Vibe-Coding with Claude, below).</p>
+          </div>
+
+          <div class="proj-subcard" id="p3-saved-views">
+            <span class="proj-eyebrow-sm">▸ Sub-project</span>
+            <h4 class="proj-subtitle">Saved Views</h4>
+            <p class="proj-oneliner">Letting power users bundle their filters, column layout, and sort order into a single named "View" — built directly from a customer's idea.</p>
+
+            <div class="proj-sub"><h4>Context &amp; Customer Signal</h4>
+              <p>The idea originated from a customer request submitted through FourKites' community idea exchange: "Filters with Column Headers Saved," submitted by Amber McMillian of Bridgestone Americas, which gathered strong support from other customers. She had actually raised a related need years earlier — suggesting this was a long-standing pain point before it finally got built.</p>
+            </div>
+            <div class="proj-sub"><h4>My Role</h4>
+              <p>Took this from a raw customer idea through to a fully specified feature — writing the problem statement, proposed solution, and seven detailed user-story flows with acceptance criteria.</p>
+            </div>
+            <div class="proj-sub"><h4>Design Strategy</h4>
+              <ul>
+                <li><strong>Personal, not shared (v1):</strong> Views scoped to the individual user.</li>
+                <li><strong>List View only (v1):</strong> Card View out of scope for the first release.</li>
+                <li><strong>Non-destructive exploration:</strong> temporarily tweaking a filter doesn't alter the saved View — a subtle indicator shows the change, with one-click reset.</li>
+                <li><strong>Explicit Edit Mode:</strong> updating a saved View requires deliberately entering an edit state, with a safeguard against accidental changes.</li>
+              </ul>
+            </div>
+            <div class="proj-sub"><h4>Impact &amp; Outcome</h4>
+              <p>Currently in development, not yet released to customers.</p>
+            </div>
+            <div class="proj-sub">
+              <h4>Photos</h4>
+              <div class="proj-photo-grid">
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="saved-views" aria-label="View larger: Saved Views toolbar">
+                    <img src="https://placehold.co/600x400?text=Saved+Views+Toolbar" alt="Saved Views toolbar — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="saved-views" aria-label="View larger: Saved Views edit mode">
+                    <img src="https://placehold.co/600x400?text=Edit+Mode" alt="Saved Views edit mode — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+              </div>
+            </div>
+          </div>
+                  <div class="proj-sub">
+            <h4>Photos</h4>
+            <div class="proj-photo-grid">
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p3" aria-label="View larger: List View">
+                    <img src="https://placehold.co/600x400?text=List+View" alt="List View — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p3" aria-label="View larger: Shipment Detail">
+                    <img src="https://placehold.co/600x400?text=Shipment+Detail" alt="Shipment Detail — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p3" aria-label="View larger: Map View">
+                    <img src="https://placehold.co/600x400?text=Map+View" alt="Map View — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+            </div>
+          </div>
+        </article>
+
+        <!-- 04 — FOURSIGHT AI -->
+        <article class="proj-entry" id="p4" data-group="flagship">
+          <div class="proj-head"><span class="proj-num">04</span><h3>FourKites AI — FourSight AI</h3></div>
+          <p class="proj-oneliner">FourKites' AI assistant — from a contextual sidebar chat to a full-page data-explainability experience.</p>
+
+          <div class="proj-sub"><h4>Context &amp; Problem Statement</h4>
+            <p>The prior landing-page experience packed in many separate dashboards, requiring users to navigate complex menus and filters just to find relevant information — creating high friction for new users. FourSight was designed to pair a conversational AI assistant with clearer, more guided data exploration.</p>
+          </div>
+          <div class="proj-sub"><h4>My Role</h4>
+            <p>Led a full usability review of FourSight — improving sidebar icon consistency, aligning headers with the rest of the product, simplifying overly technical language, and removing friction points in the chat flow. Also contributed to the longer-term product vision for AI-assisted insights and data explainability.</p>
+          </div>
+          <div class="proj-sub"><h4>Design Strategy / Process</h4>
+            <p>Iterative usability testing cycles: refining the transition from a sidebar chat to a full-page view, adding conversation history, and improving in-product search.</p>
+          </div>
+                  <div class="proj-sub">
+            <h4>Photos</h4>
+            <div class="proj-photo-grid">
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p4" aria-label="View larger: Sidebar Chat">
+                    <img src="https://placehold.co/600x400?text=Sidebar+Chat" alt="Sidebar Chat — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p4" aria-label="View larger: Full-Page View">
+                    <img src="https://placehold.co/600x400?text=Full-Page+View" alt="Full-Page View — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+            </div>
+          </div>
+        </article>
+
+        <!-- 05 — ADDRESS MANAGER -->
+        <article class="proj-entry" id="p5" data-group="flagship">
+          <div class="proj-head"><span class="proj-num">05</span><h3>Address Manager</h3></div>
+          <p class="proj-tagline">Address Manager — UX Audit &amp; Redesign</p>
+          <p class="proj-oneliner">A full usage audit and end-to-end redesign of one of FourKites' most heavily used tools — grounded in real product analytics, not just a visual refresh.</p>
+
+          <div class="proj-sub"><h4>Context &amp; Problem Statement</h4>
+            <p>Address Manager stores every stop address a shipper uses — pickup, delivery, and yard locations — and lets customers define the geofence around each one, which FourKites uses to detect arrivals and departures. It's one of the most frequently used tools in the product, but the existing table-style layout packed dense, low-contrast rows of data with no clear signal for which addresses actually needed attention.</p>
+          </div>
+
+          <div class="proj-sub"><h4>My Role</h4>
+            <p>Owned the redesign end-to-end: ran a full usage audit of the existing tool (engagement time, feature-level click data, and task flows), defined the UX goals and success metrics for the initiative, and proposed a new card-based interface built on the Elemental Design System.</p>
+          </div>
+
+          <div class="proj-sub"><h4>Usage Audit</h4>
+            <p>Before redesigning anything, I pulled real usage data to see how customers actually worked in the tool:</p>
+            <ul>
+              <li>Users spent an average of <strong>6m 31s</strong> per day in Address Manager, with Unilever North LATAM the single heaviest user at over 7,000 views in a 180-day window — alongside high-volume customers like Dow Chemical, Averitt Express, Penske Managed Transportation, and Niagara Bottling.</li>
+              <li>Feature-click data showed <strong>viewing card details</strong> overwhelmingly dominated every other interaction — dwarfing search, custom geofence editing, and version history combined — meaning the list view's main job was simply getting people to a single address faster.</li>
+              <li>Mapping the task flow (add address, edit address, export, view statistics) showed most journeys funneled through the same handful of actions, which became the basis for what the new card layout needed to surface up front instead of hiding behind a click.</li>
+            </ul>
+          </div>
+
+          <div class="proj-sub"><h4>UX Goals</h4>
+            <p>Two goals anchored the redesign, each tied to a measurable target:</p>
+            <ul>
+              <li><strong>Reduce time spent managing addresses</strong> — from a baseline of 9.75 minutes to a target of 8.8 minutes per month, by surfacing the right information without extra clicks.</li>
+              <li><strong>Increase adoption of FourKites' recommended geofences</strong> — from a 24% baseline to a 70% target among shippers with a recommendation available, since geofence accuracy directly drives tracking reliability.</li>
+            </ul>
+          </div>
+
+          <div class="proj-sub"><h4>FourKites Recommended Geofence</h4>
+            <p>A core piece of the redesign: instead of leaving customers to hand-draw and guess at geofence shapes, the tool recommends a better-performing geofence based on that customer's own history at the location, or the best-performing geofence used by other shippers at the same site across the FourKites network. On individual addresses tested, activating the recommended geofence improved entry-success accuracy by roughly 11–13% over the existing custom shape.</p>
+          </div>
+
+          <div class="proj-sub"><h4>Proposed Design — Card View</h4>
+            <p>Replaced the dense, low-contrast table with a scannable card grid: each address card surfaces its geofence entry-success rate as an at-a-glance ring, shows whether a better-performing recommended geofence is available with a one-tap Activate action, and exposes the connected services (EDocs, Yard Connect, Appointments Manager) as inline toggles — removing the need to open a record just to check or flip a switch.</p>
+          </div>
+
+          <div class="proj-sub"><h4>Impact &amp; Outcome</h4>
+            <p>The audit gave the team a real baseline to design against instead of guessing, and the recommended-geofence work showed measurable accuracy gains on individual addresses. It also reinforced validation from elsewhere in Address Manager — Fast Track, a related tracking-reliability feature, has strong customer results:</p>
+            <div class="proj-quote"><p>"The week after implementing Fast Track we were tracking at 88%... we achieved multiple weeks of 100% tracking in a row."</p><cite>Carrie Conrad — Land O'Lakes</cite></div>
+          </div>
+
+                  <div class="proj-sub">
+            <h4>Photos</h4>
+            <div class="proj-photo-grid">
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p5" aria-label="View larger: Usage Audit">
+                    <img src="https://placehold.co/600x400?text=Usage+Audit" alt="Usage audit dashboard — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p5" aria-label="View larger: Task Flow">
+                    <img src="https://placehold.co/600x400?text=Task+Flow" alt="Task flow map — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p5" aria-label="View larger: Proposed Card View">
+                    <img src="https://placehold.co/600x400?text=Proposed+Card+View" alt="Proposed Card View redesign — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+            </div>
+          </div>
+        </article>
+
+        <!-- 06 — UNIFIED USER MANAGEMENT -->
+        <article class="proj-entry" id="p6" data-group="flagship">
+          <div class="proj-head"><span class="proj-num">06</span><h3>Unified User Management System</h3></div>
+          <p class="proj-oneliner">Unifying three fragmented per-product user-management systems into a single, consistent experience.</p>
+
+          <div class="proj-sub"><h4>Context &amp; Problem Statement</h4>
+            <p>Each FourKites product had evolved its own user-creation model, meaning the same person could need separate accounts across products, with no shared view or bulk management. The fix: a single unified user list, one creation flow, and clearly organized permission settings per product.</p>
+          </div>
+          <div class="proj-sub"><h4>My Role</h4>
+            <p>Led the UX for unifying the experience, from early concept wireframes shared with the broader team through to final usability testing.</p>
+          </div>
+          <div class="proj-sub"><h4>Key Artifacts</h4>
+            <div class="proj-links">
+              <a class="proj-chip" href="https://www.figma.com/design/Uisc9CcmGGGeU1WMawvOL2/Unified-User-Management--2025-?node-id=912-71552" target="_blank" rel="noopener">Figma design file ↗</a>
+              <a class="proj-chip" href="https://www.figma.com/proto/Uisc9CcmGGGeU1WMawvOL2/Unified-User-Management--2025-?page-id=2%3A403&node-id=2-404" target="_blank" rel="noopener">Figma prototype ↗</a>
+            </div>
+          </div>
+                  <div class="proj-sub">
+            <h4>Photos</h4>
+            <div class="proj-photo-grid">
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p6" aria-label="View larger: User List">
+                    <img src="https://placehold.co/600x400?text=User+List" alt="User List — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p6" aria-label="View larger: Create User Flow">
+                    <img src="https://placehold.co/600x400?text=Create+User+Flow" alt="Create User Flow — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+            </div>
+          </div>
+        </article>
+
+        <div class="proj-group" data-group="additional"><h2>Additional Projects</h2></div>
+
+        <!-- 07 — FOURKITES CONNECT -->
+        <article class="proj-entry" id="p7" data-group="additional">
+          <div class="proj-head"><span class="proj-num">07</span><h3>FourKites Connect</h3></div>
+          <p class="proj-oneliner">A self-service onboarding tool that replaced a slow, manual carrier-network setup process with a three-click flow.</p>
+
+          <div class="proj-sub"><h4>Context &amp; Problem Statement</h4>
+            <p>Previously, connecting a shipper to a new carrier required manual setup by an administrator, plus separate backend credential configuration — a slow process with long customer wait times. Self Onboarding replaced this with a simple three-click flow: pick a carrier, enable tracking, and go.</p>
+          </div>
+          <div class="proj-sub"><h4>My Role</h4>
+            <p>Responsible for the UX design and live presentation of this feature at a company-wide product demo day, including building the Figma prototypes and recording the feature walkthrough.</p>
+          </div>
+                  <div class="proj-sub">
+            <h4>Photos</h4>
+            <div class="proj-photo-grid">
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p7" aria-label="View larger: Carrier Selection">
+                    <img src="https://placehold.co/600x400?text=Carrier+Selection" alt="Carrier Selection — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p7" aria-label="View larger: Demo Prototype">
+                    <img src="https://placehold.co/600x400?text=Demo+Prototype" alt="Demo Prototype — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+            </div>
+          </div>
+        </article>
+
+        <!-- 08 — DEVELOPER PORTAL -->
+        <article class="proj-entry" id="p8" data-group="additional">
+          <div class="proj-head"><span class="proj-num">08</span><h3>Developer Portal</h3></div>
+          <p class="proj-oneliner">Design contributions to FourKites' Developer Portal, the self-service hub for partners and customers integrating with the FourKites API.</p>
+          <div class="proj-sub"><h4>My Role</h4>
+            <p>Shared UX ownership within the design team for a set of new application features on the Developer Portal.</p>
+          </div>
+                  <div class="proj-sub">
+            <h4>Photos</h4>
+            <div class="proj-photo-grid">
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p8" aria-label="View larger: Application Features">
+                    <img src="https://placehold.co/600x400?text=Application+Features" alt="Application Features — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+            </div>
+          </div>
+        </article>
+
+        <!-- 09 — ICT -->
+        <article class="proj-entry" id="p9" data-group="additional">
+          <div class="proj-head"><span class="proj-num">09</span><h3>Intelligent Control Tower</h3></div>
+          <p class="proj-oneliner">A unified navigation shell and digital-worker command center, consolidating FourKites' previously fragmented product apps into one cohesive experience.</p>
+
+          <div class="proj-sub"><h4>Context &amp; Problem Statement</h4>
+            <p>The Intelligent Control Tower combines supply chain visibility, AI automation, and predictive analytics — moving FourKites from passive visibility toward automated execution, powered by AI "digital workers" for supplier operations and shipment tracking. Previously, FourKites' web experience was a set of separately deployed apps, each maintaining its own copy of shared navigation; ICT consolidates these into a single, cohesive product.</p>
+          </div>
+          <div class="proj-sub"><h4>My Role</h4>
+            <p>Served as the UX reviewer for the ICT Supplier Connect landing page and its context-aware map view, working closely with engineering and product teams. Defined detailed UI rules for visualizing ranked carrier recommendations, and contributed to a broader navigation redesign consolidating the product into a more unified structure.</p>
+          </div>
+          <div class="proj-sub"><h4>Design Strategy / Process</h4>
+            <p>Established consistent design rules for light and dark themes, including shadow, outline, and interaction states for map controls, and a structured design-to-development handoff process.</p>
+          </div>
+          <div class="proj-sub"><h4>Key Artifacts</h4>
+            <div class="proj-links">
+              <a class="proj-chip" href="https://www.figma.com/design/ezEpVwf9oK3czZbIkN5yQG/Context-Based-Map-View--ICT-?node-id=394-10066" target="_blank" rel="noopener">Figma design ↗</a>
+              <a class="proj-chip" href="https://www.figma.com/proto/ezEpVwf9oK3czZbIkN5yQG/Context-Based-Map-View--ICT-?page-id=366%3A16344&node-id=394-10066" target="_blank" rel="noopener">Figma prototype ↗</a>
+            </div>
+          </div>
+                  <div class="proj-sub">
+            <h4>Photos</h4>
+            <div class="proj-photo-grid">
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p9" aria-label="View larger: Supplier Connect">
+                    <img src="https://placehold.co/600x400?text=Supplier+Connect" alt="Supplier Connect — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p9" aria-label="View larger: Context Map View">
+                    <img src="https://placehold.co/600x400?text=Context+Map+View" alt="Context Map View — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p9" aria-label="View larger: Navigation Shell">
+                    <img src="https://placehold.co/600x400?text=Navigation+Shell" alt="Navigation Shell — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+            </div>
+          </div>
+        </article>
+
+        <!-- 10 — GLOBAL MAP VIEW -->
+        <article class="proj-entry" id="p10" data-group="additional">
+          <div class="proj-head"><span class="proj-num">10</span><h3>Global Map View</h3></div>
+          <p class="proj-oneliner">A purpose-built map experience for supply chain visibility, redesigned from the ground up after its original version failed to earn its place next to the list view.</p>
+
+          <div class="proj-sub"><h4>Context &amp; Problem Statement</h4>
+            <p>An internal review of the original map view found that it simply plotted the same data shown in the list view, with no clear problem of its own to solve. The redesign asked a different question: what could a map show that a list never could — leading to a purpose-built experience layering in risk, weather, and points of interest rather than just repainting the list in a different shape.</p>
+          </div>
+          <div class="proj-sub"><h4>My Role</h4>
+            <p>This is the same underlying work referenced in the Intelligent Control Tower project above — the current, supplier-focused evolution of Global Map View.</p>
+          </div>
+          <div class="proj-sub"><h4>Design Strategy / Process</h4>
+            <p>Early design principles — showing only the most important shipments, a "zoom to drill down" interaction model, and layered points of interest — carried forward into the current iteration's theme-consistency and legend-clarity work.</p>
+          </div>
+          <div class="proj-sub"><h4>Key Artifacts</h4><p>Same Figma files as the Intelligent Control Tower project above.</p></div>
+                  <div class="proj-sub">
+            <h4>Photos</h4>
+            <div class="proj-photo-grid">
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p10" aria-label="View larger: Map Legend">
+                    <img src="https://placehold.co/600x400?text=Map+Legend" alt="Map Legend — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p10" aria-label="View larger: Risk Overlay">
+                    <img src="https://placehold.co/600x400?text=Risk+Overlay" alt="Risk Overlay — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+            </div>
+          </div>
+        </article>
+
+        <!-- 11 — BOOKING CONNECT -->
+        <article class="proj-entry" id="p11" data-group="additional">
+          <div class="proj-head"><span class="proj-num">11</span><h3>Booking Connect</h3></div>
+          <p class="proj-oneliner">FourKites' lightweight, faster-to-implement Transportation Management System, spanning LTL, Parcel, Ocean, and Air booking.</p>
+
+          <div class="proj-sub"><h4>Context &amp; Problem Statement</h4>
+            <p>Booking Connect centers on AI-generated rate recommendations and initiating a booking directly from an existing order — covering booking requests, contract rates, routing guide compliance, required documentation, and configuration, all in one place.</p>
+          </div>
+          <div class="proj-sub"><h4>My Role</h4>
+            <p>Owned usability testing and design fixes across all Booking Connect modules, working closely with the product team to resolve interface issues.</p>
+          </div>
+                  <div class="proj-sub">
+            <h4>Photos</h4>
+            <div class="proj-photo-grid">
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p11" aria-label="View larger: Booking Requests">
+                    <img src="https://placehold.co/600x400?text=Booking+Requests" alt="Booking Requests — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p11" aria-label="View larger: Contract Master">
+                    <img src="https://placehold.co/600x400?text=Contract+Master" alt="Contract Master — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+            </div>
+          </div>
+        </article>
+
+        <!-- 12 — PLATFORM IA -->
+        <article class="proj-entry" id="p12" data-group="additional">
+          <div class="proj-head"><span class="proj-num">12</span><h3>Platform-Wide IA &amp; Recommendation Engine</h3></div>
+          <p class="proj-oneliner">Company-wide information architecture, product-flow simplification, and a unified recommendation engine spanning every FourKites module.</p>
+
+          <div class="proj-sub"><h4>Context &amp; Problem Statement</h4>
+            <p>The Recommendation Engine gives users dynamic, real-time recommendations that can be acted on before a shipment is picked up or while it's in transit — helping teams improve on-time performance, reduce detention costs, and avoid missed appointment windows.</p>
+          </div>
+          <div class="proj-sub"><h4>My Role</h4>
+            <p>Owned the navigation and information-architecture restructuring across FourKites' entire product suite, in partnership with the product team on the Recommendation Engine specifically.</p>
+          </div>
+          <div class="proj-sub"><h4>Impact &amp; Outcome</h4>
+            <p>The Recommendation Engine reached <strong>$264K in annual recurring revenue with 14 paying customers</strong>, and was the third most-viewed page on the entire platform.</p>
+            <div class="proj-quote"><p>"They followed up on the recommendations received by our product and were able to SAVE 5 OF THE 6 LOADS indicated. This seemingly small improvement is equivalent to a 3% improvement in their on time delivery rate for Walmart in ONE DAY."</p><cite>Jason E. — USA Truck</cite></div>
+          </div>
+                  <div class="proj-sub">
+            <h4>Photos</h4>
+            <div class="proj-photo-grid">
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p12" aria-label="View larger: Navigation IA">
+                    <img src="https://placehold.co/600x400?text=Navigation+IA" alt="Navigation IA — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p12" aria-label="View larger: Recommendation Card">
+                    <img src="https://placehold.co/600x400?text=Recommendation+Card" alt="Recommendation Card — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+            </div>
+          </div>
+        </article>
+
+        <!-- 13 — VIBE-CODING -->
+        <article class="proj-entry" id="p13" data-group="additional">
+          <div class="proj-head"><span class="proj-num">13</span><h3>Vibe-Coding with Claude</h3></div>
+          <p class="proj-oneliner">An AI-native workflow for turning customer-reported issues into shipped production fixes — end to end, owned solo.</p>
+
+          <div class="proj-sub"><h4>Context &amp; Problem Statement</h4>
+            <p>FourKites customers report issues and ideas through a public community forum. Turning that feedback into a shipped fix traditionally means routing it through several teams and a backlog. This project is a faster, more direct path: going from customer request to a reviewed, shipped fix myself, using Claude as a coding partner.</p>
+          </div>
+          <div class="proj-sub"><h4>My Role</h4>
+            <p>Own the full loop end to end, solo: monitor and analyze customer requests, diagnose the real problem, decide the right fix, build it using Claude, review it, and ship straight to production. A few real examples:</p>
+            <ul>
+              <li>A customer on Unilever's North LATAM team asked to filter by multiple carrier codes at once instead of one at a time — a request with strong support from other users. The fix shipped directly to production.</li>
+              <li>A customer at BRP asked to add a "watcher" to multiple shipments at once instead of one by one. Before building it, usage data was pulled to confirm real demand — the existing single-shipment version was barely used, while a similar bulk action elsewhere in the product was used constantly, confirming the gap was the missing bulk option, not low interest. The fix shipped shortly after.</li>
+              <li>Reviewed and refined a teammate's AI-assisted fix for a shipment status indicator, contributing UX constraints before it shipped.</li>
+              <li>Additional community-requested fixes have shipped this way for customers at Cargill and Direct Roots.</li>
+            </ul>
+          </div>
+          <div class="proj-sub"><h4>Process</h4>
+            <ol>
+              <li>Analyze incoming customer requests via the community forum</li>
+              <li>Diagnose the real problem — often backed by usage-data analysis</li>
+              <li>Decide on the right fix/approach</li>
+              <li>Build the fix directly using Claude (or review a teammate's AI-assisted fix)</li>
+              <li>Review the change</li>
+              <li>Ship to production</li>
+            </ol>
+          </div>
+          <div class="proj-sub"><h4>Design Strategy / Approach</h4>
+            <p>Currently exploring ways to make this process even more efficient — including exporting the design system as structured design tokens, which can reduce AI token usage by roughly 70% while keeping generated UI consistent with the design system.</p>
+          </div>
+          <div class="proj-sub"><h4>Key Artifacts</h4>
+            <div class="proj-links">
+              <a class="proj-chip" href="https://claude.ai/artifacts/latest/af3b9094-5996-4cf7-83aa-5d1424dd40ee" target="_blank" rel="noopener">Example Claude-generated UI concept ↗</a>
+            </div>
+          </div>
+          <div class="proj-sub"><h4>Impact &amp; Outcome</h4>
+            <p>Several customer-requested fixes have shipped this way so far, each resolving a real, validated customer need.</p>
+          </div>
+                  <div class="proj-sub">
+            <h4>Photos</h4>
+            <div class="proj-photo-grid">
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p13" aria-label="View larger: Community Request">
+                    <img src="https://placehold.co/600x400?text=Community+Request" alt="Community Request — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p13" aria-label="View larger: Claude Code Session">
+                    <img src="https://placehold.co/600x400?text=Claude+Code+Session" alt="Claude Code Session — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="p13" aria-label="View larger: Shipped Fix">
+                    <img src="https://placehold.co/600x400?text=Shipped+Fix" alt="Shipped Fix — placeholder image" loading="lazy" width="600" height="400">
+                  </button>
+                </figure>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ========================================================== FOOTER -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="Kevin Miranda — home">
+          <span class="mono" aria-hidden="true">KM</span>
+          <span>Kevin&nbsp;Miranda<small>UX &amp; Interaction Designer</small></span>
+        </a>
+        <p>A UI/UX &amp; interaction designer with a keen eye for detail &amp; a knack for visualizing any idea put forth.</p>
+        <ul class="socials" aria-label="Kevin on social platforms">
+          <li><a href="#" aria-label="Dribbble"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.8"/><path d="M5 8c4.5 2 9 2.5 13.5 1M8.5 4.5C12 8 14 13 14.5 19.5M18.8 14.5c-5-1.5-9.5-.3-12.6 3.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
+          <li><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/></svg></a></li>
+          <li><a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M8 10.5V17M8 7.6v.02M11.6 17v-3.6c0-1.4 1-2.4 2.3-2.4s2.1 1 2.1 2.4V17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
+          <li><a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 4l7.6 9.6L4.4 20M20 4l-7.5 8.2M20 20l-7.6-9.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+        </ul>
+      </div>
+
+      <nav class="footer-col" aria-label="Site">
+        <h4>Explore</h4>
+        <a href="index.html#about">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#voices">Testimonials</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+
+      <nav class="footer-col" aria-label="Services">
+        <h4>Services</h4>
+        <a href="index.html#services">Product design</a>
+        <a href="index.html#services">Brand &amp; identity</a>
+        <a href="index.html#services">Design systems</a>
+        <a href="index.html#services">Art direction</a>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="year"></span> Kevin Miranda. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ========================================================== LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" aria-hidden="true">
+  <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close image viewer">✕</button>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" type="button" aria-label="Previous image">‹</button>
+  <figure class="lightbox-figure">
+    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    <figcaption class="lightbox-caption" id="lightboxCaption"></figcaption>
+  </figure>
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" type="button" aria-label="Next image">›</button>
+</div>
+
+<script src="js/vendor/bootstrap.bundle.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/projects.js"></script>
+<script src="js/lightbox.js"></script>
+<script>document.getElementById("year").innerHTML = new Date().getFullYear();</script>
+</body>
+</html>
