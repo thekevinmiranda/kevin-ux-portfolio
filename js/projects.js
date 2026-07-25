@@ -133,3 +133,56 @@
   }
   goToProject(initialHref, { userInitiated: false });
 })();
+
+/* ============================================================================
+   Design Process project — interactive process-map widget
+   (My Design Process, "Interactive Process Map"). Self-contained IIFE so
+   showDetail can't collide with anything else on the page.
+   ============================================================================ */
+(function () {
+  "use strict";
+
+  var labels = { discover: "Discover", diagnose: "Diagnose", ideate: "Ideate", validate: "Validate", build: "Build", ship: "Ship" };
+  var aiAssisted = { discover: false, diagnose: true, ideate: true, validate: true, build: false, ship: false };
+  var nums = {
+    pre: { discover: "01", diagnose: "02", ideate: "03–04", validate: "05–09", build: "10–12", ship: "13" },
+    ai:  { discover: "01", diagnose: "02", ideate: "03",         validate: "04–08", build: "09–11", ship: "12" }
+  };
+  var steps = {
+    discover: { pre: ["Find a problem"], ai: ["Find a problem"] },
+    diagnose: { pre: ["Understand root cause & customer pain points"], ai: ["Understand root cause & customer pain points, aided by AI analysis"] },
+    ideate: { pre: ["Brainstorm multiple solutions", "Evolve & iterate on the strongest idea"], ai: ["Leverage AI to research & generate solutions"] },
+    validate: {
+      pre: ["Create lo-fi wireframes", "Present lo-fi & gather UX/Product/Eng feedback", "Design hi-fi prototype, present & gather feedback", "Present hi-fi to customers & gather feedback", "Iterate on customer feedback"],
+      ai: ["AI-generate lo-fi prototypes", "Review the AI artifact with UX & Product", "Iterate on feedback with AI, until approved", "AI-build a hi-fi prototype in the design system", "Gather feedback from stakeholders & customers"]
+    },
+    build: { pre: ["Final prototype, sign-off & handoff specs", "Hand over to Product & Engineering", "Run UXAT with engineering, fix issues"], ai: ["Create engineering handoff specs", "Hand over designs & assets to Engineering", "Run UXAT with engineering, fix issues"] },
+    ship: { pre: ["Sign off & release to production"], ai: ["Sign off & release to production"] }
+  };
+
+  var detail = document.getElementById("dpDetail");
+  if (!detail) return;
+
+  function showDetail(phase) {
+    try {
+      var assisted = aiAssisted[phase];
+      var html = '<p class="dp-detail-title">' + labels[phase] + '</p>';
+      if (assisted) html += '<p class="dp-detail-tag">AI-assisted in the AI era</p>';
+      html += '<div class="dp-detail-grid">';
+      html += '<div><p class="dp-detail-col-label">Pre-AI &middot; ' + nums.pre[phase] + '</p>' +
+        steps[phase].pre.map(function (s) { return '<p class="dp-detail-step">' + s + '</p>'; }).join('') + '</div>';
+      html += '<div><p class="dp-detail-col-label">AI era &middot; ' + nums.ai[phase] + '</p>' +
+        steps[phase].ai.map(function (s) { return '<p class="dp-detail-step">' + s + '</p>'; }).join('') + '</div>';
+      html += '</div>';
+      detail.innerHTML = html;
+    } catch (err) {
+      console.warn("Design process detail render failed silently:", err);
+    }
+  }
+
+  document.querySelectorAll(".dp-node, .dp-segment").forEach(function (el) {
+    el.addEventListener("click", function () {
+      showDetail(el.getAttribute("data-phase"));
+    });
+  });
+})();

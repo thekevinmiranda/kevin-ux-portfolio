@@ -670,6 +670,15 @@ main { display: block; }
 .work-overlay .arrow svg { width: 18px; height: 18px; }
 .work-card > a { position: absolute; inset: 0; z-index: 3; }
 
+/* Touch devices have no hover state, so show the overlay info by default.
+   Desktop (and any pointer:fine/hover:hover device) keeps the hover-only behavior above. */
+@media (hover: none) and (pointer: coarse) {
+  .work-overlay { opacity: 1; }
+  .work-overlay .cat,
+  .work-overlay h3 { transform: translateY(0); }
+  .work-overlay .arrow { transform: scale(1) rotate(0); }
+}
+
 /* ------------------------------------------------------- testimonials --- */
 .tst-wrap { position: relative; }
 .tst-track {

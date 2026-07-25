@@ -16,8 +16,8 @@
 <meta name="author" content="Kevin Miranda">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Kevin Miranda — Projects">
-<meta property="og:description" content="Thirteen in-depth UX case studies from Kevin Miranda's work at FourKites.">
+<meta property="og:title" content="Kevin Miranda — Work">
+<meta property="og:description" content="Fourteen in-depth UX case studies from Kevin Miranda's work at FourKites.">
 <meta property="og:image" content="img/hero2.jpg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,7 +44,7 @@
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="index.html#about">About</a></li>
-        <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="projects.html" class="active">Work</a></li>
         <li><a href="index.html#services">Services</a></li>
         <li><a href="index.html#voices">Voices</a></li>
         <li><a href="index.html#contact">Contact</a></li>
@@ -64,8 +64,8 @@
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">FourKites UX Case Studies</span>
-        <h1 id="proj-h">Thirteen projects, in depth.</h1>
-        <p>A collection of UX case studies from my time at FourKites — spanning design systems, AI product design, navigation architecture, and customer-driven feature work. Each one reflects real customer feedback, real product decisions, and real outcomes.</p>
+        <h1 id="proj-h">Fourteen projects, in depth.</h1>
+        <p>A collection of UX case studies from my time at FourKites — spanning design systems, AI product design, navigation architecture, and customer-driven feature work — plus a look at how I actually work, from problem to production. Each one reflects real customer feedback, real product decisions, and real outcomes.</p>
       </div>
     </div>
   </section>
@@ -100,7 +100,12 @@
             <li><a class="proj-nav-link" href="#p10"><span class="n">10</span>Global Map View</a></li>
             <li><a class="proj-nav-link" href="#p11"><span class="n">11</span>Booking Connect</a></li>
             <li><a class="proj-nav-link" href="#p12"><span class="n">12</span>Platform IA &amp; Reco Engine</a></li>
+          </ul>
+
+          <p class="proj-nav-label">How I Work</p>
+          <ul>
             <li><a class="proj-nav-link" href="#p13"><span class="n">13</span>Vibe-Coding with Claude</a></li>
+            <li><a class="proj-nav-link" href="#p14"><span class="n">14</span>My Design Process</a></li>
           </ul>
         </div>
       </nav>
@@ -490,18 +495,24 @@
           <p class="proj-oneliner">Ground-up redesign of FourKites' core shipment-tracking experience.</p>
 
           <div class="proj-sub"><h4>Context &amp; Problem Statement</h4>
-            <p>Leadership identified the need for a single, connected experience for tracking shipments across every mode of transport, replacing a fragmented set of legacy tools — and to invest in better self-service tools as the platform scaled. The initiative was scoped across six areas: navigation, load cards, control tower, collaboration, map view, and international support. My day-to-day work centered on two of them:</p>
+            <p>Leadership identified the need for a single, connected experience for tracking shipments across every mode of transport, replacing a fragmented set of legacy tools — and to invest in better self-service tools as the platform scaled. The initiative was scoped across six program-level areas: navigation, shipment cards, control tower, collaboration, map view, and international support. Within that, I played a major role in conception, execution, and delivery across the core customer-facing tracking experience:</p>
             <ul>
               <li><strong>Navigation:</strong> a single, extensible pattern that could support every mode — Truckload, LTL, Ocean, Rail, Parcel, and Air — plus multiple languages and white-labeling, without forking the experience per mode.</li>
-              <li><strong>Load cards:</strong> the existing cards treated every shipment identically regardless of phase. The redesign split load status into Pre-Pickup, In-Transit, and At-Stop, so each phase surfaces only the data that's actually reliable at that point — an ETA prediction on a load that hasn't shipped yet does more harm than good — with clearer signals on which data points are inferred versus customer-provided.</li>
+              <li><strong>Shipment cards &amp; list view:</strong> the existing cards treated every shipment identically regardless of phase. The redesign split shipment status into Pre-Pickup, In-Transit, and At-Stop, so each phase surfaces only the data that's actually reliable at that point — an ETA prediction on a shipment that hasn't shipped yet does more harm than good — with clearer signals on which data points are inferred versus customer-provided.</li>
+              <li><strong>Shipment Details pages:</strong> redesigned the detail view customers land on from every card and search result, restructuring dense tracking, exception, and document data around the question customers actually land there to answer: where is it, and what's wrong.</li>
+              <li><strong>Filter &amp; filtering experience:</strong> filters were noisy, ate up a large share of the screen, and made simple things like reusing a team's saved setup unintuitive — the direct problem Saved Views (below) was built to solve.</li>
+              <li><strong>Export experience:</strong> rebuilt how customers pull tracking data out of the platform, aligning what's exportable with what's actually filterable and visible on-screen.</li>
+              <li><strong>Map view — shipment visibility &amp; supplier consolidation:</strong> extended the tracking map beyond individual shipments to consolidate supplier-level visibility (fuller detail in the Global Map View case study elsewhere in this list).</li>
+              <li><strong>Saved views:</strong> let power users bundle filters, column layout, and sort order into a single named View — covered as its own sub-project below.</li>
+              <li><strong>Other feature releases, enhancements &amp; bug fixes:</strong> an ongoing stream of smaller releases and fixes across the tracking experience post-launch.</li>
             </ul>
-            <p>(Control tower and map-view work from the same initiative are covered in their own case studies elsewhere in this list.)</p>
+            <p>(Control tower work from the same initiative is covered in its own case study elsewhere in this list.)</p>
           </div>
           <div class="proj-sub"><h4>My Role</h4>
-            <p>Served as a primary UX reviewer for the redesigned tracking experience, resolving real-world issues reported by enterprise customers — including SC Johnson, Henkel, and others — across filters, list views, and shipment detail pages.</p>
+            <p>Led design across the redesign end-to-end — from initial concept through execution and delivery — owning navigation, shipment cards &amp; list view, shipment detail pages, filtering, export, map view, and saved views, plus a steady stream of feature releases, enhancements, and bug fixes post-launch. Worked directly with enterprise customers — including SC Johnson, Henkel, and others — to validate designs and resolve real-world issues as they surfaced.</p>
           </div>
           <div class="proj-sub"><h4>Design Strategy / Process</h4>
-            <p>Component-level design audits against the design system, with fixes prioritized by customer impact — increasingly supported by AI-assisted development to ship fixes faster (see Vibe-Coding with Claude, below).</p>
+            <p>A mix of net-new feature design — Saved Views, Export, the filtering overhaul — and component-level audits against the design system for existing surfaces, with fixes prioritized by customer impact and increasingly supported by AI-assisted development to ship faster (see Vibe-Coding with Claude, below).</p>
           </div>
           <div class="proj-sub"><h4>Search &amp; Discovery</h4>
             <p>Filters were noisy, ate up a large share of the screen, and made simple things like reusing a team's saved setup unintuitive — while the search box had quietly become a workaround for filtering limitations it was never meant to solve. Saved Views, below, was the direct response to that gap.</p>
@@ -709,8 +720,70 @@
             <p>Previously, connecting a shipper to a new carrier required manual setup by an administrator, plus separate backend credential configuration — a slow process with long customer wait times. Self Onboarding replaced this with a simple three-click flow: pick a carrier, enable tracking, and go.</p>
           </div>
           <div class="proj-sub"><h4>My Role</h4>
-            <p>Responsible for the UX design and live presentation of this feature at a company-wide product demo day, including building the Figma prototypes and recording the feature walkthrough.</p>
+            <p>Responsible for the UX design and live presentation of this feature at a company-wide product demo day, including building the Figma prototypes and recording the feature walkthrough. Ran pre/post-launch Pendo metric analysis on two of the flow's key pages — the Carriers Sign-up page and Carriers List page — to validate impact and prioritize the next round of improvements.</p>
           </div>
+
+          <div class="proj-subcard" id="p7-signup-page">
+            <span class="proj-eyebrow-sm">▸ Sub-project</span>
+            <h4 class="proj-subtitle">Carriers Sign-up Page</h4>
+            <p class="proj-oneliner">A two-stage funnel fix — from carrier invite email to the sign-up form itself — that lifted page visits 4–5X and account creation 286%.</p>
+
+            <div class="proj-sub"><h4>Study Methodology</h4>
+              <p>Pendo Metric Analysis of the carrier self-service sign-up flow, comparing Jan–Mar 2023 (baseline) against Apr–Jun 2023, following a sign-up page update shipped in April 2023.</p>
+            </div>
+
+            <div class="proj-sub"><h4>How the Flow Starts</h4>
+              <p>A carrier receives an email invite from the shipper they work with (e.g. "Magellan Transport Logistics is requesting to connect with you via FourKites"), covering who FourKites is, the platform's benefits, and its data policies. A "Join FourKites" button in that email leads directly to the self-service sign-up page.</p>
+            </div>
+
+            <div class="proj-sub"><h4>Problem 1 — Low Click-Through</h4>
+              <p>Most invited carriers never proceeded past the email: only an average of ~300 visitors/month clicked through to the sign-up page (Jan 207, Feb 334, Mar 427). Working hypotheses: carriers didn't know enough about FourKites to bother clicking, or were already using a competing platform.</p>
+            </div>
+            <div class="proj-sub"><h4>Solution 1 — Lead with Brand &amp; Benefits</h4>
+              <p>Rebuilt the invite/landing experience to inform rather than just prompt — leading with a "Why Join?" benefits list (save time, improve customer service, reduce dwell time, validate detention claims) and an explainer video, instead of a bare logo and button.</p>
+            </div>
+            <div class="proj-sub"><h4>Result 1</h4>
+              <p>Visitors to the self-service sign-up page jumped to as high as <strong>2,691</strong> in April, settling around <strong>1,000–1,600/month</strong> through May and June — a <strong>4–5X increase</strong> over the pre-update baseline.</p>
+            </div>
+
+            <div class="proj-sub"><h4>Problem 2 — Drop-off at Sign-up</h4>
+              <p>Of the carriers who did reach the sign-up page, many still didn't complete it. Working hypotheses: carriers didn't trust the platform, or had privacy concerns about the data being requested.</p>
+            </div>
+            <div class="proj-sub"><h4>Solution 2 — Build Trust at the Point of Sign-up</h4>
+              <p>Personalized the form with the requesting customer's name and company (making the ask feel specific rather than generic), restated the benefits directly on the form, and added the explainer video — reinforcing legitimacy at the exact moment carriers were deciding whether to hand over information.</p>
+            </div>
+            <div class="proj-sub"><h4>Result 2</h4>
+              <p>Accounts created grew to roughly <strong>1,000/month</strong>, a <strong>286% increase</strong> quarter-over-quarter — from <strong>794</strong> sign-ups in Q1'23 to <strong>3,067</strong> in Q2'23.</p>
+            </div>
+
+            <div class="proj-sub"><h4>Conclusion</h4>
+              <p>Both problems traced back to the same root cause: carriers' lack of trust in and knowledge of FourKites, which suppressed click-through and completion at every stage of the sign-up funnel. Adding trustworthy elements — customer/company personalization, benefit messaging, and an explainer video — at both the invite and the form fixed it.</p>
+            </div>
+          </div>
+
+          <div class="proj-subcard" id="p7-list-page">
+            <span class="proj-eyebrow-sm">▸ Sub-project</span>
+            <h4 class="proj-subtitle">Carriers List Page</h4>
+            <p class="proj-oneliner">Pendo metric analysis on an information-hierarchy redesign of the carriers list page.</p>
+
+            <div class="proj-sub"><h4>Study Methodology</h4>
+              <p>Pendo Metric Analysis, comparing Q4'22 (Oct–Dec, pre-update) against Q1'23 (Jan–Mar, post-update).</p>
+            </div>
+            <div class="proj-sub"><h4>Objective</h4>
+              <p>Increase feature usage and reduce the time taken to absorb information on the carriers list page.</p>
+            </div>
+            <div class="proj-sub"><h4>Solution</h4>
+              <p>Rebuilt the page around a proper information hierarchy — clearer grouping plus actionable CTAs and recommendations in place of raw, undifferentiated data.</p>
+            </div>
+            <div class="proj-sub"><h4>Key Results</h4>
+              <ul>
+                <li>Total users grew from <strong>150</strong> in Q4'22 to <strong>481</strong> in Q1'23 — a <strong>220%</strong> increase in user visits.</li>
+                <li>Time required to understand the information dropped from <strong>10 minutes</strong> to <strong>7 minutes</strong> — a <strong>30% reduction</strong>.</li>
+                <li>Number of clicks needed reduced to a <strong>single click</strong>.</li>
+              </ul>
+            </div>
+          </div>
+
                   <div class="proj-sub">
             <h4>Photos</h4>
             <div class="proj-photo-grid">
@@ -881,8 +954,10 @@
           </div>
         </article>
 
+        <div class="proj-group" data-group="practice"><h2>How I Work</h2></div>
+
         <!-- 13 — VIBE-CODING -->
-        <article class="proj-entry" id="p13" data-group="additional">
+        <article class="proj-entry" id="p13" data-group="practice">
           <div class="proj-head"><span class="proj-num">13</span><h3>Vibe-Coding with Claude</h3></div>
           <p class="proj-oneliner">An AI-native workflow for turning customer-reported issues into shipped production fixes — end to end, owned solo.</p>
 
@@ -941,6 +1016,231 @@
           </div>
         </article>
 
+        <!-- 14 — MY DESIGN PROCESS -->
+        <article class="proj-entry" id="p14" data-group="practice">
+          <div class="proj-head"><span class="proj-num">14</span><h3>My Design Process</h3></div>
+          <p class="proj-oneliner">How I take an idea from a raw problem to a shipped product — before AI was part of my workflow, and after.</p>
+
+          <div class="proj-sub"><h4>Context</h4>
+            <p>Over 10 years as a Senior Interaction Designer, I've relied on the same repeatable process to move from an ambiguous problem to a released feature: discover, diagnose, ideate, validate, build, ship. That shape hasn't changed. What has changed is how fast I move through it, now that AI is a working partner in my day-to-day practice rather than a tool I reach for occasionally. This project lays out both versions of that process side by side.</p>
+          </div>
+
+          <div class="proj-sub">
+            <h4>Interactive Process Map</h4>
+            <p>Click any phase to see its actual steps, pre-AI vs AI era. The bars below show illustrative time per phase — shorter is faster, not fewer steps.</p>
+
+            <div class="dp-flow" role="group" aria-label="Six phases of the design process">
+              <button class="dp-node" data-phase="discover" title="Discover · pre-AI step 01 · AI-era step 01">
+                <span class="dp-badge">01</span>
+                <span class="dp-circle"><svg viewBox="0 0 24 24" fill="none"><circle cx="10" cy="10" r="6" stroke="currentColor" stroke-width="1.8"/><path d="M14.5 14.5L19 19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+                <span class="dp-node-label">Discover</span>
+              </button>
+              <span class="dp-arrow-slot">&#8594;</span>
+              <button class="dp-node is-ai" data-phase="diagnose" title="Diagnose · pre-AI step 02 · AI-era step 02 · AI-assisted">
+                <span class="dp-badge">02</span>
+                <span class="dp-circle"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></span>
+                <span class="dp-node-label">Diagnose</span>
+              </button>
+              <span class="dp-arrow-slot">&#8594;</span>
+              <button class="dp-node is-ai" data-phase="ideate" title="Ideate · pre-AI steps 03–04 · AI-era step 03 · AI-assisted">
+                <span class="dp-badge">03&ndash;04</span>
+                <span class="dp-circle"><svg viewBox="0 0 24 24" fill="none"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3 11.2c.6.4 1 1.1 1 1.8h4c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="dp-node-label">Ideate</span>
+              </button>
+              <span class="dp-arrow-slot">&#8594;</span>
+              <button class="dp-node is-ai" data-phase="validate" title="Validate · pre-AI steps 05–09 · AI-era steps 04–08 · AI-assisted">
+                <span class="dp-badge">05&ndash;09</span>
+                <span class="dp-circle"><svg viewBox="0 0 24 24" fill="none"><path d="M4 5h16v11H9l-4 4V5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.5 10.5l2 2 4-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="dp-node-label">Validate</span>
+              </button>
+              <span class="dp-arrow-slot">&#8594;</span>
+              <button class="dp-node" data-phase="build" title="Build · pre-AI steps 10–12 · AI-era steps 09–11">
+                <span class="dp-badge">10&ndash;12</span>
+                <span class="dp-circle"><svg viewBox="0 0 24 24" fill="none"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="dp-node-label">Build</span>
+              </button>
+              <span class="dp-arrow-slot">&#8594;</span>
+              <button class="dp-node" data-phase="ship" title="Ship · pre-AI step 13 · AI-era step 12">
+                <span class="dp-badge">13</span>
+                <span class="dp-circle"><svg viewBox="0 0 24 24" fill="none"><path d="M21 3 3 10.5l7.5 2.5L13 21l3-5.5L21 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M21 3l-8.5 8.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+                <span class="dp-node-label">Ship</span>
+              </button>
+            </div>
+
+            <div class="dp-legend"><span class="dp-legend-dot"></span>AI-assisted in the AI era</div>
+
+            <p class="dp-bars-title">Time taken <em>(illustrative)</em></p>
+
+            <div class="dp-bar-row" data-era="pre">
+              <span class="dp-bar-era">Pre-AI</span>
+              <div class="dp-bar-track">
+                <button class="dp-segment" data-phase="discover" style="flex:1 1 0" title="Discover · Pre-AI step 01">01</button>
+                <button class="dp-segment" data-phase="diagnose" style="flex:1 1 0" title="Diagnose · Pre-AI step 02">02</button>
+                <button class="dp-segment" data-phase="ideate" style="flex:3 1 0" title="Ideate · Pre-AI steps 03–04">03&ndash;04</button>
+                <button class="dp-segment" data-phase="validate" style="flex:6 1 0" title="Validate · Pre-AI steps 05–09">05&ndash;09</button>
+                <button class="dp-segment" data-phase="build" style="flex:3 1 0" title="Build · Pre-AI steps 10–12">10&ndash;12</button>
+                <button class="dp-segment" data-phase="ship" style="flex:1 1 0" title="Ship · Pre-AI step 13">13</button>
+              </div>
+            </div>
+
+            <div class="dp-bar-row" data-era="ai">
+              <span class="dp-bar-era">AI era</span>
+              <div class="dp-bar-track">
+                <button class="dp-segment" data-phase="discover" style="flex:1 1 0" title="Discover · AI-era step 01">01</button>
+                <button class="dp-segment" data-phase="diagnose" style="flex:1 1 0" title="Diagnose · AI-era step 02 · AI-assisted">02</button>
+                <button class="dp-segment is-ai" data-phase="ideate" style="flex:0.5 1 0" title="Ideate · AI-era step 03 · AI-assisted">03</button>
+                <button class="dp-segment is-ai" data-phase="validate" style="flex:3 1 0" title="Validate · AI-era steps 04–08 · AI-assisted">04&ndash;08</button>
+                <button class="dp-segment" data-phase="build" style="flex:3 1 0" title="Build · AI-era steps 09–11">09&ndash;11</button>
+                <button class="dp-segment" data-phase="ship" style="flex:1 1 0" title="Ship · AI-era step 12">12</button>
+              </div>
+            </div>
+
+            <div class="dp-detail" id="dpDetail">
+              <p class="dp-detail-empty">Click any phase above to see its steps, pre-AI vs AI era.</p>
+            </div>
+          </div>
+
+          <div class="proj-sub">
+            <h4>Full Step-by-Step Reference</h4>
+            <p>The complete process, phase by phase — 13 steps before AI, 12 steps now.</p>
+
+            <p style="font-weight:700; font-size:13px; margin:16px 0 8px;">Pre-AI era &middot; 13 steps</p>
+            <div class="dp-board">
+              <div class="dp-phase">
+                <span class="dp-phase-label">Discover</span>
+                <div class="dp-arrow">&#8594;</div>
+                <div class="dp-steps">
+                  <div class="dp-step"><span class="dp-step-num">01</span>Find a problem</div>
+                </div>
+              </div>
+              <div class="dp-phase">
+                <span class="dp-phase-label">Diagnose</span>
+                <div class="dp-arrow">&#8594;</div>
+                <div class="dp-steps">
+                  <div class="dp-step"><span class="dp-step-num">02</span>Understand root cause &amp; customer pain points</div>
+                </div>
+              </div>
+              <div class="dp-phase">
+                <span class="dp-phase-label">Ideate</span>
+                <div class="dp-arrow">&#8594;</div>
+                <div class="dp-steps">
+                  <div class="dp-step"><span class="dp-step-num">03</span>Brainstorm multiple solutions</div>
+                  <div class="dp-connector"></div>
+                  <div class="dp-step"><span class="dp-step-num">04</span>Evolve &amp; iterate on the strongest idea</div>
+                </div>
+              </div>
+              <div class="dp-phase">
+                <span class="dp-phase-label">Validate</span>
+                <div class="dp-arrow">&#8594;</div>
+                <div class="dp-steps">
+                  <div class="dp-step"><span class="dp-step-num">05</span>Create lo-fi wireframes</div>
+                  <div class="dp-connector"></div>
+                  <div class="dp-step"><span class="dp-step-num">06</span>Present lo-fi &amp; gather UX/Product/Eng feedback</div>
+                  <div class="dp-connector"></div>
+                  <div class="dp-step"><span class="dp-step-num">07</span>Design hi-fi prototype, present &amp; gather feedback</div>
+                  <div class="dp-connector"></div>
+                  <div class="dp-step"><span class="dp-step-num">08</span>Present hi-fi to customers &amp; gather feedback</div>
+                  <div class="dp-connector"></div>
+                  <div class="dp-step"><span class="dp-step-num">09</span>Iterate on customer feedback</div>
+                </div>
+              </div>
+              <div class="dp-phase">
+                <span class="dp-phase-label">Build</span>
+                <div class="dp-arrow">&#8594;</div>
+                <div class="dp-steps">
+                  <div class="dp-step"><span class="dp-step-num">10</span>Final prototype, sign-off &amp; handoff specs</div>
+                  <div class="dp-connector"></div>
+                  <div class="dp-step"><span class="dp-step-num">11</span>Hand over to Product &amp; Engineering</div>
+                  <div class="dp-connector"></div>
+                  <div class="dp-step"><span class="dp-step-num">12</span>Run UXAT with engineering, fix issues</div>
+                </div>
+              </div>
+              <div class="dp-phase">
+                <span class="dp-phase-label">Ship</span>
+                <div class="dp-steps">
+                  <div class="dp-step"><span class="dp-step-num">13</span>Sign off &amp; release to production</div>
+                </div>
+              </div>
+            </div>
+
+            <p style="font-weight:700; font-size:13px; margin:28px 0 8px;">AI era &middot; 12 steps</p>
+            <div class="dp-board">
+              <div class="dp-phase">
+                <span class="dp-phase-label">Discover</span>
+                <div class="dp-arrow">&#8594;</div>
+                <div class="dp-steps">
+                  <div class="dp-step"><span class="dp-step-num">01</span>Find a problem</div>
+                </div>
+              </div>
+              <div class="dp-phase">
+                <span class="dp-phase-label">Diagnose</span>
+                <div class="dp-arrow">&#8594;</div>
+                <div class="dp-steps">
+                  <div class="dp-step dp-step--ai"><span class="dp-step-num">02</span>Understand root cause &amp; customer pain points, aided by AI analysis</div>
+                </div>
+              </div>
+              <div class="dp-phase">
+                <span class="dp-phase-label">Ideate</span>
+                <div class="dp-arrow">&#8594;</div>
+                <div class="dp-steps">
+                  <div class="dp-step dp-step--ai"><span class="dp-step-num">03</span>Leverage AI to research &amp; generate solutions</div>
+                </div>
+              </div>
+              <div class="dp-phase">
+                <span class="dp-phase-label">Validate</span>
+                <div class="dp-arrow">&#8594;</div>
+                <div class="dp-steps">
+                  <div class="dp-step dp-step--ai"><span class="dp-step-num">04</span>AI-generate lo-fi prototypes</div>
+                  <div class="dp-connector"></div>
+                  <div class="dp-step"><span class="dp-step-num">05</span>Review the AI artifact with UX &amp; Product</div>
+                  <div class="dp-connector"></div>
+                  <div class="dp-step dp-step--ai"><span class="dp-step-num">06</span>Iterate on feedback with AI, until approved</div>
+                  <div class="dp-connector"></div>
+                  <div class="dp-step dp-step--ai"><span class="dp-step-num">07</span>AI-build a hi-fi prototype in the design system</div>
+                  <div class="dp-connector"></div>
+                  <div class="dp-step"><span class="dp-step-num">08</span>Gather feedback from stakeholders &amp; customers</div>
+                </div>
+              </div>
+              <div class="dp-phase">
+                <span class="dp-phase-label">Build</span>
+                <div class="dp-arrow">&#8594;</div>
+                <div class="dp-steps">
+                  <div class="dp-step"><span class="dp-step-num">09</span>Create engineering handoff specs</div>
+                  <div class="dp-connector"></div>
+                  <div class="dp-step"><span class="dp-step-num">10</span>Hand over designs &amp; assets to Engineering</div>
+                  <div class="dp-connector"></div>
+                  <div class="dp-step"><span class="dp-step-num">11</span>Run UXAT with engineering, fix issues</div>
+                </div>
+              </div>
+              <div class="dp-phase">
+                <span class="dp-phase-label">Ship</span>
+                <div class="dp-steps">
+                  <div class="dp-step"><span class="dp-step-num">12</span>Sign off &amp; release to production</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="dp-legend"><span class="dp-legend-dot"></span>AI-assisted step</div>
+          </div>
+
+          <div class="proj-sub"><h4>What Actually Changed</h4>
+            <ul>
+              <li><strong>Speed of exploration:</strong> solution research and lo-fi prototyping compressed from a multi-day effort into a single working session.</li>
+              <li><strong>More shots on goal:</strong> because early-stage output is cheaper to produce, I can explore more solution variants before committing to one, instead of anchoring early on the first idea that felt workable.</li>
+              <li><strong>Earlier, higher-fidelity conversations:</strong> stakeholders and customers now react to something close to a real hi-fi prototype much sooner in the process, instead of a hand-sketched lo-fi wireframe — sharpening feedback earlier.</li>
+              <li><strong>Same rigor where it matters:</strong> problem discovery, root-cause diagnosis, internal sign-off, customer validation, engineering handoff, and UXAT are unchanged — AI sped up production, not judgment.</li>
+            </ul>
+          </div>
+
+          <div class="proj-sub"><h4>My Role</h4>
+            <p>I own this process end to end on every project I lead — from the craft-driven version I built over the first several years of my career to the AI-augmented version I use today — including deciding where in the process AI actually earns its place, and where hand-craft and human judgment still matter more.</p>
+          </div>
+
+          <div class="proj-sub"><h4>Impact &amp; Outcome</h4>
+            <p>The result isn't a shorter process — it's a faster one, with more room in the same timeline for iteration and validation instead of production. The Vibe-Coding with Claude project (above) is the natural extension of this shift: taking the AI-assisted version of this process all the way through to shipped code, solo.</p>
+          </div>
+        </article>
+
       </div>
     </div>
   </section>
@@ -967,7 +1267,7 @@
       <nav class="footer-col" aria-label="Site">
         <h4>Explore</h4>
         <a href="index.html#about">About</a>
-        <a href="projects.html">Projects</a>
+        <a href="projects.html">Work</a>
         <a href="index.html#services">Services</a>
         <a href="index.html#voices">Testimonials</a>
         <a href="index.html#contact">Contact</a>
