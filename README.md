@@ -45,7 +45,7 @@ npx serve -l tcp://0.0.0.0:3000   # listen on your local network too, e.g. to pr
 ├── projects.html            Projects page — 13 FourKites case studies, sidebar-switched
 ├── css/
 │   ├── style.css             Shared design system + all of index.html's page-specific styles
-│   ├── projects.css          Everything specific to projects.html (sidebar, cards, lightbox, photo grids)
+│   ├── projects.css          Everything specific to projects.html (sidebar, cards, lightbox, photo grids, sticker sheet)
 │   └── vendor/bootstrap.min.css   Reset + grid only — no Bootstrap components are used
 ├── js/
 │   ├── main.js                Shared: sticky header, mobile nav, smooth-scroll, scrollspy, reveal-on-scroll,
@@ -54,36 +54,59 @@ npx serve -l tcp://0.0.0.0:3000   # listen on your local network too, e.g. to pr
 │   ├── lightbox.js            projects.html only: click-to-enlarge image viewer
 │   └── vendor/bootstrap.bundle.min.js
 ├── img/                      Template's own images (hero, about, homepage work-teaser tiles, testimonial headshots)
-├── projects/                 ← Real project screenshots go here (currently empty — see "Images" below)
+├── projects/                 Real project screenshots, one subfolder per project
 │   └── <project-slug>/         e.g. projects/workspace/flow.jpg
 └── .gitignore
 ```
+
+**Before committing:** run `git status` and check what's staged. Screenshots or
+source material used while drafting a case study can occasionally land in the
+project root during editing — review anything outside the established folders
+(`css/`, `js/`, `img/`, `projects/`) before a blanket `git add .`.
 
 ---
 
 ## `index.html` — Homepage
 
 Standard one-pager: Hero → Tools marquee → About → Services → **Projects teaser**
-(6 cards, filterable by category, each linking to a specific case study on
-`projects.html#pN`) → Testimonials → Contact. Nav and footer are shared verbatim
-with `projects.html` (same 5 items: Home / About / Projects / Services / Voices /
-Contact — kept intentionally identical on both pages, see "Nav conventions" below).
+(6 cards, linking to the same 6 case studies highlighted on `projects.html`, each
+tagged `#pN`) → Testimonials → Contact. Nav and footer are shared verbatim with
+`projects.html` (same 5 items: Home / About / Projects / Services / Voices /
+Contact — kept intentionally identical on both pages, see "Nav conventions"
+below).
+
+The teaser section's filter buttons use a 3-category taxonomy that mirrors how
+the case studies are framed: **Product**, **Systems**, **AI** (plus **All**).
+Each `.work-card` carries `data-cat="product|systems|ai"` to match. Keep new
+teaser cards' categories consistent with how the same project is framed on
+`projects.html` — the two pages should never contradict each other on what a
+project "is."
 
 ## `projects.html` — Projects
 
 This is the bulk of the custom work. Key architecture:
 
-**Layout:** sticky left sidebar (project index, grouped into "Flagship Projects"
-and "Additional Projects") + a content panel on the right. **Only one project is
-rendered at a time** — clicking a sidebar link hides every other project and shows
-just that one (`projects.js`), rather than a continuously-scrolling page. This
-also supports hash deep-linking: `projects.html#p9` opens straight to project 9.
+**Layout:** sticky left sidebar (project index, grouped into "Highlighted
+Projects" and "Additional Projects") + a content panel on the right. **Only one
+project is rendered at a time** — clicking a sidebar link hides every other
+project and shows just that one (`projects.js`), rather than a
+continuously-scrolling page. This also supports hash deep-linking:
+`projects.html#p9` opens straight to project 9.
+
+The six **Highlighted Projects**, in order, are: Elemental Design System (`#p1`),
+My Workspace (`#p2`), FourKites Redesign (`#p3`), FourSight AI (`#p4`), Address
+Manager (`#p5`), Unified User Management (`#p6`). Everything else lives under
+Additional Projects (`#p7`–`#p13`). Note the group is labeled "Highlighted
+Projects" in the UI, but internally each `<article>`/nav link still uses
+`data-group="flagship"` for that group (vs. `"additional"`) — this is just an
+internal attribute value, not something users see, so it wasn't renamed when the
+visible label changed. Don't be thrown by the mismatch in future edits.
 
 **Per-project structure** (`<article class="proj-entry" id="pN" data-group="...">`):
 a one-liner, then `.proj-sub` blocks for Context, My Role, Design Strategy,
 Process, Key Artifacts, Impact & Outcome, etc. — whichever apply. One project
-(FourKites Redesign, `#p5`) has a nested sub-project card (`.proj-subcard`,
-Saved Views) with its own sidebar entry.
+(FourKites Redesign, `#p3`) has a nested sub-project card (`.proj-subcard`,
+`id="p3-saved-views"`) with its own sidebar entry.
 
 **Photos, two kinds:**
 1. **Gallery** — a "Photos" `.proj-sub` at the end of a project, containing any
@@ -95,9 +118,10 @@ Saved Views) with its own sidebar entry.
 2. **Inline editorial image** — `.proj-inline-figure`, a full-width image dropped
    directly inside a `.proj-sub`'s prose (newspaper-article style), with an
    italic caption underneath. Also opens in the lightbox, but standalone (no
-   prev/next, since it illustrates one specific point in the text). Two live
-   examples exist today: My Workspace (after the Process list) and Elemental
-   Design System (in Design Strategy) — copy either one as a template.
+   prev/next, since it illustrates one specific point in the text). Add
+   `proj-inline-figure--fit` alongside the base class when the image must show
+   in full rather than being cropped to 16:9 (e.g. a tall diagram or IA tree) —
+   it switches from `object-fit: cover` to `object-fit: contain`.
 
 **The lightbox** (`lightbox.js` + `#lightbox` markup at the end of `<body>`) is a
 single reusable overlay for every clickable image on the page, gallery or inline.
@@ -125,21 +149,55 @@ Palette — deep-forest ink + warm marigold on warm paper:
 
 | Token | Hex | Use |
 |---|---|---|
-| `--ink` | `#14231C` | Footer, hero name, deepest text |
+| `--ink` | `#14231C` | Footer, hero name, deepest text, `.proj-sub h4` titles |
 | `--forest` | `#1C3A2E` | Dark section backgrounds |
 | `--forest-2` | `#244A3A` | Card surfaces on dark |
 | `--paper` | `#F4F1E8` | Main light background |
 | `--paper-2` | `#ECE7D9` | Alt light background / cards |
-| `--marigold` | `#E6A017` | Primary accent (buttons, active states, links) |
+| `--marigold` | `#E6A017` | Primary accent (buttons, links) |
+| `--marigold-t` | `#F6E4B4` | Light accent tint — callouts, active sidebar link background |
 | `--clay` | `#B0512C` | Rare secondary warm accent |
 | `--sage` | `#6E8377` | Muted text on light backgrounds |
 
 Type: **Bricolage Grotesque** (display — headings, quotes) + **Hanken Grotesk**
-(body/UI). Both loaded via Google Fonts in each page's `<head>`.
+(body/UI), plus **Lato** (loaded specifically for the Component Sticker Sheet,
+matching the source design system's own typeface). All loaded via Google Fonts
+in each page's `<head>`.
 
 All colors/fonts are CSS custom properties on `:root` in `style.css` —
-`projects.css` reuses them rather than redefining anything, so a palette change
-only ever needs to happen in one place.
+`projects.css` reuses them rather than redefining anything (outside the sticker
+sheet's intentionally-separate token block), so a palette change only ever needs
+to happen in one place.
+
+---
+
+## Known CSS gotchas
+
+A couple of non-obvious behaviors that have caused real bugs in this codebase —
+worth knowing before debugging something that looks like it "should" work:
+
+- **`ul { list-style: none; }` is a global reset** in `style.css`, applied to
+  every list on the site (used for nav lists, card grids, etc.). Any new prose
+  content with a genuine bulleted list needs to explicitly restore markers in
+  its own scope (see `.proj-sub ul` in `projects.css`) — otherwise the list
+  renders with no visible bullets at all.
+- **`overflow-y: auto` silently forces `overflow-x` to `auto` too** (per the CSS
+  overflow spec, whenever one axis is non-`visible` and the other isn't set).
+  `.proj-sidebar` relies on `overflow-y: auto` for its scrollable nav, which
+  means anything relying on negative margins to "bleed" past its own box (a
+  common trick for full-width hover/active pill backgrounds) gets silently
+  clipped flush at the container edge — including any rounded corners on that
+  edge. If a pill/highlight background looks flush and square no matter how
+  much padding or border-radius you add, this is the first thing to check.
+  `.proj-nav-link`'s active/hover background is sized with plain padding for
+  this reason, not a margin bleed.
+- **Visually-hidden checkboxes/radios need `position: relative` on the wrapping
+  `<label>`.** The pattern used throughout (toggle/checkbox/radio, and the
+  sticker sheet's controls) hides the real `<input>` with
+  `position: absolute; opacity: 0`. Without `position: relative` on the label,
+  the input's containing block becomes some distant ancestor instead, and its
+  hit target can drift away from the visible control — the control looks
+  present but stops responding to clicks.
 
 ---
 
@@ -154,6 +212,9 @@ for an external audience. When editing or adding content, keep to these rules:
 - **No named internal FourKites colleagues** — refer to "Product," "Engineering,"
   "the design team," or similar. Never a specific person's name unless they're a
   named product/company entity relevant externally.
+- **No confidential or internal-only information** of any kind (roadmap details,
+  internal metrics not meant for external sharing, screenshots containing
+  internal usernames, etc.).
 - **Customer names, companies, and direct quotes are always kept and encouraged**
   — that's the strongest, most credible content on the page (e.g. Frito-Lay,
   TJX, Dow, Unilever, BRP, USA Truck all appear by name with real quotes).
@@ -170,16 +231,29 @@ Two image sources are in play:
 1. **`img/`** — the template's own homepage imagery (hero, about, work-teaser
    tiles, testimonial headshots). Leave these as-is unless redesigning the
    homepage itself.
-2. **`projects/`** — currently empty, intended for real FourKites case-study
-   screenshots, organized one subfolder per project (e.g.
-   `projects/workspace/flow.jpg`, `projects/eds/color-tokens.jpg`).
-   Every image in `projects.html` right now is a **placehold.co placeholder**
-   (`https://placehold.co/600x400?text=Label`), one per project, labeled to
-   match what it should eventually show. To replace one: swap the `src` on the
-   relevant `<img>` to the local path (e.g.
-   `src="projects/workspace/flow.jpg"`), and update its `alt` text to describe
-   the real image. No other markup needs to change — same `<figure>`/`<button>`
-   wrapper, same lightbox behavior.
+2. **`projects/`** — real FourKites case-study screenshots, organized one
+   subfolder per project (e.g. `projects/workspace/fourkites-ia.png`). Some
+   projects still use a **placehold.co placeholder**
+   (`https://placehold.co/600x400?text=Label`) where a real screenshot hasn't
+   been sourced yet — check each project as you go rather than assuming. To
+   replace a placeholder: swap the `src` on the relevant `<img>` to the local
+   path, and update its `alt` text to describe the real image. No other markup
+   needs to change — same `<figure>`/`<button>` wrapper, same lightbox
+   behavior.
+
+---
+
+## Working with an AI coding session
+
+If you're picking this up in a fresh Claude/Cowork session with no memory of
+prior edits: this file plus a `git status`/`git log` check should be enough
+context to start. A couple of environment notes that otherwise cause confusion:
+
+- A sandboxed session generally has **no GitHub push credentials** — it can
+  edit files and commit locally (if working directly against your machine's
+  copy of the repo), but pushing to GitHub has to be done by you afterward.
+- Always confirm before committing/pushing anything — don't assume silence
+  means "go ahead."
 
 ---
 
@@ -195,7 +269,7 @@ forward.
 
 1. Duplicate an existing `<article class="proj-entry" id="pN" data-group="...">`
    block, give it the next `id` (e.g. `p14`) and the correct `data-group`
-   (`"flagship"` or `"additional"`).
+   (`"flagship"` for Highlighted Projects, or `"additional"`).
 2. Add a matching `<li><a class="proj-nav-link" href="#p14">...</a></li>` to the
    sidebar list in the same file.
 3. That's it — `projects.js` selects everything by class/attribute, not by a

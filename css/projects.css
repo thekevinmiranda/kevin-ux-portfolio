@@ -93,14 +93,16 @@
 .proj-sub h4 {
   font-family: var(--f-body);
   font-weight: 700;
-  font-size: .74rem;
+  font-size: .85rem;
   letter-spacing: .16em;
   text-transform: uppercase;
-  color: var(--sage);
+  color: var(--marigold-d);
   margin: 0 0 .55rem;
 }
 .proj-sub p, .proj-sub li { font-size: .96rem; line-height: 1.65; margin: 0 0 .6rem; }
-.proj-sub ul, .proj-sub ol { padding-left: 1.15rem; margin: 0; }
+.proj-sub ul, .proj-sub ol { padding-left: 1.15rem; margin: 0; list-style: revert; }
+.proj-sub ul { list-style-type: disc; }
+.proj-sub ul li::marker { color: var(--marigold-d); }
 .proj-sub li:last-child { margin-bottom: 0; }
 .proj-sub strong { color: var(--ink); }
 
@@ -245,13 +247,12 @@
   font-size: .89rem;
   font-weight: 600;
   color: var(--ink-on-light);
-  padding: .4rem .55rem;
-  margin: 0 -.55rem;
-  border-radius: 7px;
+  padding: .4rem .55rem .4rem .75rem;
+  border-radius: 9px;
   transition: background .15s ease, color .15s ease;
 }
 .proj-nav-link:hover { background: var(--paper-2); }
-.proj-nav-link.active { background: var(--paper-2); color: var(--ink); }
+.proj-nav-link.active { background: var(--marigold-t); color: var(--ink); }
 .proj-nav-link.active .n { color: var(--marigold-d); }
 .proj-nav-link .n { font-size: .8rem; color: var(--sage); flex-shrink: 0; }
 .proj-nav-link.is-sub { padding-left: 1.6rem; font-weight: 500; font-size: .85rem; color: var(--sage); }
@@ -355,6 +356,15 @@
   transition: transform .35s ease;
 }
 .proj-inline-figure:hover img { transform: scale(1.02); }
+
+/* --fit modifier — for diagrams/screenshots that must show in full rather
+   than being cropped to 16:9 (e.g. an IA tree that's naturally tall). */
+.proj-inline-figure--fit img {
+  aspect-ratio: auto;
+  object-fit: contain;
+  background: var(--paper);
+}
+.proj-inline-figure--fit:hover img { transform: none; }
 .proj-inline-figure figcaption {
   margin-top: .6rem;
   font-family: var(--f-display);
@@ -424,12 +434,398 @@
 .lightbox-close:focus-visible,
 .lightbox-nav:focus-visible { outline: 3px solid var(--marigold); outline-offset: 2px; }
 
-.lightbox-close { top: clamp(1rem, 4vw, 2rem); right: clamp(1rem, 4vw, 2rem); font-size: 1.4rem; }
-.lightbox-prev { left: clamp(.5rem, 3vw, 2rem); top: 50%; transform: translateY(-50%); font-size: 1.6rem; }
-.lightbox-next { right: clamp(.5rem, 3vw, 2rem); top: 50%; transform: translateY(-50%); font-size: 1.6rem; }
+.lightbox-close { top: clamp(1rem, 4vw, 2rem); right: clamp(1rem, 4vw, 2rem); }
+.lightbox-prev { left: clamp(.5rem, 3vw, 2rem); top: 50%; transform: translateY(-50%); }
+.lightbox-next { right: clamp(.5rem, 3vw, 2rem); top: 50%; transform: translateY(-50%); }
 .lightbox-nav[hidden] { display: none; }
+.lightbox-close svg { width: 18px; height: 18px; }
+.lightbox-nav svg { width: 20px; height: 20px; }
 
 @media (max-width: 640px) {
   .lightbox-close { width: 40px; height: 40px; }
   .lightbox-nav { width: 38px; height: 38px; }
+  .lightbox-img { max-width: 74vw; }
+  .lightbox-prev { left: .5rem; }
+  .lightbox-next { right: .5rem; }
+}
+
+/* ==========================================================================
+   Component sticker sheet — a live, interactive reference sheet of the
+   REAL Elemental Design System, pulled from FourKites' actual EDS Figma
+   file (colors, typography, buttons, text input, dropdown, toggle,
+   checkbox, and radio all pulled node-for-node, states included). Uses
+   hardcoded EDS hex values throughout, deliberately NOT the portfolio
+   site's own --marigold/--forest/--sage/etc. custom properties.
+   ========================================================================== */
+.sticker-sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  margin-top: 1.25rem;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  background: #FAFAFA;
+  border: 1px solid #E9EAEB;
+  border-radius: 12px;
+}
+
+.sticker-group-label {
+  display: block;
+  font-weight: 700;
+  font-size: .72rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #717680;
+  margin-bottom: .75rem;
+}
+.eds-approx {
+  display: block;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: .78rem;
+  color: #a4a7ae;
+  margin-top: .2rem;
+}
+.eds-caption {
+  font-size: .8rem;
+  color: #717680;
+  margin: .6rem 0 0;
+}
+
+.control-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .85rem;
+}
+
+/* --- color swatches --- */
+.swatch-row { display: flex; flex-wrap: wrap; gap: .65rem; }
+.swatch {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: .15rem;
+  width: 100px;
+  height: 72px;
+  border-radius: 8px;
+  padding: .55rem .65rem;
+  box-shadow: 0 1px 2px 0 rgba(10,13,18,.05);
+}
+.swatch-name { font-weight: 700; font-size: .74rem; }
+.swatch-hex { font-size: .68rem; opacity: .85; }
+@media (max-width: 480px) { .swatch { width: 88px; height: 66px; } }
+
+/* --- typography sample --- */
+.eds-type-sample p { font-family: 'Lato', sans-serif; color: #181D27; margin: 0; }
+
+/* Shared focus-ring effect — same token used across dropdown, checkbox,
+   radio, and toggle in the real Figma file ("Focus rings/focus-ring"):
+   a 2px white inset ring plus a 4px brand-blue outer ring. */
+:root { --eds-focus-ring: 0 0 0 2px #ffffff, 0 0 0 6px #0E65E5; }
+
+/* ==========================================================================
+   Buttons — Solid / Outline / Flat, real EDS colors & measurements
+   (40px height, 14px/10px padding, 8px radius, Lato Semibold 16/24).
+   ========================================================================== */
+.eds-btn {
+  font-family: 'Lato', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  height: 40px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+.eds-btn:focus-visible { outline: none; box-shadow: var(--eds-focus-ring); }
+
+.eds-btn--solid-primary {
+  background: #0E65E5;
+  border: 2px solid rgba(255,255,255,.12);
+  color: #ffffff;
+  box-shadow: 0 1px 2px 0 rgba(10,13,18,.05), inset 0 0 0 1px rgba(10,13,18,.18), inset 0 -2px 0 0 rgba(10,13,18,.05);
+}
+.eds-btn--solid-primary:hover,
+.eds-btn--solid-primary.is-hover { background: #0B51B7; }
+.eds-btn--solid-primary:disabled {
+  background: #CFE1FC;
+  box-shadow: none;
+  border-color: transparent;
+  cursor: not-allowed;
+}
+
+.eds-btn--solid-secondary {
+  background: #E9EAEB;
+  border: 1px solid rgba(255,255,255,.12);
+  color: #181D27;
+  box-shadow: 0 1px 2px 0 rgba(10,13,18,.05), inset 0 0 0 1px rgba(10,13,18,.18), inset 0 -2px 0 0 rgba(10,13,18,.05);
+}
+
+.eds-btn--outline-primary {
+  background: #ffffff;
+  border: 2px solid #0E65E5;
+  color: #0E65E5;
+  box-shadow: 0 1px 2px 0 rgba(10,13,18,.05);
+}
+.eds-btn--outline-primary:hover { background: #F1F6FE; }
+
+.eds-btn--flat-primary {
+  background: transparent;
+  border: none;
+  color: #0E65E5;
+}
+.eds-btn--flat-primary:hover { background: #F1F6FE; }
+
+/* ==========================================================================
+   Text input — white bg, #A4A7AE border, 8px radius, 40px height,
+   12px/8px padding, Lato Regular 16/24; focus = 2px brand border;
+   error = 2px red border + red hint; disabled = muted gray bg.
+   ========================================================================== */
+.eds-field { display: flex; flex-direction: column; gap: 6px; width: 220px; max-width: 100%; }
+.eds-label { font-family: 'Lato', sans-serif; font-size: 16px; line-height: 24px; color: #535862; }
+.eds-input-wrap {
+  background: #ffffff;
+  border: 1px solid #A4A7AE;
+  border-radius: 8px;
+  padding: 8px 12px;
+  box-shadow: 0 1px 1px 0 rgba(10,13,18,.05);
+}
+.eds-input {
+  all: unset;
+  width: 100%;
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: #181D27;
+}
+.eds-input::placeholder { color: #A4A7AE; }
+.eds-input-wrap:has(.eds-input:focus) { border: 2px solid #0E65E5; padding: 7px 11px; }
+.eds-input-wrap.is-error { border: 2px solid #F04438; padding: 7px 11px; }
+.eds-input-wrap.is-disabled { background: #FAFAFA; border-color: #D5D7DA; opacity: .8; }
+.eds-hint { font-family: 'Lato', sans-serif; font-size: 14px; line-height: 20px; color: #717680; margin: 0; }
+.eds-hint.is-error { color: #D92D20; }
+
+/* ==========================================================================
+   Dropdown — same shell spec as text input (white bg, #A4A7AE border,
+   8px radius, 40px height) with a trailing caret; focus/error/disabled
+   pulled from the real Dropdown Input component.
+   ========================================================================== */
+.eds-select-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #A4A7AE;
+  border-radius: 8px;
+  padding: 8px 12px;
+  box-shadow: 0 1px 2px 0 rgba(10,13,18,.05);
+}
+.eds-select {
+  all: unset;
+  width: 100%;
+  padding-right: 24px;
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: #181D27;
+  cursor: pointer;
+}
+.eds-caret {
+  position: absolute;
+  right: 12px;
+  color: #717680;
+  font-size: 14px;
+  pointer-events: none;
+}
+.eds-select-wrap:has(.eds-select:focus) { border: 2px solid #0E65E5; padding: 7px 11px; }
+.eds-select-wrap.is-error { border: 2px solid #F04438; padding: 7px 11px; }
+.eds-select-wrap.is-disabled { background: #FAFAFA; border-color: #D5D7DA; opacity: .8; }
+.eds-select-wrap.is-disabled .eds-select { cursor: not-allowed; color: #A4A7AE; }
+
+/* ==========================================================================
+   Toggle — real EDS spec (md size): 44×24px track, 20px thumb, 2px
+   padding, fully-rounded. Off = white bg + #D5D7DA border, thumb
+   #535862. On = brand-blue bg + #0B51B7 border, thumb white. Hover
+   darkens the On fill; Focus adds the shared focus-ring; Disabled uses
+   flat #E9EAEB (off) / #CFE1FC (on) with no border.
+
+   One live, fully-interactive control per sheet — no static "state
+   copy" instances. Every state below is reachable by actually hovering,
+   tabbing to, or clicking the control. `position: relative` on the
+   label is required so the visually-hidden input lines up exactly over
+   the visible track (without it, the input's hit target drifts and the
+   control stops responding to clicks — this was the "broken toggle" /
+   "checkbox not interactive" bug).
+   ========================================================================== */
+.eds-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-family: 'Lato', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #181D27;
+  cursor: pointer;
+}
+.eds-toggle:has(input:disabled) { cursor: not-allowed; }
+.eds-toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.eds-toggle .track {
+  width: 44px;
+  height: 24px;
+  border-radius: 999px;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #D5D7DA;
+  transition: background .15s ease, border-color .15s ease;
+  flex-shrink: 0;
+}
+.eds-toggle .thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #535862;
+  box-shadow: 0 2px 4px 0 rgba(10,13,18,.12), 0 1px 2px -1px rgba(10,13,18,.1);
+  transition: transform .18s ease, background .15s ease;
+}
+.eds-toggle input:checked + .track { background: #0E65E5; border-color: #0B51B7; justify-content: flex-end; }
+.eds-toggle input:checked + .track .thumb { background: #ffffff; transform: translateX(20px); }
+
+/* hover */
+.eds-toggle:hover input:checked + .track { background: #0B51B7; border-color: #0B51B7; }
+
+/* focus */
+.eds-toggle input:focus-visible + .track { box-shadow: var(--eds-focus-ring); }
+
+/* disabled */
+.eds-toggle input:disabled + .track { background: #E9EAEB; border-color: transparent; }
+.eds-toggle input:disabled + .track .thumb { background: #A4A7AE; box-shadow: none; }
+.eds-toggle input:checked:disabled + .track { background: #CFE1FC; border-color: transparent; }
+.eds-toggle input:checked:disabled + .track .thumb { background: #FAFAFA; }
+
+/* ==========================================================================
+   Checkbox & Radio — real EDS spec (20px box, "Medium (16)" variant):
+   unchecked = white bg + #A4A7AE border; checked = brand-blue bg, white
+   check/dot; hover adds pointer cursor; focus = shared focus-ring;
+   disabled-unchecked = #F5F5F5 bg + #D5D7DA border; disabled-checked =
+   #9FC3F9 bg + #CFE1FC border. Checkbox radius 6px; Radio fully round.
+
+   Same one-live-control approach as Toggle above. Indeterminate is set
+   with real JavaScript (`input.indeterminate = true`, see projects.html)
+   rather than faked with a CSS class, since it's a genuine native input
+   state that can't be reached through a plain HTML attribute.
+   ========================================================================== */
+.eds-checkbox, .eds-radio {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-family: 'Lato', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #181D27;
+  cursor: pointer;
+}
+.eds-checkbox:has(input:disabled), .eds-radio:has(input:disabled) { cursor: not-allowed; }
+.eds-checkbox input, .eds-radio input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.eds-checkbox .box {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  border: 1px solid #A4A7AE;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  transition: background .15s ease, border-color .15s ease;
+  flex-shrink: 0;
+}
+.eds-radio .dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid #A4A7AE;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  transition: background .15s ease, border-color .15s ease;
+  flex-shrink: 0;
+}
+
+/* checked */
+.eds-checkbox input:checked + .box { background: #0E65E5; border-color: #0E65E5; }
+.eds-checkbox input:checked + .box::after {
+  content: "";
+  width: 11px; height: 7px;
+  border-left: 2px solid #fff; border-bottom: 2px solid #fff;
+  transform: rotate(-45deg) translateY(-1px);
+}
+.eds-radio input:checked + .dot { background: #0E65E5; border-color: #0E65E5; }
+.eds-radio input:checked + .dot::after {
+  content: "";
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+/* indeterminate (checkbox only — set via JS, real :indeterminate pseudo-class) */
+.eds-checkbox input:indeterminate + .box { background: #0E65E5; border-color: #0E65E5; }
+.eds-checkbox input:indeterminate + .box::after {
+  content: "";
+  width: 10px; height: 0;
+  border-bottom: 2px solid #fff;
+  transform: none;
+}
+
+/* focus */
+.eds-checkbox input:focus-visible + .box,
+.eds-radio input:focus-visible + .dot { box-shadow: var(--eds-focus-ring); }
+
+/* disabled */
+.eds-checkbox input:disabled + .box,
+.eds-radio input:disabled + .dot {
+  background: #F5F5F5; border-color: #D5D7DA;
+}
+.eds-checkbox input:checked:disabled + .box,
+.eds-radio input:checked:disabled + .dot {
+  background: #9FC3F9; border-color: #CFE1FC;
+}
+.eds-checkbox input:checked:disabled + .box::after {
+  border-color: #fff;
+}
+
+/* ==========================================================================
+   Tag — built from real EDS color tokens (Brand/25 bg, Brand/100 border,
+   Brand/700 text); exact component spec not individually pulled.
+   ========================================================================== */
+.eds-tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Lato', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #083B87;
+  background: #E7F0FE;
+  border: 1px solid #CFE1FC;
+  border-radius: 6px;
+  padding: 2px 10px;
 }

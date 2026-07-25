@@ -22,7 +22,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=Lato:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
 <link rel="stylesheet" href="css/style.css">
@@ -81,7 +81,7 @@
         </button>
 
         <div class="proj-nav-list" id="projNavList">
-          <p class="proj-nav-label">Flagship Projects</p>
+          <p class="proj-nav-label">Highlighted Projects</p>
           <ul>
             <li><a class="proj-nav-link" href="#p1"><span class="n">01</span>Elemental Design System</a></li>
             <li><a class="proj-nav-link" href="#p2"><span class="n">02</span>My Workspace</a></li>
@@ -108,7 +108,7 @@
       <!-- ----------------------------------------------------- MAIN LIST -->
       <div class="proj-main">
 
-        <div class="proj-group" data-group="flagship"><h2>Flagship Projects</h2></div>
+        <div class="proj-group" data-group="flagship"><h2>Highlighted Projects</h2></div>
 
         <!-- 01 — ELEMENTAL DESIGN SYSTEM -->
         <article class="proj-entry" id="p1" data-group="flagship">
@@ -126,7 +126,7 @@
 
             <figure class="proj-inline-figure">
               <button class="photo-trigger" type="button" aria-label="View larger: Color and typography foundations">
-                <img src="https://placehold.co/1200x675?text=Color+%26+Typography+Foundations" alt="Color and typography foundations — placeholder image" loading="lazy" width="1200" height="675">
+                <img src="https://placehold.co/1200x675?text=Color+%26+Typography+Foundations" alt="Color and typography foundations — placeholder image" width="1200" height="675">
               </button>
               <figcaption>The color and typography foundations underpinning every component in the system.</figcaption>
             </figure>
@@ -134,33 +134,220 @@
           <div class="proj-sub"><h4>Process</h4>
             <p>Built in phases — foundational styles first, then input controls, then full components — including a complete migration of the design library to Figma.</p>
           </div>
+
+          <div class="proj-sub">
+            <h4>Component Sticker Sheet</h4>
+            <p>A live look at the actual Elemental Design System — real interactive controls (not screenshots), built with the exact colors, type, and component specs pulled directly from the EDS Figma library, including every default/hover/focus/disabled state.</p>
+            <p style="font-size:.85rem; color:var(--sage);">Colors, typography, buttons, dropdowns, toggles, checkboxes, and radios below are pulled node-for-node from Figma, states included. The tag is built from the same real color tokens, but its exact component spec wasn't individually pulled — flagged inline below. Colors are consolidated to one shade (600) per color family rather than every ramp step.</p>
+
+            <div class="sticker-sheet eds-sheet">
+
+              <div class="sticker-group">
+                <span class="sticker-group-label">Color — Palette (600 shade)</span>
+                <div class="swatch-row">
+                  <div class="swatch" style="background:#535862; color:#fff;"><span class="swatch-name">Gray</span><span class="swatch-hex">#535862</span></div>
+                  <div class="swatch" style="background:#0B51B7; color:#fff;"><span class="swatch-name">Brand</span><span class="swatch-hex">#0B51B7</span></div>
+                  <div class="swatch" style="background:#D92D20; color:#fff;"><span class="swatch-name">Error</span><span class="swatch-hex">#D92D20</span></div>
+                  <div class="swatch" style="background:#DC6803; color:#fff;"><span class="swatch-name">Warning</span><span class="swatch-hex">#DC6803</span></div>
+                  <div class="swatch" style="background:#079455; color:#fff;"><span class="swatch-name">Success</span><span class="swatch-hex">#079455</span></div>
+                  <div class="swatch" style="background:#4CA30D; color:#fff;"><span class="swatch-name">Green Light</span><span class="swatch-hex">#4CA30D</span></div>
+                  <div class="swatch" style="background:#099250; color:#fff;"><span class="swatch-name">Green</span><span class="swatch-hex">#099250</span></div>
+                  <div class="swatch" style="background:#0E9384; color:#fff;"><span class="swatch-name">Teal</span><span class="swatch-hex">#0E9384</span></div>
+                  <div class="swatch" style="background:#088AB2; color:#fff;"><span class="swatch-name">Cyan</span><span class="swatch-hex">#088AB2</span></div>
+                  <div class="swatch" style="background:#1570EF; color:#fff;"><span class="swatch-name">Blue</span><span class="swatch-hex">#1570EF</span></div>
+                  <div class="swatch" style="background:#6938EF; color:#fff;"><span class="swatch-name">Purple</span><span class="swatch-hex">#6938EF</span></div>
+                  <div class="swatch" style="background:#9245E2; color:#fff;"><span class="swatch-name">Orchid</span><span class="swatch-hex">#9245E2</span></div>
+                  <div class="swatch" style="background:#BA24D5; color:#fff;"><span class="swatch-name">Fuchsia</span><span class="swatch-hex">#BA24D5</span></div>
+                  <div class="swatch" style="background:#DD2590; color:#fff;"><span class="swatch-name">Pink</span><span class="swatch-hex">#DD2590</span></div>
+                  <div class="swatch" style="background:#E31B54; color:#fff;"><span class="swatch-name">Rosé</span><span class="swatch-hex">#E31B54</span></div>
+                  <div class="swatch" style="background:#E04F16; color:#fff;"><span class="swatch-name">Orange</span><span class="swatch-hex">#E04F16</span></div>
+                  <div class="swatch" style="background:#CA8504; color:#fff;"><span class="swatch-name">Yellow</span><span class="swatch-hex">#CA8504</span></div>
+                  <div class="swatch" style="background:#AE7F47; color:#fff;"><span class="swatch-name">Brown</span><span class="swatch-hex">#AE7F47</span></div>
+                </div>
+              </div>
+
+              <div class="sticker-group">
+                <span class="sticker-group-label">Color — Text &amp; Surface</span>
+                <div class="swatch-row">
+                  <div class="swatch" style="background:#181D27; color:#fff;"><span class="swatch-name">Text Primary</span><span class="swatch-hex">#181D27</span></div>
+                  <div class="swatch" style="background:#535862; color:#fff;"><span class="swatch-name">Text Secondary</span><span class="swatch-hex">#535862</span></div>
+                  <div class="swatch" style="background:#717680; color:#fff;"><span class="swatch-name">Text Tertiary</span><span class="swatch-hex">#717680</span></div>
+                  <div class="swatch" style="background:#ffffff; color:#181D27; border:1px solid #E9EAEB;"><span class="swatch-name">BG White</span><span class="swatch-hex">#FFFFFF</span></div>
+                  <div class="swatch" style="background:#FAFAFA; color:#181D27; border:1px solid #E9EAEB;"><span class="swatch-name">BG Secondary</span><span class="swatch-hex">#FAFAFA</span></div>
+                </div>
+              </div>
+
+              <div class="sticker-group">
+                <span class="sticker-group-label">Typography — Lato</span>
+                <div class="type-sample eds-type-sample">
+                  <p style="font-size:36px; line-height:44px; font-weight:400;">Display MD — 36/44</p>
+                  <p style="font-size:24px; line-height:32px; font-weight:400;">Display XS — 24/32</p>
+                  <p style="font-size:20px; line-height:30px; font-weight:600;">Text XL Semibold — 20/30</p>
+                  <p style="font-size:16px; line-height:24px; font-weight:400;">Text MD Regular — 16/24 (base body size)</p>
+                  <p style="font-size:14px; line-height:20px; font-weight:400; color:#717680;">Text SM Regular — 14/20 (hint/helper text)</p>
+                </div>
+              </div>
+
+              <div class="sticker-group">
+                <span class="sticker-group-label">Buttons — Solid</span>
+                <div class="control-row">
+                  <button class="eds-btn eds-btn--solid-primary" type="button">Button CTA</button>
+                  <button class="eds-btn eds-btn--solid-primary is-hover" type="button">Button CTA (hover)</button>
+                  <button class="eds-btn eds-btn--solid-primary" type="button" disabled>Button CTA (disabled)</button>
+                  <button class="eds-btn eds-btn--solid-secondary" type="button">Button CTA</button>
+                </div>
+              </div>
+
+              <div class="sticker-group">
+                <span class="sticker-group-label">Buttons — Outline &amp; Flat</span>
+                <div class="control-row">
+                  <button class="eds-btn eds-btn--outline-primary" type="button">Button CTA</button>
+                  <button class="eds-btn eds-btn--flat-primary" type="button">Button CTA</button>
+                </div>
+              </div>
+
+              <div class="sticker-group">
+                <span class="sticker-group-label">Text Input</span>
+                <div class="control-row" style="align-items:flex-start;">
+                  <div class="eds-field">
+                    <label class="eds-label" for="eds-input-default">Label</label>
+                    <div class="eds-input-wrap">
+                      <input class="eds-input" type="text" id="eds-input-default" placeholder="Placeholder">
+                    </div>
+                    <p class="eds-hint">This is a hint text to help user.</p>
+                  </div>
+                  <div class="eds-field">
+                    <label class="eds-label" for="eds-input-error">Label</label>
+                    <div class="eds-input-wrap is-error">
+                      <input class="eds-input" type="text" id="eds-input-error" placeholder="Placeholder" aria-invalid="true">
+                    </div>
+                    <p class="eds-hint is-error">This is an error message.</p>
+                  </div>
+                  <div class="eds-field">
+                    <label class="eds-label" for="eds-input-disabled">Label</label>
+                    <div class="eds-input-wrap is-disabled">
+                      <input class="eds-input" type="text" id="eds-input-disabled" placeholder="Placeholder" disabled>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sticker-group">
+                <span class="sticker-group-label">Dropdown</span>
+                <div class="control-row" style="align-items:flex-start;">
+                  <div class="eds-field">
+                    <label class="eds-label" for="eds-select-default">Label</label>
+                    <div class="eds-select-wrap">
+                      <select class="eds-select" id="eds-select-default">
+                        <option>Option one</option>
+                        <option>Option two</option>
+                        <option>Option three</option>
+                      </select>
+                      <span class="eds-caret">▾</span>
+                    </div>
+                    <p class="eds-hint">This is a hint text to help the user</p>
+                  </div>
+                  <div class="eds-field">
+                    <label class="eds-label" for="eds-select-error">Label</label>
+                    <div class="eds-select-wrap is-error">
+                      <select class="eds-select" id="eds-select-error" aria-invalid="true">
+                        <option>Option one</option>
+                        <option>Option two</option>
+                      </select>
+                      <span class="eds-caret">▾</span>
+                    </div>
+                    <p class="eds-hint is-error">This is a hint text to help the user</p>
+                  </div>
+                  <div class="eds-field">
+                    <label class="eds-label" for="eds-select-disabled">Label</label>
+                    <div class="eds-select-wrap is-disabled">
+                      <select class="eds-select" id="eds-select-disabled" disabled>
+                        <option>Option one</option>
+                      </select>
+                      <span class="eds-caret">▾</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sticker-group">
+                <span class="sticker-group-label">Toggle</span>
+                <div class="control-row">
+                  <label class="eds-toggle"><input type="checkbox" id="eds-toggle-live"><span class="track"><span class="thumb"></span></span>Notifications</label>
+                  <label class="eds-toggle"><input type="checkbox" disabled><span class="track"><span class="thumb"></span></span>Disabled</label>
+                </div>
+                <p class="eds-caption">Live control — hover, tab to it, or click it to see the real default, hover, focus, and checked states. Second example shown disabled.</p>
+              </div>
+
+              <div class="sticker-group">
+                <span class="sticker-group-label">Checkbox</span>
+                <div class="control-row">
+                  <label class="eds-checkbox"><input type="checkbox" id="eds-checkbox-live"><span class="box"></span>Checkbox label</label>
+                  <label class="eds-checkbox"><input type="checkbox" id="eds-checkbox-indeterminate"><span class="box"></span>Indeterminate</label>
+                  <label class="eds-checkbox"><input type="checkbox" disabled><span class="box"></span>Disabled</label>
+                </div>
+                <p class="eds-caption">Live control — hover, tab to it, or click it to see the real default, hover, focus, and checked states. Indeterminate is set with JavaScript, same as it would be in product code. Third example shown disabled.</p>
+              </div>
+
+              <div class="sticker-group">
+                <span class="sticker-group-label">Radio</span>
+                <div class="control-row">
+                  <label class="eds-radio"><input type="radio" name="eds-radio-live" id="eds-radio-live-a" checked><span class="dot"></span>Option A</label>
+                  <label class="eds-radio"><input type="radio" name="eds-radio-live" id="eds-radio-live-b"><span class="dot"></span>Option B</label>
+                  <label class="eds-radio"><input type="radio" name="eds-radio-disabled" disabled><span class="dot"></span>Disabled</label>
+                </div>
+                <p class="eds-caption">Live control — click either option, or tab through with the keyboard, to see the real selected, hover, and focus states. Third example shown disabled.</p>
+              </div>
+
+              <div class="sticker-group">
+                <span class="sticker-group-label">Tag <em class="eds-approx">(built from real EDS color tokens — exact component spec not individually pulled)</em></span>
+                <div class="control-row">
+                  <span class="eds-tag">Tag label</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="proj-sub"><h4>UX Acceptance Testing</h4>
+            <p>Also helped establish a formal UX sign-off step before release: every UI change was checked against its approved designs, the Elemental Design System's components and spacing, and the product's content and tone — catching visual and interaction drift before it reached customers instead of after.</p>
+          </div>
           <div class="proj-sub"><h4>Key Artifacts</h4>
-            <p>A living component library in Figma, plus internal documentation covering foundations and usage guidelines.</p>
+            <ul>
+              <li>An organization-wide Figma design system that I design and maintain — the single source of truth other designers and engineers use to build UI.</li>
+              <li>A coded implementation in React, Tailwind CSS, and shadcn, published to a Storybook instance so internal teams can view, reference, and consume components directly.</li>
+              <li>Internal documentation covering foundations and usage guidelines.</li>
+            </ul>
           </div>
           <div class="proj-sub"><h4>Impact &amp; Outcome</h4>
-            <p>No exact adoption metrics are available externally, but the system continues to be actively maintained and used across every FourKites product team.</p>
+            <ul>
+              <li><strong>40–60% faster development:</strong> reusable, ready-to-implement components cut the time it takes engineering to ship new UI.</li>
+              <li><strong>Stronger consistency &amp; fidelity:</strong> standard UX patterns applied consistently across every application and page, closing the gap between design intent and what actually ships.</li>
+              <li><strong>Fewer clicks to the outcome:</strong> streamlined common interactions so users reach the result they're after in fewer steps.</li>
+            </ul>
+            <p>The system continues to be actively maintained and used across every FourKites product team.</p>
           </div>
                   <div class="proj-sub">
             <h4>Photos</h4>
             <div class="proj-photo-grid">
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p1" aria-label="View larger: Color Tokens">
-                    <img src="https://placehold.co/600x400?text=Color+Tokens" alt="Color Tokens — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Color+Tokens" alt="Color Tokens — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p1" aria-label="View larger: Typography Scale">
-                    <img src="https://placehold.co/600x400?text=Typography+Scale" alt="Typography Scale — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Typography+Scale" alt="Typography Scale — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p1" aria-label="View larger: Component Library">
-                    <img src="https://placehold.co/600x400?text=Component+Library" alt="Component Library — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Component+Library" alt="Component Library — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p1" aria-label="View larger: Button States">
-                    <img src="https://placehold.co/600x400?text=Button+States" alt="Button States — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Button+States" alt="Button States — placeholder image" width="600" height="400">
                   </button>
                 </figure>
             </div>
@@ -183,6 +370,13 @@
               <li><strong>Missed opportunities:</strong> leadership flagged this as lost cross-sell and upsell potential.</li>
               <li><strong>Core challenges:</strong> siloed products prevented users from discovering solutions they already had access to; there was no bird's-eye view for executives.</li>
             </ul>
+
+            <figure class="proj-inline-figure proj-inline-figure--fit">
+              <button class="photo-trigger" type="button" aria-label="View larger: FourKites Information Architecture Structure">
+                <img src="projects/workspace/fourkites-ia.png" alt="FourKites Information Architecture Structure">
+              </button>
+              <figcaption>The FourKites Information Architecture Structure</figcaption>
+            </figure>
           </div>
 
           <div class="proj-sub">
@@ -202,7 +396,17 @@
           </div>
 
           <div class="proj-sub">
+            <h4>Two Personas, One Page</h4>
+            <p>Rather than one generic dashboard, My Workspace ships with two default views tuned to how people actually work — configurable further from there:</p>
+            <ul>
+              <li><strong>Executive:</strong> historical, high-level aggregates — on-time performance, sustainability, revenue risk, order performance, facility performance, and a global map view — built for scanning trends and deciding without digging into individual tools.</li>
+              <li><strong>Operational:</strong> live, actionable widgets for day-to-day roles like warehouse managers and transportation coordinators — appointment-reschedule recommendations, trailer-prioritization alerts, ETA tracking, detention and stock-out risk — several of which let you act (prioritize a trailer, reschedule an appointment) directly from the widget.</li>
+            </ul>
+          </div>
+
+          <div class="proj-sub">
             <h4>Process</h4>
+            <p>Validation happened in two stages: internal cross-team testing first, then live sessions with Executive Customer Advisory Board members.</p>
             <ul>
               <li>Ran structured validation calls with 8 named executives across 7 companies — including TJX, Trane Technologies, Frito-Lay, Coca-Cola Consolidated, 3M, Eastman Chemical, and Dow — over a focused three-week period.</li>
               <li>Collected feedback through a widget-by-widget rating exercise, split separately across executive and operational persona views.</li>
@@ -212,7 +416,7 @@
 
             <figure class="proj-inline-figure">
               <button class="photo-trigger" type="button" aria-label="View larger: Executive Customer Advisory Board validation session">
-                <img src="https://placehold.co/1200x675?text=E-CAB+Validation+Session" alt="Executive Customer Advisory Board validation session — placeholder image" loading="lazy" width="1200" height="675">
+                <img src="https://placehold.co/1200x675?text=E-CAB+Validation+Session" alt="Executive Customer Advisory Board validation session — placeholder image" width="1200" height="675">
               </button>
               <figcaption>A validation session with Executive Customer Advisory Board members, reviewing widget-level feedback.</figcaption>
             </figure>
@@ -258,22 +462,22 @@
             <div class="proj-photo-grid">
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p2" aria-label="View larger: Landing Page">
-                    <img src="https://placehold.co/600x400?text=Landing+Page" alt="Landing Page — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Landing+Page" alt="Landing Page — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p2" aria-label="View larger: Widget Detail">
-                    <img src="https://placehold.co/600x400?text=Widget+Detail" alt="Widget Detail — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Widget+Detail" alt="Widget Detail — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p2" aria-label="View larger: Executive View">
-                    <img src="https://placehold.co/600x400?text=Executive+View" alt="Executive View — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Executive+View" alt="Executive View — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p2" aria-label="View larger: Operational View">
-                    <img src="https://placehold.co/600x400?text=Operational+View" alt="Operational View — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Operational+View" alt="Operational View — placeholder image" width="600" height="400">
                   </button>
                 </figure>
             </div>
@@ -286,13 +490,21 @@
           <p class="proj-oneliner">Ground-up redesign of FourKites' core shipment-tracking experience.</p>
 
           <div class="proj-sub"><h4>Context &amp; Problem Statement</h4>
-            <p>Leadership identified the need for a single, connected experience for tracking shipments across every mode of transport, replacing a fragmented set of legacy tools — and to invest in better self-service tools as the platform scaled.</p>
+            <p>Leadership identified the need for a single, connected experience for tracking shipments across every mode of transport, replacing a fragmented set of legacy tools — and to invest in better self-service tools as the platform scaled. The initiative was scoped across six areas: navigation, load cards, control tower, collaboration, map view, and international support. My day-to-day work centered on two of them:</p>
+            <ul>
+              <li><strong>Navigation:</strong> a single, extensible pattern that could support every mode — Truckload, LTL, Ocean, Rail, Parcel, and Air — plus multiple languages and white-labeling, without forking the experience per mode.</li>
+              <li><strong>Load cards:</strong> the existing cards treated every shipment identically regardless of phase. The redesign split load status into Pre-Pickup, In-Transit, and At-Stop, so each phase surfaces only the data that's actually reliable at that point — an ETA prediction on a load that hasn't shipped yet does more harm than good — with clearer signals on which data points are inferred versus customer-provided.</li>
+            </ul>
+            <p>(Control tower and map-view work from the same initiative are covered in their own case studies elsewhere in this list.)</p>
           </div>
           <div class="proj-sub"><h4>My Role</h4>
             <p>Served as a primary UX reviewer for the redesigned tracking experience, resolving real-world issues reported by enterprise customers — including SC Johnson, Henkel, and others — across filters, list views, and shipment detail pages.</p>
           </div>
           <div class="proj-sub"><h4>Design Strategy / Process</h4>
             <p>Component-level design audits against the design system, with fixes prioritized by customer impact — increasingly supported by AI-assisted development to ship fixes faster (see Vibe-Coding with Claude, below).</p>
+          </div>
+          <div class="proj-sub"><h4>Search &amp; Discovery</h4>
+            <p>Filters were noisy, ate up a large share of the screen, and made simple things like reusing a team's saved setup unintuitive — while the search box had quietly become a workaround for filtering limitations it was never meant to solve. Saved Views, below, was the direct response to that gap.</p>
           </div>
 
           <div class="proj-subcard" id="p3-saved-views">
@@ -322,12 +534,12 @@
               <div class="proj-photo-grid">
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="saved-views" aria-label="View larger: Saved Views toolbar">
-                    <img src="https://placehold.co/600x400?text=Saved+Views+Toolbar" alt="Saved Views toolbar — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Saved+Views+Toolbar" alt="Saved Views toolbar — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="saved-views" aria-label="View larger: Saved Views edit mode">
-                    <img src="https://placehold.co/600x400?text=Edit+Mode" alt="Saved Views edit mode — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Edit+Mode" alt="Saved Views edit mode — placeholder image" width="600" height="400">
                   </button>
                 </figure>
               </div>
@@ -338,17 +550,17 @@
             <div class="proj-photo-grid">
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p3" aria-label="View larger: List View">
-                    <img src="https://placehold.co/600x400?text=List+View" alt="List View — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=List+View" alt="List View — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p3" aria-label="View larger: Shipment Detail">
-                    <img src="https://placehold.co/600x400?text=Shipment+Detail" alt="Shipment Detail — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Shipment+Detail" alt="Shipment Detail — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p3" aria-label="View larger: Map View">
-                    <img src="https://placehold.co/600x400?text=Map+View" alt="Map View — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Map+View" alt="Map View — placeholder image" width="600" height="400">
                   </button>
                 </figure>
             </div>
@@ -374,12 +586,12 @@
             <div class="proj-photo-grid">
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p4" aria-label="View larger: Sidebar Chat">
-                    <img src="https://placehold.co/600x400?text=Sidebar+Chat" alt="Sidebar Chat — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Sidebar+Chat" alt="Sidebar Chat — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p4" aria-label="View larger: Full-Page View">
-                    <img src="https://placehold.co/600x400?text=Full-Page+View" alt="Full-Page View — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Full-Page+View" alt="Full-Page View — placeholder image" width="600" height="400">
                   </button>
                 </figure>
             </div>
@@ -435,17 +647,17 @@
             <div class="proj-photo-grid">
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p5" aria-label="View larger: Usage Audit">
-                    <img src="https://placehold.co/600x400?text=Usage+Audit" alt="Usage audit dashboard — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Usage+Audit" alt="Usage audit dashboard — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p5" aria-label="View larger: Task Flow">
-                    <img src="https://placehold.co/600x400?text=Task+Flow" alt="Task flow map — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Task+Flow" alt="Task flow map — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p5" aria-label="View larger: Proposed Card View">
-                    <img src="https://placehold.co/600x400?text=Proposed+Card+View" alt="Proposed Card View redesign — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Proposed+Card+View" alt="Proposed Card View redesign — placeholder image" width="600" height="400">
                   </button>
                 </figure>
             </div>
@@ -474,12 +686,12 @@
             <div class="proj-photo-grid">
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p6" aria-label="View larger: User List">
-                    <img src="https://placehold.co/600x400?text=User+List" alt="User List — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=User+List" alt="User List — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p6" aria-label="View larger: Create User Flow">
-                    <img src="https://placehold.co/600x400?text=Create+User+Flow" alt="Create User Flow — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Create+User+Flow" alt="Create User Flow — placeholder image" width="600" height="400">
                   </button>
                 </figure>
             </div>
@@ -504,12 +716,12 @@
             <div class="proj-photo-grid">
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p7" aria-label="View larger: Carrier Selection">
-                    <img src="https://placehold.co/600x400?text=Carrier+Selection" alt="Carrier Selection — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Carrier+Selection" alt="Carrier Selection — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p7" aria-label="View larger: Demo Prototype">
-                    <img src="https://placehold.co/600x400?text=Demo+Prototype" alt="Demo Prototype — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Demo+Prototype" alt="Demo Prototype — placeholder image" width="600" height="400">
                   </button>
                 </figure>
             </div>
@@ -528,7 +740,7 @@
             <div class="proj-photo-grid">
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p8" aria-label="View larger: Application Features">
-                    <img src="https://placehold.co/600x400?text=Application+Features" alt="Application Features — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Application+Features" alt="Application Features — placeholder image" width="600" height="400">
                   </button>
                 </figure>
             </div>
@@ -560,17 +772,17 @@
             <div class="proj-photo-grid">
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p9" aria-label="View larger: Supplier Connect">
-                    <img src="https://placehold.co/600x400?text=Supplier+Connect" alt="Supplier Connect — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Supplier+Connect" alt="Supplier Connect — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p9" aria-label="View larger: Context Map View">
-                    <img src="https://placehold.co/600x400?text=Context+Map+View" alt="Context Map View — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Context+Map+View" alt="Context Map View — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p9" aria-label="View larger: Navigation Shell">
-                    <img src="https://placehold.co/600x400?text=Navigation+Shell" alt="Navigation Shell — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Navigation+Shell" alt="Navigation Shell — placeholder image" width="600" height="400">
                   </button>
                 </figure>
             </div>
@@ -597,12 +809,12 @@
             <div class="proj-photo-grid">
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p10" aria-label="View larger: Map Legend">
-                    <img src="https://placehold.co/600x400?text=Map+Legend" alt="Map Legend — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Map+Legend" alt="Map Legend — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p10" aria-label="View larger: Risk Overlay">
-                    <img src="https://placehold.co/600x400?text=Risk+Overlay" alt="Risk Overlay — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Risk+Overlay" alt="Risk Overlay — placeholder image" width="600" height="400">
                   </button>
                 </figure>
             </div>
@@ -625,12 +837,12 @@
             <div class="proj-photo-grid">
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p11" aria-label="View larger: Booking Requests">
-                    <img src="https://placehold.co/600x400?text=Booking+Requests" alt="Booking Requests — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Booking+Requests" alt="Booking Requests — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p11" aria-label="View larger: Contract Master">
-                    <img src="https://placehold.co/600x400?text=Contract+Master" alt="Contract Master — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Contract+Master" alt="Contract Master — placeholder image" width="600" height="400">
                   </button>
                 </figure>
             </div>
@@ -657,12 +869,12 @@
             <div class="proj-photo-grid">
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p12" aria-label="View larger: Navigation IA">
-                    <img src="https://placehold.co/600x400?text=Navigation+IA" alt="Navigation IA — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Navigation+IA" alt="Navigation IA — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p12" aria-label="View larger: Recommendation Card">
-                    <img src="https://placehold.co/600x400?text=Recommendation+Card" alt="Recommendation Card — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Recommendation+Card" alt="Recommendation Card — placeholder image" width="600" height="400">
                   </button>
                 </figure>
             </div>
@@ -712,17 +924,17 @@
             <div class="proj-photo-grid">
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p13" aria-label="View larger: Community Request">
-                    <img src="https://placehold.co/600x400?text=Community+Request" alt="Community Request — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Community+Request" alt="Community Request — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p13" aria-label="View larger: Claude Code Session">
-                    <img src="https://placehold.co/600x400?text=Claude+Code+Session" alt="Claude Code Session — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Claude+Code+Session" alt="Claude Code Session — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="p13" aria-label="View larger: Shipped Fix">
-                    <img src="https://placehold.co/600x400?text=Shipped+Fix" alt="Shipped Fix — placeholder image" loading="lazy" width="600" height="400">
+                    <img src="https://placehold.co/600x400?text=Shipped+Fix" alt="Shipped Fix — placeholder image" width="600" height="400">
                   </button>
                 </figure>
             </div>
@@ -778,13 +990,19 @@
 
 <!-- ========================================================== LIGHTBOX -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" aria-hidden="true">
-  <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close image viewer">✕</button>
-  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" type="button" aria-label="Previous image">‹</button>
+  <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close image viewer">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+  </button>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" type="button" aria-label="Previous image">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
   <figure class="lightbox-figure">
     <img class="lightbox-img" id="lightboxImg" src="" alt="">
     <figcaption class="lightbox-caption" id="lightboxCaption"></figcaption>
   </figure>
-  <button class="lightbox-nav lightbox-next" id="lightboxNext" type="button" aria-label="Next image">›</button>
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" type="button" aria-label="Next image">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
 </div>
 
 <script src="js/vendor/bootstrap.bundle.min.js"></script>
@@ -792,5 +1010,11 @@
 <script src="js/projects.js"></script>
 <script src="js/lightbox.js"></script>
 <script>document.getElementById("year").innerHTML = new Date().getFullYear();</script>
+<script>
+  // Sticker sheet: set indeterminate the same way product code would —
+  // it's a real input state with no HTML attribute, so it has to be set in JS.
+  var edsIndeterminate = document.getElementById("eds-checkbox-indeterminate");
+  if (edsIndeterminate) { edsIndeterminate.indeterminate = true; }
+</script>
 </body>
 </html>
