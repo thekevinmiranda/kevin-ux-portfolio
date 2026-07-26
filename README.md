@@ -154,10 +154,13 @@ Palette — deep-forest ink + warm marigold on warm paper:
 | `--forest-2` | `#244A3A` | Card surfaces on dark |
 | `--paper` | `#F4F1E8` | Main light background |
 | `--paper-2` | `#ECE7D9` | Alt light background / cards |
-| `--marigold` | `#E6A017` | Primary accent (buttons, links) |
+| `--marigold` | `#E6A017` | Primary accent — backgrounds, icons, borders, on-dark text only (fails 4.5:1 as text on light) |
+| `--marigold-d` | `#C0810A` | Accent hover/darker — same usage rule as `--marigold` |
 | `--marigold-t` | `#F6E4B4` | Light accent tint — callouts, active sidebar link background |
+| `--marigold-text` | `#8A600D` | Marigold-family text color for light backgrounds — meets 4.5:1 where `--marigold`/`--marigold-d` don't |
 | `--clay` | `#B0512C` | Rare secondary warm accent |
-| `--sage` | `#6E8377` | Muted text on light backgrounds |
+| `--sage` | `#58685F` | Muted text on light backgrounds — darkened from an earlier `#6E8377` to meet 4.5:1 on `--paper` |
+| `--sage-d` | `#A9BBAF` | Muted text on dark backgrounds |
 
 Type: **Bricolage Grotesque** (display — headings, quotes) + **Hanken Grotesk**
 (body/UI), plus **Lato** (loaded specifically for the Component Sticker Sheet,

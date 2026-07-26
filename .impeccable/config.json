@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "lato",
+        "createdAt": "2026-07-26T19:36:59.075Z",
+        "reason": "User confirmed Lato is intentional (matches Elemental Design System sticker-sheet source typeface, documented in README.md)"
+      }
+    ]
+  }
+}

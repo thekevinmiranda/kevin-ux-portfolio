@@ -119,34 +119,34 @@
   padding: .05rem .5rem;
 }
 
-.proj-tag {
-  display: inline-block;
-  font-weight: 700;
-  font-size: .68rem;
-  letter-spacing: .07em;
-  text-transform: uppercase;
-  padding: .1rem .5rem;
-  border-radius: 5px;
-  margin-right: .35rem;
-  white-space: nowrap;
-}
-.proj-tag.is-verified { color: #285242; background: #E1EEE5; border: 1px solid #8FBBA0; }
-.proj-tag.is-gemini   { color: #6A4A9A; background: #ECE3F7; border: 1px solid #C6ADE6; }
-
 /* ---------------------------------------------------------------- quote --- */
+/* Distinguished from the page's other paper-2 cards by an oversized
+   display-font quotation mark, not a colored accent border. */
 .proj-quote {
+  position: relative;
   margin: .9rem 0 0;
-  padding: 1.1rem 1.35rem;
+  padding: 1.1rem 1.35rem 1.1rem 2.15rem;
   background: var(--paper-2);
-  border-left: 3px solid var(--marigold);
-  border-radius: 0 var(--r) var(--r) 0;
+  border-radius: var(--r);
 }
-.proj-quote p { font-style: italic; font-size: 1rem; margin: 0 0 .5rem; }
+.proj-quote::before {
+  content: "\201C";
+  position: absolute;
+  top: .3rem;
+  left: .7rem;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-style: normal;
+  font-size: 2.25rem;
+  line-height: 1;
+  color: var(--marigold-text);
+}
+.proj-quote p { position: relative; font-style: italic; font-size: 1rem; margin: 0 0 .5rem; }
 .proj-quote cite { font-style: normal; font-size: .84rem; color: var(--sage); font-weight: 600; }
 
 /* Testimonial cards — 3-column grid (used for Customer Testimonials sections
    with several quotes; a lone .proj-quote elsewhere stays the full-width
-   left-accent style above). */
+   quote-mark style above). */
 .proj-quote-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -295,8 +295,19 @@
     overflow: visible;
   }
   .proj-nav-toggle { display: flex; }
-  .proj-nav-list { max-height: 0; overflow: hidden; visibility: hidden; transition: max-height .25s ease, visibility 0s linear .25s; }
-  .proj-nav-list.is-open { max-height: 2000px; visibility: visible; transition: max-height .25s ease, visibility 0s linear; }
+  .proj-nav-list {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    visibility: hidden;
+    transition: grid-template-rows .25s ease, visibility 0s linear .25s;
+  }
+  .proj-nav-list-inner { min-height: 0; overflow: hidden; }
+  .proj-nav-list.is-open {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition: grid-template-rows .25s ease, visibility 0s linear;
+  }
 }
 
 /* ==========================================================================

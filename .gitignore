@@ -18,3 +18,7 @@ node_modules/
 dist/
 build/
 Thumbs.db
+
+# Impeccable live-mode session state (local recovery data, not project source)
+.impeccable/live/sessions/
+.impeccable/hook.cache.json
