@@ -308,71 +308,121 @@ main { display: block; }
   position: relative;
   overflow: hidden;
 }
-.hero::before {
-  /* soft off-canvas marigold glow, lower-left */
-  content: "";
-  position: absolute;
-  left: -12%; bottom: -20%;
-  width: 46vw; height: 46vw;
-  max-width: 620px; max-height: 620px;
-  background: radial-gradient(circle at center, rgba(230,160,23,.32), transparent 68%);
-  pointer-events: none;
-  animation: heroFloat1 26s ease-in-out infinite;
-  will-change: transform;
-  z-index: 0;
-}
 
-/* extra ambient blobs, layered behind hero content */
+/* ambient blobs, layered behind hero content — 5 independently-timed
+   circles so their loops never sync up, reads as organic drifting rather
+   than a mechanical loop */
 .hero-blobs { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
 .hero-blobs span {
   position: absolute;
   border-radius: 50%;
-  filter: blur(35px);
   will-change: transform;
 }
 .hero-blobs .b1 {
-  top: -12%; right: -10%;
-  width: 32vw; height: 32vw;
-  max-width: 440px; max-height: 440px;
-  background: radial-gradient(circle at 35% 35%, rgba(246,228,180,.75), transparent 70%);
-  animation: heroFloat2 32s ease-in-out infinite;
+  left: -14%; bottom: -22%;
+  width: 65vw; height: 65vw;
+  max-width: 950px; max-height: 950px;
+  background: radial-gradient(circle at center, rgba(230,160,23,.32), transparent 68%);
+  filter: blur(50px);
+  animation: heroFloat1 34s cubic-bezier(.45,.05,.55,.95) infinite;
 }
 .hero-blobs .b2 {
-  top: 48%; left: 40%;
-  width: 22vw; height: 22vw;
-  max-width: 300px; max-height: 300px;
-  background: radial-gradient(circle at 50% 50%, rgba(176,81,44,.5), transparent 70%);
-  animation: heroFloat3 22s ease-in-out infinite;
+  top: -18%; right: -14%;
+  width: 60vw; height: 60vw;
+  max-width: 800px; max-height: 800px;
+  background: radial-gradient(circle at 35% 35%, rgba(246,228,180,.78), transparent 70%);
+  filter: blur(46px);
+  animation: heroFloat2 40s ease-in-out infinite 2s;
+}
+.hero-blobs .b3 {
+  top: 44%; left: 40%;
+  width: 39vw; height: 39vw;
+  max-width: 525px; max-height: 525px;
+  background: radial-gradient(circle at 50% 50%, rgba(206,110,20,.46), transparent 70%);
+  filter: blur(38px);
+  animation: heroFloat3 27s cubic-bezier(.37,0,.63,1) infinite 1s;
+}
+.hero-blobs .b4 {
+  top: 4%; left: 15%;
+  width: 34vw; height: 34vw;
+  max-width: 450px; max-height: 450px;
+  background: radial-gradient(circle at 50% 50%, rgba(192,129,10,.4), transparent 70%);
+  filter: blur(34px);
+  animation: heroFloat4 23s ease-in-out infinite 4s;
+}
+.hero-blobs .b5 {
+  bottom: 0%; right: 10%;
+  width: 36vw; height: 36vw;
+  max-width: 500px; max-height: 500px;
+  background: radial-gradient(circle at 50% 50%, rgba(216,124,24,.42), transparent 70%);
+  filter: blur(36px);
+  animation: heroFloat5 37s cubic-bezier(.42,0,.58,1) infinite 6s;
 }
 .hero-copy, .hero-figure { position: relative; z-index: 1; }
 
-/* each blob wanders to a different corner of the hero section on every leg,
-   using viewport units (not %) so the travel spans the whole section rather
-   than just the blob's own footprint */
+/* each blob wanders through 7-8 irregularly-spaced waypoints (translate +
+   scale, several with a slight rotate) using viewport units so the travel
+   spans the whole section; the uneven timing, varied magnitudes/signs, and
+   distinct durations/delays/easings keep every loop from ever reading as a
+   simple back-and-forth or lining up with the others */
 @keyframes heroFloat1 {
-  0%   { transform: translate(0, 0) scale(1); }
-  20%  { transform: translate(30vw, -14vh) scale(1.12); }
-  45%  { transform: translate(46vw, 24vh) scale(0.9); }
-  70%  { transform: translate(10vw, 30vh) scale(1.08); }
-  100% { transform: translate(0, 0) scale(1); }
+  0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
+  14%  { transform: translate(9vw, -19vh) scale(1.08) rotate(4deg); }
+  29%  { transform: translate(27vw, -6vh) scale(0.93) rotate(-3deg); }
+  41%  { transform: translate(19vw, 17vh) scale(1.15); }
+  58%  { transform: translate(-4vw, 24vh) scale(0.88) rotate(6deg); }
+  73%  { transform: translate(-14vw, 4vh) scale(1.05) rotate(-5deg); }
+  89%  { transform: translate(-6vw, -13vh) scale(0.95); }
+  100% { transform: translate(0, 0) scale(1) rotate(0deg); }
 }
 @keyframes heroFloat2 {
   0%   { transform: translate(0, 0) scale(1); }
-  25%  { transform: translate(-32vw, 18vh) scale(1.15); }
-  50%  { transform: translate(-14vw, -26vh) scale(0.88); }
-  75%  { transform: translate(-42vw, -6vh) scale(1.1); }
+  17%  { transform: translate(-14vw, 11vh) scale(1.1); }
+  33%  { transform: translate(-27vw, -4vh) scale(0.9) rotate(-4deg); }
+  47%  { transform: translate(-18vw, -21vh) scale(1.05); }
+  63%  { transform: translate(3vw, -16vh) scale(0.92) rotate(5deg); }
+  78%  { transform: translate(11vw, 2vh) scale(1.12); }
+  92%  { transform: translate(-3vw, 13vh) scale(0.96); }
   100% { transform: translate(0, 0) scale(1); }
 }
 @keyframes heroFloat3 {
+  0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
+  19%  { transform: translate(-10vw, -17vh) scale(1.12) rotate(-7deg); }
+  34%  { transform: translate(6vw, -22vh) scale(0.88); }
+  52%  { transform: translate(19vw, -7vh) scale(1.08) rotate(5deg); }
+  68%  { transform: translate(14vw, 13vh) scale(0.9); }
+  84%  { transform: translate(-5vw, 17vh) scale(1.06) rotate(-4deg); }
+  100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+}
+@keyframes heroFloat4 {
   0%   { transform: translate(0, 0) scale(1); }
-  30%  { transform: translate(-24vw, -20vh) scale(1.1); }
-  60%  { transform: translate(20vw, -12vh) scale(0.85); }
-  85%  { transform: translate(18vw, 16vh) scale(1.05); }
+  16%  { transform: translate(11vw, 9vh) scale(0.92); }
+  31%  { transform: translate(21vw, -6vh) scale(1.14); }
+  49%  { transform: translate(9vw, -19vh) scale(0.9) rotate(6deg); }
+  66%  { transform: translate(-8vw, -11vh) scale(1.08); }
+  83%  { transform: translate(-3vw, 7vh) scale(0.95) rotate(-5deg); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+@keyframes heroFloat5 {
+  0%   { transform: translate(0, 0) scale(1); }
+  13%  { transform: translate(-8vw, -14vh) scale(1.1); }
+  27%  { transform: translate(-19vw, -2vh) scale(0.9) rotate(-6deg); }
+  44%  { transform: translate(-13vw, 15vh) scale(1.12); }
+  61%  { transform: translate(4vw, 20vh) scale(0.88) rotate(4deg); }
+  77%  { transform: translate(13vw, 6vh) scale(1.05); }
+  90%  { transform: translate(6vw, -9vh) scale(0.94); }
   100% { transform: translate(0, 0) scale(1); }
 }
 
+@media (max-width: 640px) {
+  .hero-blobs .b4, .hero-blobs .b5 { display: none; }
+  .hero-blobs .b1 { filter: blur(30px); }
+  .hero-blobs .b2 { filter: blur(28px); }
+  .hero-blobs .b3 { filter: blur(24px); }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .hero::before, .hero-blobs span { animation: none; }
+  .hero-blobs span { animation: none; }
 }
 .hero-grid {
   display: grid;
@@ -559,25 +609,6 @@ main { display: block; }
 .about-body h2 { font-size: clamp(1.9rem, 4vw, 3rem); margin-bottom: 1.3rem; }
 .about-body .lead { margin-bottom: 1.2rem; }
 .about-body p { color: #3c4a41; }
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
-  margin-top: 2.2rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--paper-line);
-}
-.stat .num {
-  font-family: var(--f-display);
-  font-weight: 800;
-  font-size: clamp(2rem, 4.6vw, 3rem);
-  color: var(--ink);
-  line-height: 1;
-  letter-spacing: -0.03em;
-}
-.stat .num .suffix { color: var(--marigold-text); }
-.stat .lbl { font-size: .9rem; color: var(--sage); margin-top: .4rem; }
 
 /* ---------------------------------------------------------- experience --- */
 .timeline { position: relative; max-width: 54rem; }
@@ -973,7 +1004,6 @@ main { display: block; }
 
 @media (max-width: 640px) {
   .work-grid { grid-template-columns: 1fr; }
-  .stats { grid-template-columns: 1fr 1fr; }
   .hero-chip { left: 0; }
   .about-figure .tag { right: 0; }
   .hero-cta { width: 100%; }

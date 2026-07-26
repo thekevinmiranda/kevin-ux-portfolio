@@ -120,44 +120,6 @@
     els.forEach(function (el) { obs.observe(el); });
   }
 
-  /* ------------------------------------------------- count-up stats ---- */
-  function initCounters() {
-    var nums = document.querySelectorAll(".num[data-count]");
-    if (!nums.length) return;
-
-    var run = function (el) {
-      var target = parseInt(el.getAttribute("data-count"), 10) || 0;
-      var valEl = el.querySelector(".val");
-      if (!valEl) return;
-      if (prefersReduced) { valEl.textContent = String(target); return; }
-      var start = null;
-      var dur = 1400;
-      var step = function (ts) {
-        if (start === null) start = ts;
-        var p = Math.min((ts - start) / dur, 1);
-        var eased = 1 - Math.pow(1 - p, 3);
-        valEl.textContent = String(Math.round(eased * target));
-        if (p < 1) requestAnimationFrame(step);
-        else valEl.textContent = String(target);
-      };
-      requestAnimationFrame(step);
-    };
-
-    if (!("IntersectionObserver" in window)) {
-      nums.forEach(run);
-      return;
-    }
-    var obs = new IntersectionObserver(function (entries, o) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          run(entry.target);
-          o.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
-    nums.forEach(function (n) { obs.observe(n); });
-  }
-
   /* ------------------------------------------------- work filtering ---- */
   function initFilters() {
     var buttons = document.querySelectorAll(".filter-btn");
@@ -206,7 +168,6 @@
     initSmoothScroll();
     initScrollSpy();
     initReveal();
-    initCounters();
     initFilters();
     initImageProtection();
   }
