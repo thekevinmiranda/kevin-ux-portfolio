@@ -41,19 +41,20 @@ npx serve -l tcp://0.0.0.0:3000   # listen on your local network too, e.g. to pr
 ## File structure
 
 ```
-├── index.html              Homepage (hero, about, services, work teaser, testimonials, contact)
+├── index.html              Homepage (hero, about, experience/education timeline,
+│                             leadership & recognition, projects teaser, impact, contact)
 ├── projects.html            Projects page — 13 FourKites case studies, sidebar-switched
 ├── css/
 │   ├── style.css             Shared design system + all of index.html's page-specific styles
 │   ├── projects.css          Everything specific to projects.html (sidebar, cards, lightbox, photo grids, sticker sheet)
 │   └── vendor/bootstrap.min.css   Reset + grid only — no Bootstrap components are used
 ├── js/
-│   ├── main.js                Shared: sticky header, mobile nav, smooth-scroll, scrollspy, reveal-on-scroll,
-│   │                           stat counters, testimonial carousel, work-grid filter (index.html only)
+│   ├── main.js                Shared: sticky header, mobile nav, smooth-scroll, scrollspy,
+│   │                           reveal-on-scroll, work-grid filter (index.html only)
 │   ├── projects.js            projects.html only: sidebar project switcher (see below)
 │   ├── lightbox.js            projects.html only: click-to-enlarge image viewer
 │   └── vendor/bootstrap.bundle.min.js
-├── img/                      Template's own images (hero, about, homepage work-teaser tiles, testimonial headshots)
+├── img/                      Template's own images (hero, about photo, homepage work-teaser tiles)
 ├── projects/                 Real project screenshots, one subfolder per project
 │   └── <project-slug>/         e.g. projects/workspace/flow.jpg
 └── .gitignore
@@ -68,12 +69,18 @@ project root during editing — review anything outside the established folders
 
 ## `index.html` — Homepage
 
-Standard one-pager: Hero → Tools marquee → About → Services → **Projects teaser**
-(6 cards, linking to the same 6 case studies highlighted on `projects.html`, each
-tagged `#pN`) → Testimonials → Contact. Nav and footer are shared verbatim with
-`projects.html` (same 5 items: Home / About / Projects / Services / Voices /
-Contact — kept intentionally identical on both pages, see "Nav conventions"
-below).
+One-pager: Hero → Tools marquee → About → **Experience** (a single timeline
+mixing work history and education — see below) → Leadership & Recognition →
+**Projects teaser** (6 cards, linking to the same 6 case studies highlighted on
+`projects.html`, each tagged `#pN`) → Quantifiable Impact → Contact. Nav and
+footer are shared with `projects.html` (see "Nav conventions" below).
+
+The **Experience** timeline (`#experience`) lists work history newest-first,
+then education — currently Kevin's MCA (2013–2016). Each entry (`.tl-item`) has
+a date-range + duration badge, a title (`h3`), an employer/institution name
+(`.tl-meta`, linked to the org's site where one exists — no link for 4th
+Switch, which has none), an optional description, and a plain-text date range
+(`.tl-range`).
 
 The teaser section's filter buttons use a 3-category taxonomy that mirrors how
 the case studies are framed: **Product**, **Systems**, **AI** (plus **All**).
@@ -131,15 +138,23 @@ Closes via ✕, backdrop click, or Escape; arrow keys navigate within a gallery.
 
 ## Nav conventions
 
-Both pages share the exact same 5 nav items: **Home, About, Projects, Services,
-Voices, Contact**. On `index.html` these are in-page anchors (`#home`, `#about`,
-etc.) with a scroll-driven active state (`main.js`'s `initScrollSpy`). On
-`projects.html`, "Home"/"About"/"Services"/"Voices"/"Contact" point back to
-`index.html#...`, and "Projects" is a static self-link marked `class="active"`
-(there's no scrollspy on this page for that item — it's just always active while
-you're here). **Do not reintroduce a separate "Work" nav item** — the homepage's
-project-teaser section was deliberately renamed from "Work" to "Projects" (`id`
-included) so there's exactly one project-related nav concept across the site.
+Both pages share the same 6 header nav items: **Home, About, Experience, Work,
+Impact, Contact**. On `index.html` these are in-page anchors (`#home`, `#about`,
+`#experience`, `#projects`, `#impact`, `#contact`) with a scroll-driven active
+state (`main.js`'s `initScrollSpy`). "Work" points at the `#projects` id — same
+label/id mismatch as `data-group="flagship"` above, so don't be thrown by it.
+
+On `projects.html`, "Home" points to `index.html` (not an anchor), the rest
+point back to `index.html#...`, and "Work" is a static self-link to
+`projects.html` marked `class="active"` (no scrollspy needed — it's just
+always active here).
+
+The footer nav (`.footer-col`, both pages) repeats the same items minus Home,
+since the footer's own logo/brand link already covers that.
+
+Leadership & Recognition (`#leadership`) is a real homepage section, but isn't
+in the nav or footer — it isn't distinct enough from Experience to warrant its
+own slot.
 
 ---
 
@@ -231,9 +246,9 @@ for an external audience. When editing or adding content, keep to these rules:
 
 Two image sources are in play:
 
-1. **`img/`** — the template's own homepage imagery (hero, about, work-teaser
-   tiles, testimonial headshots). Leave these as-is unless redesigning the
-   homepage itself.
+1. **`img/`** — the template's own homepage imagery (hero, about photo,
+   work-teaser tile icons). Leave these as-is unless redesigning the homepage
+   itself.
 2. **`projects/`** — real FourKites case-study screenshots, organized one
    subfolder per project (e.g. `projects/workspace/fourkites-ia.png`). Some
    projects still use a **placehold.co placeholder**
