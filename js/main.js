@@ -181,107 +181,21 @@
     });
   }
 
-  /* --------------------------------------------- testimonials slider --- */
-  function initTestimonials() {
-    var track = document.getElementById("tstTrack");
-    var prev = document.getElementById("tstPrev");
-    var next = document.getElementById("tstNext");
-    var dotsWrap = document.getElementById("tstDots");
-    if (!track) return;
-    var cards = track.querySelectorAll(".tst-card");
-    if (!cards.length) return;
-
-    var scrollAmt = function () {
-      var card = cards[0];
-      var gap = parseFloat(getComputedStyle(track).columnGap || "24") || 24;
-      return card.getBoundingClientRect().width + gap;
-    };
-
-    // build dots
-    var dots = [];
-    if (dotsWrap) {
-      cards.forEach(function (_, i) {
-        var d = document.createElement("button");
-        d.type = "button";
-        d.setAttribute("aria-label", "Go to testimonial " + (i + 1));
-        d.addEventListener("click", function () {
-          track.scrollTo({ left: scrollAmt() * i, behavior: prefersReduced ? "auto" : "smooth" });
-        });
-        dotsWrap.appendChild(d);
-        dots.push(d);
-      });
-    }
-
-    var updateUI = function () {
-      var idx = Math.round(track.scrollLeft / scrollAmt());
-      dots.forEach(function (d, i) { d.classList.toggle("active", i === idx); });
-      var maxScroll = track.scrollWidth - track.clientWidth - 2;
-      if (prev) prev.disabled = track.scrollLeft <= 2;
-      if (next) next.disabled = track.scrollLeft >= maxScroll;
-    };
-
-    if (prev) prev.addEventListener("click", function () {
-      track.scrollBy({ left: -scrollAmt(), behavior: prefersReduced ? "auto" : "smooth" });
+  /* ------------------------------------------- image download deterrents --
+     Casual-download prevention only — right-click "save image", drag-to-
+     desktop, and mobile long-press-save. This can't stop a determined
+     visitor (devtools, view-source, network tab), but it removes the
+     one-click paths most people would actually use. Delegated on document
+     so it also covers images added later (lightbox, etc). */
+  function initImageProtection() {
+    document.addEventListener("contextmenu", function (e) {
+      if (e.target && e.target.tagName === "IMG") e.preventDefault();
     });
-    if (next) next.addEventListener("click", function () {
-      track.scrollBy({ left: scrollAmt(), behavior: prefersReduced ? "auto" : "smooth" });
+    document.addEventListener("dragstart", function (e) {
+      if (e.target && e.target.tagName === "IMG") e.preventDefault();
     });
-
-    var ticking = false;
-    track.addEventListener("scroll", function () {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () { updateUI(); ticking = false; });
-    }, { passive: true });
-    window.addEventListener("resize", updateUI);
-    updateUI();
-  }
-
-  /* ------------------------------------------------- contact form ------ */
-  function initContactForm() {
-    var form = document.getElementById("contactForm");
-    if (!form) return;
-    var note = document.getElementById("formNote");
-
-    var setInvalid = function (input, bad) {
-      var field = input.closest(".field") || (input.parentNode && input.parentNode.closest(".field"));
-      if (field) field.classList.toggle("invalid", bad);
-      input.setAttribute("aria-invalid", bad ? "true" : "false");
-    };
-
-    var validateEmail = function (v) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-    };
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var name = form.querySelector("#cf-name");
-      var email = form.querySelector("#cf-email");
-      var msg = form.querySelector("#cf-msg");
-      var ok = true;
-
-      if (name && !name.value.trim()) { setInvalid(name, true); ok = false; } else if (name) setInvalid(name, false);
-      if (email && !validateEmail(email.value.trim())) { setInvalid(email, true); ok = false; } else if (email) setInvalid(email, false);
-      if (msg && msg.value.trim().length < 2) { setInvalid(msg, true); ok = false; } else if (msg) setInvalid(msg, false);
-
-      if (!ok) {
-        var firstBad = form.querySelector(".field.invalid input, .field.invalid textarea");
-        if (firstBad) firstBad.focus();
-        if (note) note.classList.remove("show");
-        return;
-      }
-
-      if (note) note.classList.add("show");
-      form.reset();
-    });
-
-    // clear invalid state as the user fixes fields
-    form.addEventListener("input", function (e) {
-      var field = e.target.closest && e.target.closest(".field.invalid");
-      if (field) {
-        field.classList.remove("invalid");
-        e.target.setAttribute("aria-invalid", "false");
-      }
+    document.querySelectorAll("img").forEach(function (img) {
+      img.setAttribute("draggable", "false");
     });
   }
 
@@ -294,8 +208,7 @@
     initReveal();
     initCounters();
     initFilters();
-    initTestimonials();
-    initContactForm();
+    initImageProtection();
   }
 
   if (document.readyState === "loading") {

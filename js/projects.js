@@ -186,3 +186,71 @@
     });
   });
 })();
+
+/* ============================================================================
+   Before/After compare slider (FourKites Redesign — "Before & After").
+   Drag — mouse, touch, or pen, unified via the Pointer Events API — to
+   reveal more or less of the "before" image layered over the "after"
+   image. The handle is a native role="slider", fully operable from the
+   keyboard (Arrow keys, Shift+Arrow for a bigger step, Home/End for the
+   ends). Self-contained IIFE, vanilla JS, no dependencies.
+   ============================================================================ */
+(function () {
+  "use strict";
+
+  function setupSlider(root) {
+    var beforeWrap = root.querySelector(".compare-slider__before-wrap");
+    var handle = root.querySelector(".compare-slider__handle");
+    if (!beforeWrap || !handle) return;
+
+    var pos = 50;
+    var dragging = false;
+
+    function setPos(next) {
+      pos = Math.min(100, Math.max(0, next));
+      root.style.setProperty("--pos", pos + "%");
+      handle.setAttribute("aria-valuenow", String(Math.round(pos)));
+    }
+
+    function posFromClientX(clientX) {
+      var rect = root.getBoundingClientRect();
+      if (!rect.width) return pos;
+      return ((clientX - rect.left) / rect.width) * 100;
+    }
+
+    function onPointerDown(e) {
+      dragging = true;
+      try { root.setPointerCapture(e.pointerId); } catch (err) {}
+      setPos(posFromClientX(e.clientX));
+      handle.focus();
+      e.preventDefault();
+    }
+    function onPointerMove(e) {
+      if (!dragging) return;
+      setPos(posFromClientX(e.clientX));
+    }
+    function onPointerUp(e) {
+      dragging = false;
+      try { root.releasePointerCapture(e.pointerId); } catch (err) {}
+    }
+
+    root.addEventListener("pointerdown", onPointerDown);
+    root.addEventListener("pointermove", onPointerMove);
+    root.addEventListener("pointerup", onPointerUp);
+    root.addEventListener("pointercancel", onPointerUp);
+
+    handle.addEventListener("keydown", function (e) {
+      var step = e.shiftKey ? 10 : 3;
+      if (e.key === "ArrowLeft" || e.key === "ArrowDown") { setPos(pos - step); e.preventDefault(); }
+      else if (e.key === "ArrowRight" || e.key === "ArrowUp") { setPos(pos + step); e.preventDefault(); }
+      else if (e.key === "Home") { setPos(0); e.preventDefault(); }
+      else if (e.key === "End") { setPos(100); e.preventDefault(); }
+    });
+
+    setPos(pos);
+  }
+
+  document.querySelectorAll("[data-compare-slider]").forEach(function (el) {
+    try { setupSlider(el); } catch (err) { console.warn("Compare slider init failed silently:", err); }
+  });
+})();

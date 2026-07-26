@@ -25,6 +25,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -43,9 +44,9 @@
       <ul class="nav-links">
         <li><a href="#home">Home</a></li>
         <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
         <li><a href="#projects">Work</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#voices">Voices</a></li>
+        <li><a href="#impact">Impact</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>      
     </nav>
@@ -61,11 +62,12 @@
 
   <!-- ============================================================ HERO -->
   <section class="hero" id="home" aria-labelledby="hero-name">
+    <div class="hero-blobs" aria-hidden="true"><span class="b1"></span><span class="b2"></span></div>
     <div class="wrap hero-grid">
       <div class="hero-copy">
         <!-- <span class="hero-badge reveal"><span class="dot" aria-hidden="true"></span> Available for projects — Autumn 2026</span> -->
         <h1 id="hero-name" class="reveal" data-delay="1">Kevin<br><span class="accent">Miranda.</span></h1>
-        <p class="role reveal" data-delay="2">UI/UX &amp; Interaction Designer — Chennai, India</p>
+        <p class="role reveal" data-delay="2">Sr. UI/UX &amp; Interaction Designer — Chennai, India</p>
         <p class="intro reveal" data-delay="2">A designer with a keen eye for detail &amp; a knack for visualizing any idea put forth.</p>
 
         <div class="hero-cta reveal" data-delay="3">
@@ -77,17 +79,11 @@
         </div>
 
         <ul class="socials reveal" data-delay="3" aria-label="Kevin on social platforms">
-          <li><a href="#" aria-label="Dribbble">
+          <li><a href="https://dribbble.com/kevinmiranda" target="_blank" rel="noopener" aria-label="Dribbble">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.8"/><path d="M5 8c4.5 2 9 2.5 13.5 1M8.5 4.5C12 8 14 13 14.5 19.5M18.8 14.5c-5-1.5-9.5-.3-12.6 3.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
           </a></li>
-          <li><a href="#" aria-label="Instagram">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/></svg>
-          </a></li>
-          <li><a href="#" aria-label="LinkedIn">
+          <li><a href="https://www.linkedin.com/in/thekevinmiranda/" target="_blank" rel="noopener" aria-label="LinkedIn">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M8 10.5V17M8 7.6v.02M11.6 17v-3.6c0-1.4 1-2.4 2.3-2.4s2.1 1 2.1 2.4V17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          </a></li>
-          <li><a href="#" aria-label="X">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 4l7.6 9.6L4.4 20M20 4l-7.5 8.2M20 20l-7.6-9.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a></li>
         </ul>
       </div>
@@ -97,7 +93,7 @@
           <img src="img/hero2.jpg" alt="Portrait of Kevin Miranda, Senior UX & Interaction designer, in natural light" width="460" height="575">
         </div>
         <div class="hero-chip" aria-hidden="true">
-          <span class="num">10</span>
+          <span class="num">10+</span>
           <span class="lbl">years of designing<br>digital products</span>
         </div>
       </figure>
@@ -107,7 +103,7 @@
   <!-- ==================================================== TOOLS MARQUEE -->
   <section class="tools-band" aria-label="Tools I work with">
     <div class="wrap">
-      <p class="tools-label">The tools &amp; skills I'm proficient with</p>
+      <p class="tools-label">Things I'm good at</p>
     </div>
     <div class="marquee">
       <div class="marquee-track" id="marqueeTrack">
@@ -141,68 +137,112 @@
   <section class="section" id="about" aria-labelledby="about-h">
     <div class="wrap about-grid">
       <figure class="about-figure reveal">
-        <img src="img/about.jpg" alt="Kevin at her studio workspace with a laptop and printed layouts" width="480" height="600">
-        <span class="tag">Studio in<br>Alfama, Lisbon</span>
+        <img src="img/about-photo.jpg" alt="Kevin Miranda presenting FourKites' visibility platform to attendees at the Visibility customer conference" width="480" height="600">
+        <span class="tag">FourKites Visibility 2023<br>Chicago, US</span>
       </figure>
       <div class="about-body">
         <span class="eyebrow">A little about me</span>
-        <h2 id="about-h" class="reveal">I design the quiet parts that make products feel effortless.</h2>
-        <p class="lead reveal" data-delay="1">After years inside product teams at fintech and health startups, I went independent to do the work I care about most — the slow, deliberate kind.</p>
-        <p class="reveal" data-delay="1">I partner with a handful of clients at a time, from first sketch to shipped release. That means I stay close to the details: the empty states, the loading moments, the way a button feels under your thumb. Good design should disappear — you only notice it when it's missing.</p>
-        <p class="reveal" data-delay="2">When I'm not in Figma you'll find me shooting 35mm around the old town, or teaching a Sunday typography workshop for junior designers.</p>
+        <h2 id="about-h" class="reveal">Self-taught, systems-minded, and always chasing the next problem worth solving.</h2>
+        <p class="lead reveal" data-delay="1">Everything I know about design, I taught myself — one late night and one new tool at a time.</p>
+        <p class="reveal" data-delay="1">I started out in 2015 as a graphic designer working in Photoshop and Illustrator. That curiosity pulled me into web design and development, and eventually into UI/UX design and development — the place where visual craft, code, and problem-solving all meet. I have no formal design training; my one formal credential is a Master's in Computer Applications from Loyola College, Chennai (2016), which sharpened the instinct I lean on most: the ability to visualize a problem, break it down into granular steps, and actually solve it. These days that instinct goes toward building design systems, designing SaaS platforms, and untangling complex supply-chain visibility problems.</p>
+        <p class="reveal" data-delay="2">Off the clock, I'm an animal person through and through — home to two dogs, plus a rotating cast of community dogs and cats I look out for. When I'm not on dog duty, I'm out wandering with a camera chasing good light for architecture and landscapes, or hunting down a cuisine I haven't tried yet. I'll travel across the world just for a meal worth remembering.</p>
 
         <div class="stats reveal" data-delay="2">
           <div class="stat">
-            <div class="num" data-count="8"><span class="val">0</span></div>
-            <div class="lbl">Years freelancing</div>
+            <div class="num" data-count="11"><span class="val">0</span></div>
+            <div class="lbl">Years in design</div>
           </div>
           <div class="stat">
-            <div class="num" data-count="64"><span class="val">0</span><span class="suffix">+</span></div>
-            <div class="lbl">Projects shipped</div>
+            <div class="num" data-count="14"><span class="val">0</span></div>
+            <div class="lbl">Case studies</div>
           </div>
           <div class="stat">
-            <div class="num" data-count="27"><span class="val">0</span></div>
-            <div class="lbl">Happy clients</div>
+            <div class="num" data-count="6"><span class="val">0</span></div>
+            <div class="lbl">Transport modes designed for</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ======================================================== SERVICES -->
-  <section class="section section--forest on-dark" id="services" aria-labelledby="svc-h">
+  <!-- ======================================================= EXPERIENCE -->
+  <section class="section section--forest on-dark" id="experience" aria-labelledby="exp-h">
     <div class="wrap">
       <div class="section-head reveal">
-        <span class="eyebrow">What I do</span>
-        <h2 id="svc-h">Four ways we can work together</h2>
-        <p>Every engagement is scoped around your stage — whether you need a full product or a sharper first impression.</p>
+        <span class="eyebrow">Career so far</span>
+        <h2 id="exp-h">Where I've worked</h2>
       </div>
 
-      <div class="svc-grid">
-        <article class="svc-card reveal">
-          <span class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 9h18M8 21h8M12 17v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
-          <h3>Product Design</h3>
-          <p>End-to-end UX and UI for web and mobile apps — research, flows, prototypes and polished, build-ready interfaces your engineers will love.</p>
-          <span class="num-tag">01 — UX / UI</span>
-        </article>
-        <article class="svc-card reveal" data-delay="1">
-          <span class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 3.5v17M3.5 12h17" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg></span>
-          <h3>Brand &amp; Identity</h3>
-          <p>Logos, colour, type and voice built into a system you can actually run — from the first mark to a tidy set of usage guidelines.</p>
-          <span class="num-tag">02 — Identity</span>
-        </article>
-        <article class="svc-card reveal" data-delay="2">
-          <span class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5" stroke="currentColor" stroke-width="1.8"/></svg></span>
-          <h3>Design Systems</h3>
-          <p>Component libraries, tokens and documentation that keep a growing team consistent — no more pixel drift between designers and devs.</p>
-          <span class="num-tag">03 — Systems</span>
-        </article>
-        <article class="svc-card reveal" data-delay="3">
-          <span class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 16l5-6 4 4 3-4 4 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="7" r="2" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/></svg></span>
-          <h3>Art Direction</h3>
-          <p>A visual language for campaigns, launches and photo shoots — so every touchpoint looks like it came from the same confident place.</p>
-          <span class="num-tag">04 — Direction</span>
-        </article>
+      <div class="timeline">
+        <div class="tl-item reveal">
+          <div class="tl-rail"><span class="tl-dot"></span></div>
+          <div class="tl-body">
+            <div class="tl-date">2019 — Now<span class="tl-duration">6+ yrs</span></div>
+            <div class="tl-content">
+              <h3>Senior Interaction Designer</h3>
+              <p class="tl-meta">FourKites India Pvt. Ltd.</p>
+              <p>Led UI/UX across FourKites' core tracking redesign, the Elemental Design System, My Workspace, and FourSight AI — plus redesigns of Address Manager, Global Map View, and Unified User Management, and many others.</p>
+              <p class="tl-range">September 2019 - Present</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-item reveal" data-delay="1">
+          <div class="tl-rail"><span class="tl-dot"></span></div>
+          <div class="tl-body">
+            <div class="tl-date">2016 — 2019<span class="tl-duration">3 yrs</span></div>
+            <div class="tl-content">
+              <h3>Junior Product Designer</h3>
+              <p class="tl-meta">Inatech India Pvt. Ltd.</p>
+              <p>Built Design Systems, designed &amp; developed the UI &amp; UX for cloud-based ETRM SaaS applications.</p>
+              <p class="tl-range">June 2016 - September 2019</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-item reveal" data-delay="2">
+          <div class="tl-rail"><span class="tl-dot"></span></div>
+          <div class="tl-body">
+            <div class="tl-date">2015 — 2016<span class="tl-duration">6 mos</span></div>
+            <div class="tl-content">
+              <h3>UI/UX Development Intern</h3>
+              <p class="tl-meta">4th Switch Pvt. Ltd.</p>
+              <p>Designed wireframes, prototypes, high-fidelity mockups and developed the front-end UI for web &amp; mobile real-time GPS based tracking applications.</p>
+              <p class="tl-range">November 2015 - May 2016</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ LEADERSHIP & RECOGNITION -->
+  <section class="section" id="leadership" aria-labelledby="lead-h">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Beyond the deliverables</span>
+        <h2 id="lead-h">Leadership &amp; recognition</h2>
+      </div>
+
+      <div class="lead-grid">
+        <div class="lead-col reveal">
+          <h3>Leadership &amp; mentoring</h3>
+          <ul>
+            <li>Onboarded and trained new design interns.</li>
+            <li>Ran design reviews to keep design quality consistent across the team.</li>
+            <li>Drove cross-functional alignment between Product, UX, and Engineering across multiple initiatives — including Unified User Management, My Workspace, the Elemental Design System, and Redesign features.</li>
+            <li>Trained fellow designers on complex design flows and internal tooling.</li>
+          </ul>
+        </div>
+
+        <div class="lead-col reveal" data-delay="1">
+          <h3>Awards &amp; recognition</h3>
+          <ul>
+            <li><strong>FourKites Dream Team Award</strong> (2019, 2021) — recognized for "visually intuitive designs" across the FourKites Redesign and Elemental Design System.</li>
+            <li><strong>Leadership recognition</strong> — named by FourKites leadership, including CEO & CPO, among the team whose Redesign work customers praised at the 2020 Visibility customer conference.</li>
+            <li><strong>Ongoing stakeholder recognition</strong> — regularly recognized by internal stakeholders for design quality, reliability, and cross-functional collaboration, including fast turnaround on ocean-disruption and explainability design work.</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
@@ -231,7 +271,7 @@
 
       <div class="work-grid">
         <article class="work-card reveal" data-cat="systems">
-          <img src="img/p1.jpg" alt="Elemental Design System — FourKites' company-wide design system" width="800" height="600">
+          <img src="img/p1.svg" alt="Elemental Design System — FourKites' company-wide design system" width="800" height="600">
           <div class="work-overlay">
             <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M17 7H8M17 7v9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="cat">Systems · Design System</span>
@@ -241,7 +281,7 @@
         </article>
 
         <article class="work-card reveal" data-cat="product" data-delay="1">
-          <img src="img/p2.jpg" alt="My Workspace — FourKites customer landing page dashboard" width="800" height="600">
+          <img src="img/p2.svg" alt="My Workspace — FourKites customer landing page dashboard" width="800" height="600">
           <div class="work-overlay">
             <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M17 7H8M17 7v9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="cat">Product · Dashboard</span>
@@ -251,7 +291,7 @@
         </article>
 
         <article class="work-card reveal" data-cat="product" data-delay="2">
-          <img src="img/p3.jpg" alt="FourKites Redesign — core shipment-tracking experience" width="800" height="600">
+          <img src="img/p3.svg" alt="FourKites Redesign — core shipment-tracking experience" width="800" height="600">
           <div class="work-overlay">
             <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M17 7H8M17 7v9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="cat">Product · Redesign</span>
@@ -261,7 +301,7 @@
         </article>
 
         <article class="work-card reveal" data-cat="ai">
-          <img src="img/p4.jpg" alt="FourSight AI — FourKites' AI assistant experience" width="800" height="600">
+          <img src="img/p4.svg" alt="FourSight AI — FourKites' AI assistant experience" width="800" height="600">
           <div class="work-overlay">
             <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M17 7H8M17 7v9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="cat">AI · Assistant</span>
@@ -270,18 +310,18 @@
           <a href="projects.html#p4" aria-label="View full case study on Work page"></a>
         </article>
 
-        <article class="work-card reveal" data-cat="product" data-delay="1">
-          <img src="img/p5.jpg" alt="Address Manager — usage audit and UX redesign of one of FourKites' most-used tools" width="800" height="600">
+        <article class="work-card reveal" data-cat="ai" data-delay="1">
+          <img src="img/p13.svg" alt="My Design Process — a six-phase flow from Discover through Ship, pre-AI and AI-assisted" width="800" height="600">
           <div class="work-overlay">
             <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M17 7H8M17 7v9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <span class="cat">Product · UX Redesign</span>
-            <h3>Address Manager</h3>
+            <span class="cat">Practice · Process</span>
+            <h3>My Design Process</h3>
           </div>
-          <a href="projects.html#p5" aria-label="View full case study on Work page"></a>
+          <a href="projects.html#p13" aria-label="View full case study on Work page"></a>
         </article>
 
         <article class="work-card reveal" data-cat="systems" data-delay="2">
-          <img src="img/p6.jpg" alt="Unified User Management — unifying FourKites' per-product user systems" width="800" height="600">
+          <img src="img/p6.svg" alt="Unified User Management — unifying FourKites' per-product user systems" width="800" height="600">
           <div class="work-overlay">
             <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M17 7H8M17 7v9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="cat">Systems · User Management</span>
@@ -293,62 +333,45 @@
     </div>
   </section>
 
-  <!-- ==================================================== TESTIMONIALS -->
-  <section class="section section--forest on-dark" id="voices" aria-labelledby="voices-h">
+  <!-- =================================================== QUANTIFIABLE IMPACT -->
+  <section class="section section--forest on-dark" id="impact" aria-labelledby="impact-h">
     <div class="wrap">
       <div class="section-head reveal">
-        <span class="eyebrow">Kind words</span>
-        <h2 id="voices-h">What it's like to work with me</h2>
-        <p>Honest notes from founders and design leads I've shipped alongside.</p>
+        <span class="eyebrow">Proof, not just process</span>
+        <h2 id="impact-h">Quantifiable impact</h2>
+        <p>A few real numbers pulled straight from the case studies above.</p>
       </div>
 
-      <div class="tst-wrap reveal">
-        <div class="tst-track" id="tstTrack" tabindex="0" aria-label="Testimonials, scrollable">
-          <figure class="tst-card">
-            <div class="quote-mark" aria-hidden="true">&ldquo;</div>
-            <blockquote>Kevin joined for six weeks and left us with a product that finally felt finished. She asks the questions nobody else on the team thinks to ask — and then quietly answers them in the design.</blockquote>
-            <figcaption class="tst-person">
-              <img src="img/t1.jpg" alt="">
-              <span>
-                <span class="who">Tomás Rocha</span>
-                <span class="role">Co-founder, Halo</span>
-              </span>
-            </figcaption>
-          </figure>
-
-          <figure class="tst-card">
-            <div class="quote-mark" aria-hidden="true">&ldquo;</div>
-            <blockquote>Our brand went from a folder of mismatched files to a system the whole company actually uses. Marketing, product, and sales finally look like the same company. Worth every euro.</blockquote>
-            <figcaption class="tst-person">
-              <img src="img/t2.jpg" alt="">
-              <span>
-                <span class="who">Ingrid Halvorsen</span>
-                <span class="role">Head of Design, Terra</span>
-              </span>
-            </figcaption>
-          </figure>
-
-          <figure class="tst-card">
-            <div class="quote-mark" aria-hidden="true">&ldquo;</div>
-            <blockquote>I've hired a lot of freelancers. Kevin is the rare one who makes the whole team better while she's here. Calm, sharp, generous with feedback. We rebooked her before the first project even wrapped.</blockquote>
-            <figcaption class="tst-person">
-              <img src="img/t3.jpg" alt="">
-              <span>
-                <span class="who">Daniel Osei</span>
-                <span class="role">VP Product, Beacon</span>
-              </span>
-            </figcaption>
-          </figure>
+      <div class="impact-grid">
+        <div class="impact-card reveal">
+          <div class="impact-num">40–60%</div>
+          <p>Faster component development after the Elemental Design System shipped.</p>
+          <a class="impact-link" href="projects.html#p1">Elemental Design System →</a>
         </div>
-
-        <div class="tst-nav">
-          <button class="tst-btn" id="tstPrev" aria-label="Previous testimonial">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <button class="tst-btn" id="tstNext" aria-label="Next testimonial">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="tst-dots" id="tstDots"></div>
+        <div class="impact-card reveal" data-delay="1">
+          <div class="impact-num">18%</div>
+          <p>Increase in executive engagement within three months, driving 46% more upsells.</p>
+          <a class="impact-link" href="projects.html#p2">My Workspace →</a>
+        </div>
+        <div class="impact-card reveal" data-delay="2">
+          <div class="impact-num">11–13%</div>
+          <p>Improvement in geofence entry-success accuracy over the existing custom shape.</p>
+          <a class="impact-link" href="projects.html#p5">Address Manager →</a>
+        </div>
+        <div class="impact-card reveal">
+          <div class="impact-num">4–5X</div>
+          <p>Increase in self-service sign-up page visits after the carrier funnel fix.</p>
+          <a class="impact-link" href="projects.html#p7">FourKites Connect →</a>
+        </div>
+        <div class="impact-card reveal" data-delay="1">
+          <div class="impact-num">286%</div>
+          <p>Quarter-over-quarter growth in carrier accounts created.</p>
+          <a class="impact-link" href="projects.html#p7">FourKites Connect →</a>
+        </div>
+        <div class="impact-card reveal" data-delay="2">
+          <div class="impact-num">90%+</div>
+          <p>Design-to-code fidelity after UXAT — up from roughly 60% before.</p>
+          <a class="impact-link" href="projects.html#p14">UX Acceptance Testing (UXAT) →</a>
         </div>
       </div>
     </div>
@@ -359,13 +382,13 @@
     <div class="wrap contact-grid">
       <div class="contact-intro reveal">
         <span class="eyebrow">Let's talk</span>
-        <h2 id="contact-h">Have a project in mind? I'd love to hear it.</h2>
-        <p>I take on a small number of projects each quarter so I can give each one real attention. Tell me a little about what you're building and I'll reply within two working days.</p>
+        <h2 id="contact-h">Say hello.</h2>
+        <p>Always happy to connect with fellow designers, talk shop about a project, or hear about an interesting opportunity. Drop me an email — I'll get back to you within a couple of days.</p>
 
         <ul class="contact-list">
           <li>
             <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <span><small>Email</small><a href="mailto:hello@KevinMiranda.com">thekevinmiranda@gmail.com</a></span>
+            <span><small>Email</small><a href="mailto:thekevinmiranda@gmail.com">thekevinmiranda@gmail.com</a></span>
           </li>
           <!-- <li>
             <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
@@ -378,59 +401,18 @@
         </ul>
 
         <ul class="socials" aria-label="Kevin on social platforms">
-          <li><a href="#" aria-label="Dribbble"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.8"/><path d="M5 8c4.5 2 9 2.5 13.5 1M8.5 4.5C12 8 14 13 14.5 19.5M18.8 14.5c-5-1.5-9.5-.3-12.6 3.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
-          <li><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/></svg></a></li>
-          <li><a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M8 10.5V17M8 7.6v.02M11.6 17v-3.6c0-1.4 1-2.4 2.3-2.4s2.1 1 2.1 2.4V17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
+          <li><a href="https://dribbble.com/kevinmiranda" target="_blank" rel="noopener" aria-label="Dribbble"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.8"/><path d="M5 8c4.5 2 9 2.5 13.5 1M8.5 4.5C12 8 14 13 14.5 19.5M18.8 14.5c-5-1.5-9.5-.3-12.6 3.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
+          <li><a href="https://www.linkedin.com/in/thekevinmiranda/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M8 10.5V17M8 7.6v.02M11.6 17v-3.6c0-1.4 1-2.4 2.3-2.4s2.1 1 2.1 2.4V17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
         </ul>
       </div>
 
-      <form class="form-card reveal" id="contactForm" novalidate>
-        <div class="field two">
-          <div>
-            <label for="cf-name">Name <span class="req" aria-hidden="true">*</span></label>
-            <input type="text" id="cf-name" name="name" autocomplete="name" required aria-describedby="cf-name-err" aria-invalid="false">
-            <span class="err" id="cf-name-err" role="alert">Please add your name.</span>
-          </div>
-          <div>
-            <label for="cf-email">Email <span class="req" aria-hidden="true">*</span></label>
-            <input type="email" id="cf-email" name="email" autocomplete="email" required aria-describedby="cf-email-err" aria-invalid="false">
-            <span class="err" id="cf-email-err" role="alert">Enter a valid email address.</span>
-          </div>
-        </div>
-
-        <div class="field">
-          <label for="cf-type">What do you need?</label>
-          <select id="cf-type" name="type">
-            <option value="product">Product design (UX/UI)</option>
-            <option value="brand">Brand &amp; identity</option>
-            <option value="system">Design system</option>
-            <option value="direction">Art direction</option>
-            <option value="other">Something else</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="cf-budget">Rough budget</label>
-          <select id="cf-budget" name="budget">
-            <option value="lt5">Under €5k</option>
-            <option value="5-15">€5k – €15k</option>
-            <option value="15-40">€15k – €40k</option>
-            <option value="40plus">€40k+</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="cf-msg">Tell me about the project <span class="req" aria-hidden="true">*</span></label>
-          <textarea id="cf-msg" name="message" required placeholder="What are you building, and what does success look like?" aria-describedby="cf-msg-err" aria-invalid="false"></textarea>
-          <span class="err" id="cf-msg-err" role="alert">A sentence or two is plenty.</span>
-        </div>
-
-        <button type="submit" class="btn2 form-submit">
-          Send message
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <p class="form-note" id="formNote" role="status">Thanks — your message is on its way. I'll be in touch within two working days.</p>
-      </form>
+      <div class="map-card reveal" aria-label="Map showing Kevin's location in Chennai, India">
+        <span class="map-pin-tag">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21c5-4.5 7.5-8 7.5-11a7.5 7.5 0 0 0-15 0c0 3 2.5 6.5 7.5 11Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.6" stroke="currentColor" stroke-width="1.8"/></svg>
+          Chennai, India
+        </span>
+        <div id="chennaiMap" role="img" aria-label="Map centered on Chennai, India"></div>
+      </div>
     </div>
   </section>
 </main>
@@ -441,33 +423,23 @@
     <div class="footer-top">
       <div class="footer-brand">
         <a class="brand" href="#top" aria-label="Kevin Miranda — home">
-          <span class="mono" aria-hidden="true">NM</span>
+          <img src="img/logo.svg" alt="Kevin Miranda logo" width="48" height="48" style="border-radius: 6px;"/>
           <span>Kevin&nbsp;Miranda<small>UX &amp; Interaction Designer</small></span>
         </a>
         <p>A UI/UX &amp; interaction designer with a keen eye for detail &amp; a knack for visualizing any idea put forth.</p>
         <ul class="socials" aria-label="Kevin on social platforms">
-          <li><a href="#" aria-label="Dribbble"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.8"/><path d="M5 8c4.5 2 9 2.5 13.5 1M8.5 4.5C12 8 14 13 14.5 19.5M18.8 14.5c-5-1.5-9.5-.3-12.6 3.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
-          <li><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/></svg></a></li>
-          <li><a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M8 10.5V17M8 7.6v.02M11.6 17v-3.6c0-1.4 1-2.4 2.3-2.4s2.1 1 2.1 2.4V17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
-          <li><a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 4l7.6 9.6L4.4 20M20 4l-7.5 8.2M20 20l-7.6-9.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+          <li><a href="https://dribbble.com/kevinmiranda" target="_blank" rel="noopener" aria-label="Dribbble"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.8"/><path d="M5 8c4.5 2 9 2.5 13.5 1M8.5 4.5C12 8 14 13 14.5 19.5M18.8 14.5c-5-1.5-9.5-.3-12.6 3.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
+          <li><a href="https://www.linkedin.com/in/thekevinmiranda/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M8 10.5V17M8 7.6v.02M11.6 17v-3.6c0-1.4 1-2.4 2.3-2.4s2.1 1 2.1 2.4V17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
         </ul>
       </div>
 
       <nav class="footer-col" aria-label="Site">
         <h4>Explore</h4>
         <a href="#about">About</a>
+        <a href="#experience">Experience</a>
         <a href="#projects">Work</a>
-        <a href="#services">Services</a>
-        <a href="#voices">Testimonials</a>
+        <a href="#impact">Impact</a>
         <a href="#contact">Contact</a>
-      </nav>
-
-      <nav class="footer-col" aria-label="Services">
-        <h4>Services</h4>
-        <a href="#services">Product design</a>
-        <a href="#services">Brand &amp; identity</a>
-        <a href="#services">Design systems</a>
-        <a href="#services">Art direction</a>
       </nav>
     </div>
 
@@ -478,6 +450,8 @@
 </footer>
 
 <script src="js/vendor/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="js/contact-map.js"></script>
 <script src="js/main.js"></script>
 <script>document.getElementById("year").innerHTML = new Date().getFullYear();</script>
 </body>

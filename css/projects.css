@@ -144,6 +144,30 @@
 .proj-quote p { font-style: italic; font-size: 1rem; margin: 0 0 .5rem; }
 .proj-quote cite { font-style: normal; font-size: .84rem; color: var(--sage); font-weight: 600; }
 
+/* Testimonial cards — 3-column grid (used for Customer Testimonials sections
+   with several quotes; a lone .proj-quote elsewhere stays the full-width
+   left-accent style above). */
+.proj-quote-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: .9rem;
+}
+.proj-quote-grid .proj-quote {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.proj-quote-grid .proj-quote p { flex: 1 1 auto; }
+
+@media (max-width: 900px) {
+  .proj-quote-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .proj-quote-grid { grid-template-columns: 1fr; }
+}
+
 /* ----------------------------------------------------------- link chips --- */
 .proj-links { margin-top: .9rem; display: flex; flex-wrap: wrap; gap: .55rem; }
 .proj-chip {
@@ -233,7 +257,7 @@
   font-size: .7rem;
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--sage);
+  color: var(--marigold-d);
   margin: 1.3rem 0 .5rem;
 }
 .proj-nav-label:first-child { margin-top: 0; }
@@ -552,8 +576,7 @@
   color: #ffffff;
   box-shadow: 0 1px 2px 0 rgba(10,13,18,.05), inset 0 0 0 1px rgba(10,13,18,.18), inset 0 -2px 0 0 rgba(10,13,18,.05);
 }
-.eds-btn--solid-primary:hover,
-.eds-btn--solid-primary.is-hover { background: #0B51B7; }
+.eds-btn--solid-primary:hover { background: #0B51B7; }
 .eds-btn--solid-primary:disabled {
   background: #CFE1FC;
   box-shadow: none;
@@ -702,7 +725,7 @@
   box-shadow: 0 2px 4px 0 rgba(10,13,18,.12), 0 1px 2px -1px rgba(10,13,18,.1);
   transition: transform .18s ease, background .15s ease;
 }
-.eds-toggle input:checked + .track { background: #0E65E5; border-color: #0B51B7; justify-content: flex-end; }
+.eds-toggle input:checked + .track { background: #0E65E5; border-color: #0B51B7; }
 .eds-toggle input:checked + .track .thumb { background: #ffffff; transform: translateX(20px); }
 
 /* hover */
@@ -988,6 +1011,112 @@
   .dp-arrow-slot { display: none; }
   .dp-detail-grid { grid-template-columns: 1fr; }
   .dp-bar-era { width: 44px; font-size: 11.5px; }
+}
+
+/* ==========================================================================
+   Before/After compare slider — drag-to-reveal comparison between the
+   classic and redesigned tracking UI (FourKites Redesign, "Before & After").
+   Sits in the same newspaper-editorial figure chrome as .proj-inline-figure
+   (rounded corners, shadow, italic caption below) but the image area is an
+   interactive drag slider rather than a single static photo. Vanilla
+   JS/CSS, no dependencies — see js/projects.js.
+   ========================================================================== */
+.compare-figure { margin: 1.5rem 0; max-width: 54rem; }
+.compare-figure figcaption {
+  margin-top: .6rem;
+  font-family: var(--f-display);
+  font-style: italic;
+  font-size: .92rem;
+  color: var(--sage);
+  line-height: 1.5;
+}
+
+.compare-slider {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3452 / 1924; /* matches the source screenshots */
+  border-radius: var(--r);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  background: var(--paper-2);
+  cursor: ew-resize;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: none; /* dragging is handled entirely via Pointer Events */
+}
+.compare-slider img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+.compare-slider__before-wrap {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 calc(100% - var(--pos, 50%)) 0 0);
+}
+
+.compare-slider__label {
+  position: absolute;
+  bottom: .85rem;
+  font-family: var(--f-body);
+  font-weight: 700;
+  font-size: .74rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(20, 35, 28, .78);
+  padding: .32rem .8rem;
+  border-radius: 999px;
+  pointer-events: none;
+}
+.compare-slider__label--before { left: .85rem; }
+.compare-slider__label--after { right: .85rem; }
+
+.compare-slider__handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--pos, 50%);
+  width: 0;
+}
+.compare-slider__handle::before {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 3px;
+  background: #fff;
+  transform: translateX(-50%);
+  box-shadow: 0 0 0 1px rgba(20, 35, 28, .18);
+}
+.compare-slider__grip {
+  position: absolute;
+  top: 50%; left: 0;
+  transform: translate(-50%, -50%);
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--marigold);
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow-sm);
+  color: var(--ink);
+  cursor: ew-resize;
+  transition: border-color .15s ease;
+}
+.compare-slider__handle:hover .compare-slider__grip { border-color: var(--marigold-d); }
+.compare-slider__handle:focus-visible { outline: none; }
+.compare-slider__handle:focus-visible .compare-slider__grip {
+  outline: 3px solid var(--marigold);
+  outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+  .compare-slider__grip { width: 36px; height: 36px; }
+  .compare-slider__label { font-size: .68rem; padding: .26rem .6rem; }
 }
 
 /* --------------------------------------------------------------------------

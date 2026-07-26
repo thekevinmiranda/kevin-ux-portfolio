@@ -44,9 +44,9 @@
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
         <li><a href="projects.html" class="active">Work</a></li>
-        <li><a href="index.html#services">Services</a></li>
-        <li><a href="index.html#voices">Voices</a></li>
+        <li><a href="index.html#impact">Impact</a></li>
         <li><a href="index.html#contact">Contact</a></li>
       </ul>      
     </nav>
@@ -88,6 +88,7 @@
             <li><a class="proj-nav-link" href="#p3"><span class="n">03</span>FourKites Redesign</a></li>
             <li><a class="proj-nav-link is-sub" href="#p3-saved-views">↳ Saved Views</a></li>
             <li><a class="proj-nav-link" href="#p4"><span class="n">04</span>FourSight AI</a></li>
+            <li><a class="proj-nav-link is-sub" href="#p4-genui">↳ Generative UI (GenUI)</a></li>
             <li><a class="proj-nav-link" href="#p5"><span class="n">05</span>Address Manager</a></li>
             <li><a class="proj-nav-link" href="#p6"><span class="n">06</span>Unified User Management</a></li>
           </ul>
@@ -99,13 +100,13 @@
             <li><a class="proj-nav-link" href="#p9"><span class="n">09</span>Intelligent Control Tower</a></li>
             <li><a class="proj-nav-link" href="#p10"><span class="n">10</span>Global Map View</a></li>
             <li><a class="proj-nav-link" href="#p11"><span class="n">11</span>Booking Connect</a></li>
-            <li><a class="proj-nav-link" href="#p12"><span class="n">12</span>Platform IA &amp; Reco Engine</a></li>
           </ul>
 
           <p class="proj-nav-label">How I Work</p>
           <ul>
-            <li><a class="proj-nav-link" href="#p13"><span class="n">13</span>Vibe-Coding with Claude</a></li>
-            <li><a class="proj-nav-link" href="#p14"><span class="n">14</span>My Design Process</a></li>
+            <li><a class="proj-nav-link" href="#p12"><span class="n">12</span>Vibe-Coding with Claude</a></li>
+            <li><a class="proj-nav-link" href="#p13"><span class="n">13</span>My Design Process</a></li>
+            <li><a class="proj-nav-link" href="#p14"><span class="n">14</span>UX Acceptance Testing (UXAT)</a></li>
           </ul>
         </div>
       </nav>
@@ -121,29 +122,44 @@
           <p class="proj-oneliner">FourKites' company-wide design system — a shared foundation of colors, typography, grids, and components built to unify the look and feel across the entire product portfolio.</p>
 
           <div class="proj-sub"><h4>Context &amp; Problem Statement</h4>
-            <p>Built as a collective effort between the UX and Engineering teams, to standardize the look and feel across FourKites' entire product portfolio — replacing what had been an inconsistent, product-by-product visual language.</p>
+            <p>Founded and built in close collaboration with Engineering, to standardize the look and feel across FourKites' entire product portfolio — replacing what had been an inconsistent, product-by-product visual language. Before EDS existed, every application in the FourKites suite looked and behaved completely differently from the next, with no reusable patterns between them. Customers who learned one application had to relearn interactions from scratch in another, driving up cognitive load for users who, in their own mind, were simply using “a FourKites app.” Without shared patterns, the product suite accumulated snowflake components — one-off elements built for a single use case that couldn't be reused anywhere else — forcing engineers to rebuild even the smallest components, down to a single button, again and again across pages. This also produced broken, inconsistent experiences: a search component might behave one way in one app and completely differently in another, so users arrived with an expectation carried over from prior use and were met with surprises when a familiar-looking component didn't behave the way they expected.</p>
           </div>
           <div class="proj-sub"><h4>My Role</h4>
-            <p>Owned and maintained the system across multiple years — auditing components, fixing accessibility and interaction issues, and keeping the library current as the product evolved. Also drove adoption by raising awareness across engineering teams and establishing a consistent process for using the system.</p>
+            <p>I built the Elemental Design System and have owned it since inception — auditing components, fixing accessibility and interaction issues, and keeping the library current as the product evolved. Also drove adoption by raising awareness across engineering teams and establishing a consistent process for using the system. It's still actively being built and maintained today; I continue to lead it, now alongside a small handful of engineers.</p>
           </div>
           <div class="proj-sub"><h4>Design Strategy</h4>
-            <p>Three pillars: color (a consistent tint/shade formula derived from a primary color), typography (a single standard typeface across the whole product), and a shared layout/grid system — all built on WCAG accessibility minimums and a component-reuse philosophy.</p>
-
-            <figure class="proj-inline-figure">
-              <button class="photo-trigger" type="button" aria-label="View larger: Color and typography foundations">
-                <img src="https://placehold.co/1200x675?text=Color+%26+Typography+Foundations" alt="Color and typography foundations — placeholder image" width="1200" height="675">
-              </button>
-              <figcaption>The color and typography foundations underpinning every component in the system.</figcaption>
-            </figure>
+            <p>EDS was built on a simple ideology: components, patterns, and user experience should be reusable and carry over from one product to the next, since to the customer it's never “this app” versus “that app” — it's just a FourKites app. Every pattern needed to work across the full portfolio, and just as importantly, needed to be easy to understand and use for our customers' typical age bracket (40+), many of whom aren't especially tech-savvy.</p>
+            <p>In practice, that meant three pillars: color (a consistent tint/shade formula derived from a primary color), typography (a single standard typeface across the whole product), and a shared layout/grid system — all built on WCAG accessibility minimums and a component-reuse philosophy.</p>
           </div>
-          <div class="proj-sub"><h4>Process</h4>
+          <div class="proj-sub"><h4>Methodology</h4>
+            <p>The system is structured around <a href="https://atomicdesign.bradfrost.com/chapter-2/" target="_blank" rel="noopener">Atomic Design</a>, Brad Frost's methodology for building interface systems out of five nested layers: atoms (the smallest functional pieces — a color token, a type style, a single input or button), molecules (simple, reusable groups of atoms, like a labeled input paired with a button), organisms (more complex, self-contained sections built from molecules and atoms, like a filter bar or a card), templates (layouts that arrange organisms into a page structure), and pages (templates populated with real content). Following this hierarchy keeps every component traceable back to its foundational building blocks and gives design and engineering a shared vocabulary for discussing the same pieces at the same level of abstraction — which is also why the library was built in phases, from foundational styles up to full components, rather than all at once.</p>
+          </div>
+
+          <figure class="proj-inline-figure proj-inline-figure--fit">
+            <button class="photo-trigger" type="button" aria-label="View larger: Atomic Design methodology — atoms, molecules, organisms, templates, pages">
+              <img src="projects/eds/atomic-design-methodology.svg" alt="Diagram of the five Atomic Design stages in sequence: Atoms, Molecules, Organisms, Templates, and Pages, each shown as an icon with an arrow leading to the next.">
+            </button>
+            <figcaption>The five stages of Atomic Design — the foundation this system's structure is built on.</figcaption>
+          </figure>
+          <div class="proj-sub"><h4>Build &amp; Rollout Process</h4>
             <p>Built in phases — foundational styles first, then input controls, then full components — including a complete migration of the design library to Figma.</p>
           </div>
 
           <div class="proj-sub">
+            <h4>New Component Request Process</h4>
+            <p>Every new component starts with a request — from a designer, an engineer, or a product need that surfaces during other design work. Before building anything new, I assess whether the request genuinely justifies a new component, or whether an existing one can be enhanced to accommodate it instead, so the library doesn't accumulate multiple components doing the same job. If a new component really is needed, it goes through design, validation, and testing, then handoff to engineering, a full round of UXAT, and documentation with usage guidelines — before it's released into both Figma and Storybook.</p>
+          </div>
+
+          <figure class="proj-inline-figure proj-inline-figure--fit">
+            <button class="photo-trigger" type="button" aria-label="View larger: New component request and development process">
+              <img src="projects/eds/component-development-process.svg" alt="Flowchart: New Component Request leads to Review & Research, which either enhances an Existing Component or proceeds to UI & UX Design, then Team Validation & Review, Dev Handoff, UXAT, Documentation & Usage Guidelines, and finally Ready for Release.">
+            </button>
+            <figcaption>How a new component request moves from intake to release — checked against existing components before any new build begins.</figcaption>
+          </figure>
+
+          <div class="proj-sub">
             <h4>Component Sticker Sheet</h4>
             <p>A live look at the actual Elemental Design System — real interactive controls (not screenshots), built with the exact colors, type, and component specs pulled directly from the EDS Figma library, including every default/hover/focus/disabled state.</p>
-            <p style="font-size:.85rem; color:var(--sage);">Colors, typography, buttons, dropdowns, toggles, checkboxes, and radios below are pulled node-for-node from Figma, states included. The tag is built from the same real color tokens, but its exact component spec wasn't individually pulled — flagged inline below. Colors are consolidated to one shade (600) per color family rather than every ramp step.</p>
 
             <div class="sticker-sheet eds-sheet">
 
@@ -197,7 +213,6 @@
                 <span class="sticker-group-label">Buttons — Solid</span>
                 <div class="control-row">
                   <button class="eds-btn eds-btn--solid-primary" type="button">Button CTA</button>
-                  <button class="eds-btn eds-btn--solid-primary is-hover" type="button">Button CTA (hover)</button>
                   <button class="eds-btn eds-btn--solid-primary" type="button" disabled>Button CTA (disabled)</button>
                   <button class="eds-btn eds-btn--solid-secondary" type="button">Button CTA</button>
                 </div>
@@ -215,21 +230,21 @@
                 <span class="sticker-group-label">Text Input</span>
                 <div class="control-row" style="align-items:flex-start;">
                   <div class="eds-field">
-                    <label class="eds-label" for="eds-input-default">Label</label>
+                    <label class="eds-label" for="eds-input-default">Label (default)</label>
                     <div class="eds-input-wrap">
                       <input class="eds-input" type="text" id="eds-input-default" placeholder="Placeholder">
                     </div>
                     <p class="eds-hint">This is a hint text to help user.</p>
                   </div>
                   <div class="eds-field">
-                    <label class="eds-label" for="eds-input-error">Label</label>
+                    <label class="eds-label" for="eds-input-error">Label (error)</label>
                     <div class="eds-input-wrap is-error">
                       <input class="eds-input" type="text" id="eds-input-error" placeholder="Placeholder" aria-invalid="true">
                     </div>
                     <p class="eds-hint is-error">This is an error message.</p>
                   </div>
                   <div class="eds-field">
-                    <label class="eds-label" for="eds-input-disabled">Label</label>
+                    <label class="eds-label" for="eds-input-disabled">Label (disabled)</label>
                     <div class="eds-input-wrap is-disabled">
                       <input class="eds-input" type="text" id="eds-input-disabled" placeholder="Placeholder" disabled>
                     </div>
@@ -241,7 +256,7 @@
                 <span class="sticker-group-label">Dropdown</span>
                 <div class="control-row" style="align-items:flex-start;">
                   <div class="eds-field">
-                    <label class="eds-label" for="eds-select-default">Label</label>
+                    <label class="eds-label" for="eds-select-default">Label (default)</label>
                     <div class="eds-select-wrap">
                       <select class="eds-select" id="eds-select-default">
                         <option>Option one</option>
@@ -253,7 +268,7 @@
                     <p class="eds-hint">This is a hint text to help the user</p>
                   </div>
                   <div class="eds-field">
-                    <label class="eds-label" for="eds-select-error">Label</label>
+                    <label class="eds-label" for="eds-select-error">Label (error)</label>
                     <div class="eds-select-wrap is-error">
                       <select class="eds-select" id="eds-select-error" aria-invalid="true">
                         <option>Option one</option>
@@ -325,37 +340,13 @@
             </ul>
           </div>
           <div class="proj-sub"><h4>Impact &amp; Outcome</h4>
+            <p>Since EDS was implemented, FourKites has seen far fewer fragmented experiences and UI/UX inconsistencies, and a noticeably more cohesive look, feel, and behavior across products.</p>
             <ul>
-              <li><strong>40–60% faster development:</strong> reusable, ready-to-implement components cut the time it takes engineering to ship new UI.</li>
+              <li><strong>40-60% faster development:</strong> reusable, ready-to-implement components cut the time it takes engineering to ship new UI.</li>
               <li><strong>Stronger consistency &amp; fidelity:</strong> standard UX patterns applied consistently across every application and page, closing the gap between design intent and what actually ships.</li>
               <li><strong>Fewer clicks to the outcome:</strong> streamlined common interactions so users reach the result they're after in fewer steps.</li>
             </ul>
-            <p>The system continues to be actively maintained and used across every FourKites product team.</p>
-          </div>
-                  <div class="proj-sub">
-            <h4>Photos</h4>
-            <div class="proj-photo-grid">
-                <figure class="photo-card">
-                  <button class="photo-trigger" type="button" data-gallery="p1" aria-label="View larger: Color Tokens">
-                    <img src="https://placehold.co/600x400?text=Color+Tokens" alt="Color Tokens — placeholder image" width="600" height="400">
-                  </button>
-                </figure>
-                <figure class="photo-card">
-                  <button class="photo-trigger" type="button" data-gallery="p1" aria-label="View larger: Typography Scale">
-                    <img src="https://placehold.co/600x400?text=Typography+Scale" alt="Typography Scale — placeholder image" width="600" height="400">
-                  </button>
-                </figure>
-                <figure class="photo-card">
-                  <button class="photo-trigger" type="button" data-gallery="p1" aria-label="View larger: Component Library">
-                    <img src="https://placehold.co/600x400?text=Component+Library" alt="Component Library — placeholder image" width="600" height="400">
-                  </button>
-                </figure>
-                <figure class="photo-card">
-                  <button class="photo-trigger" type="button" data-gallery="p1" aria-label="View larger: Button States">
-                    <img src="https://placehold.co/600x400?text=Button+States" alt="Button States — placeholder image" width="600" height="400">
-                  </button>
-                </figure>
-            </div>
+            <p>Rollout is still ongoing — EDS continues to be implemented across the remaining apps, with current work focused on adding full theming support for light and dark modes. The system continues to be actively maintained and used across every FourKites product team.</p>
           </div>
         </article>
 
@@ -419,39 +410,34 @@
               <li>A defined six-phase process governed how new dashboards were added: design discussion → wireframe walkthrough → engineering discussion → build → release → post-release monitoring, with usability sign-off required before every release.</li>
             </ul>
 
-            <figure class="proj-inline-figure">
-              <button class="photo-trigger" type="button" aria-label="View larger: Executive Customer Advisory Board validation session">
-                <img src="https://placehold.co/1200x675?text=E-CAB+Validation+Session" alt="Executive Customer Advisory Board validation session — placeholder image" width="1200" height="675">
+            <figure class="proj-inline-figure proj-inline-figure--fit">
+              <button class="photo-trigger" type="button" aria-label="View larger: My Workspace Executive Summary view">
+                <img src="projects/workspace/workspace-exec-preview.png" alt="The My Workspace Executive Summary view, showing On-Time Shipment Performance, Total Emissions by Mode, Facilities by Dwell Time and Detention, and Order Performance widgets.">
               </button>
-              <figcaption>A validation session with Executive Customer Advisory Board members, reviewing widget-level feedback.</figcaption>
+              <figcaption>The Executive Summary view — the same widget-level layout reviewed with Executive Customer Advisory Board members.</figcaption>
             </figure>
-          </div>
-
-          <div class="proj-sub">
-            <h4>Key Artifacts</h4>
-            <div class="proj-links">
-              <a class="proj-chip" href="https://www.figma.com/proto/jIJe7iqJkO1KDz0jXBMMeY/FK-Workspace-Concept?page-id=1917%3A135931&node-id=1977-140629" target="_blank" rel="noopener">Figma prototype ↗</a>
-            </div>
           </div>
 
           <div class="proj-sub">
             <h4>Impact &amp; Outcome</h4>
             <ul>
               <li>Unveiled at FourKites' Visibility Conference 2023 in Chicago — became the event's highlight.</li>
-              <li>Executive usage increased 18% within three months.</li>
-              <li>46% increase in upsells; 100+ new product leads generated; first upsell closed within one month.</li>
-              <li>Executive NPS grew 32 points.</li>
+              <li>Executive usage increased <strong>18%</strong> within three months.</li>
+              <li><strong>46%</strong> increase in upsells; <strong>100+</strong> new product leads generated; first upsell closed within one month.</li>
+              <li>Executive NPS grew <strong>32 points</strong>.</li>
               <li>Helped reposition FourKites from "visibility provider" to "Control Tower ecosystem player."</li>
             </ul>
           </div>
 
           <div class="proj-sub">
             <h4>Customer Testimonials</h4>
-            <div class="proj-quote"><p>"The concept is great, I liked the quick access to the aggregated data... YOU GUYS NAILED IT WITH THE UI."</p><cite>Laura Ensell — Technology Director, Logistics, Dow</cite></div>
-            <div class="proj-quote"><p>"My Workspace has truly changed the way we interact with our supply chain data. It's become a daily habit."</p><cite>Mari Roberts — VP of Transportation, Frito-Lay</cite></div>
-            <div class="proj-quote"><p>"The centralised landing page having all relevant information in one place means we no longer waste time searching across different platforms."</p><cite>Tom Morton — VP of Global Supply Chain &amp; Quality, Eastman Chemical</cite></div>
-            <div class="proj-quote"><p>"The flexibility to customize the dashboard based on our personas is fantastic."</p><cite>Joe Garvin — Director of Global Logistics, 3M</cite></div>
-            <div class="proj-quote"><p>"Having all of FourKites' offerings consolidated into a single location is a game-changer."</p><cite>Raina Avalon — Chief Logistics Officer, TJX</cite></div>
+            <div class="proj-quote-grid">
+              <div class="proj-quote"><p>"The concept is great, I liked the quick access to the aggregated data... YOU GUYS NAILED IT WITH THE UI."</p><cite>Laura Ensell — Technology Director, Logistics, Dow</cite></div>
+              <div class="proj-quote"><p>"My Workspace has truly changed the way we interact with our supply chain data. It's become a daily habit."</p><cite>Mari Roberts — VP of Transportation, Frito-Lay</cite></div>
+              <div class="proj-quote"><p>"The centralised landing page having all relevant information in one place means we no longer waste time searching across different platforms."</p><cite>Tom Morton — VP of Global Supply Chain &amp; Quality, Eastman Chemical</cite></div>
+              <div class="proj-quote"><p>"The flexibility to customize the dashboard based on our personas is fantastic."</p><cite>Joe Garvin — Director of Global Logistics, 3M</cite></div>
+              <div class="proj-quote"><p>"Having all of FourKites' offerings consolidated into a single location is a game-changer."</p><cite>Raina Avalon — Chief Logistics Officer, TJX</cite></div>
+            </div>
           </div>
 
           <div class="proj-sub">
@@ -460,31 +446,6 @@
               <a class="proj-chip" href="https://www.fourkites.com/press/fourkites-launches-my-workspace-to-empower-customers-with-instant-customizable-supply-chain-insights/" target="_blank" rel="noopener">FourKites launch ↗</a>
               <a class="proj-chip" href="https://www.sdcexec.com/software-technology/supply-chain-visibility/news/22872109/fourkites-fourkites-my-workspace-dashboard-to-centralize-customizable-supply-chain-insights" target="_blank" rel="noopener">SDC Executive ↗</a>
               <a class="proj-chip" href="https://www.businesswire.com/news/home/20230906812738/en/" target="_blank" rel="noopener">Business Wire ↗</a>
-            </div>
-          </div>
-                  <div class="proj-sub">
-            <h4>Photos</h4>
-            <div class="proj-photo-grid">
-                <figure class="photo-card">
-                  <button class="photo-trigger" type="button" data-gallery="p2" aria-label="View larger: Landing Page">
-                    <img src="https://placehold.co/600x400?text=Landing+Page" alt="Landing Page — placeholder image" width="600" height="400">
-                  </button>
-                </figure>
-                <figure class="photo-card">
-                  <button class="photo-trigger" type="button" data-gallery="p2" aria-label="View larger: Widget Detail">
-                    <img src="https://placehold.co/600x400?text=Widget+Detail" alt="Widget Detail — placeholder image" width="600" height="400">
-                  </button>
-                </figure>
-                <figure class="photo-card">
-                  <button class="photo-trigger" type="button" data-gallery="p2" aria-label="View larger: Executive View">
-                    <img src="https://placehold.co/600x400?text=Executive+View" alt="Executive View — placeholder image" width="600" height="400">
-                  </button>
-                </figure>
-                <figure class="photo-card">
-                  <button class="photo-trigger" type="button" data-gallery="p2" aria-label="View larger: Operational View">
-                    <img src="https://placehold.co/600x400?text=Operational+View" alt="Operational View — placeholder image" width="600" height="400">
-                  </button>
-                </figure>
             </div>
           </div>
         </article>
@@ -499,6 +460,7 @@
             <ul>
               <li><strong>Navigation:</strong> a single, extensible pattern that could support every mode — Truckload, LTL, Ocean, Rail, Parcel, and Air — plus multiple languages and white-labeling, without forking the experience per mode.</li>
               <li><strong>Shipment cards &amp; list view:</strong> the existing cards treated every shipment identically regardless of phase. The redesign split shipment status into Pre-Pickup, In-Transit, and At-Stop, so each phase surfaces only the data that's actually reliable at that point — an ETA prediction on a shipment that hasn't shipped yet does more harm than good — with clearer signals on which data points are inferred versus customer-provided.</li>
+              <li><strong>Shipments page configuration:</strong> let customers configure their own card view, list view, and filters, so the shipments page could be personalized to each team's individual use cases and scenarios rather than shipping with one fixed layout for everyone.</li>
               <li><strong>Shipment Details pages:</strong> redesigned the detail view customers land on from every card and search result, restructuring dense tracking, exception, and document data around the question customers actually land there to answer: where is it, and what's wrong.</li>
               <li><strong>Filter &amp; filtering experience:</strong> filters were noisy, ate up a large share of the screen, and made simple things like reusing a team's saved setup unintuitive — the direct problem Saved Views (below) was built to solve.</li>
               <li><strong>Export experience:</strong> rebuilt how customers pull tracking data out of the platform, aligning what's exportable with what's actually filterable and visible on-screen.</li>
@@ -509,13 +471,37 @@
             <p>(Control tower work from the same initiative is covered in its own case study elsewhere in this list.)</p>
           </div>
           <div class="proj-sub"><h4>My Role</h4>
-            <p>Led design across the redesign end-to-end — from initial concept through execution and delivery — owning navigation, shipment cards &amp; list view, shipment detail pages, filtering, export, map view, and saved views, plus a steady stream of feature releases, enhancements, and bug fixes post-launch. Worked directly with enterprise customers — including SC Johnson, Henkel, and others — to validate designs and resolve real-world issues as they surfaced.</p>
+            <p>Led design across the redesign end-to-end — from initial concept through execution and delivery — owning navigation, shipment cards &amp; list view, shipments page configuration, shipment detail pages, filtering, export, map view, and saved views, plus a steady stream of feature releases, enhancements, and bug fixes post-launch. Worked directly with enterprise customers — including SC Johnson, Henkel, and others — to validate designs and resolve real-world issues as they surfaced.</p>
           </div>
           <div class="proj-sub"><h4>Design Strategy / Process</h4>
             <p>A mix of net-new feature design — Saved Views, Export, the filtering overhaul — and component-level audits against the design system for existing surfaces, with fixes prioritized by customer impact and increasingly supported by AI-assisted development to ship faster (see Vibe-Coding with Claude, below).</p>
           </div>
           <div class="proj-sub"><h4>Search &amp; Discovery</h4>
             <p>Filters were noisy, ate up a large share of the screen, and made simple things like reusing a team's saved setup unintuitive — while the search box had quietly become a workaround for filtering limitations it was never meant to solve. Saved Views, below, was the direct response to that gap.</p>
+          </div>
+
+          <div class="proj-sub" id="p3-before-after">
+            <h4>Before &amp; After</h4>
+            <p>The redesign replaced a dense, one-size-fits-all shipment list with the phase-aware experience described above. Drag the handle to compare the classic FourKites tracking UI against the redesigned one.</p>
+            <figure class="compare-figure">
+              <div class="compare-slider" data-compare-slider style="--pos: 50%;">
+                <img class="compare-slider__after" src="projects/redesign/new-ui.png" alt="Redesigned FourKites tracking UI" draggable="false">
+                <div class="compare-slider__before-wrap">
+                  <img class="compare-slider__before" src="projects/redesign/classic-ui.png" alt="Classic FourKites tracking UI, before the redesign" draggable="false">
+                </div>
+                <span class="compare-slider__label compare-slider__label--before">Before</span>
+                <span class="compare-slider__label compare-slider__label--after">After</span>
+                <div class="compare-slider__handle" role="slider" tabindex="0" aria-label="Drag to compare the classic and redesigned tracking UI" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+                  <span class="compare-slider__grip" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M10 6 4 12l6 6"></path>
+                      <path d="M14 6l6 6-6 6"></path>
+                    </svg>
+                  </span>
+                </div>
+              </div>
+              <figcaption>Classic FourKites tracking UI (left) vs. the redesigned experience (right) — drag to compare.</figcaption>
+            </figure>
           </div>
 
           <div class="proj-subcard" id="p3-saved-views">
@@ -545,12 +531,17 @@
               <div class="proj-photo-grid">
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="saved-views" aria-label="View larger: Saved Views toolbar">
-                    <img src="https://placehold.co/600x400?text=Saved+Views+Toolbar" alt="Saved Views toolbar — placeholder image" width="600" height="400">
+                    <img src="projects/redesign/saved-views.png" alt="Saved Views toolbar — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
                   <button class="photo-trigger" type="button" data-gallery="saved-views" aria-label="View larger: Saved Views edit mode">
-                    <img src="https://placehold.co/600x400?text=Edit+Mode" alt="Saved Views edit mode — placeholder image" width="600" height="400">
+                    <img src="projects/redesign/saved-views-create.png" alt="Saved Views edit mode — placeholder image" width="600" height="400">
+                  </button>
+                </figure>
+                <figure class="photo-card">
+                  <button class="photo-trigger" type="button" data-gallery="saved-views" aria-label="View larger: Saved Views edit mode">
+                    <img src="projects/redesign/saved-views-switcher.png" alt="Saved Views edit mode — placeholder image" width="600" height="400">
                   </button>
                 </figure>
               </div>
@@ -587,11 +578,57 @@
             <p>The prior landing-page experience packed in many separate dashboards, requiring users to navigate complex menus and filters just to find relevant information — creating high friction for new users. FourSight was designed to pair a conversational AI assistant with clearer, more guided data exploration.</p>
           </div>
           <div class="proj-sub"><h4>My Role</h4>
-            <p>Led a full usability review of FourSight — improving sidebar icon consistency, aligning headers with the rest of the product, simplifying overly technical language, and removing friction points in the chat flow. Also contributed to the longer-term product vision for AI-assisted insights and data explainability.</p>
+            <ul>
+              <li>Wireframed and designed the initial concepts — evolving the product's requirements from an AI-powered chatbot into a full-fledged application with a standalone page and insights experience.</li>
+              <li>Defined how each component, state, and interaction should look and behave.</li>
+              <li>Worked with engineering to get the designs properly built, running UXAT and driving feature enhancements.</li>
+            </ul>
           </div>
           <div class="proj-sub"><h4>Design Strategy / Process</h4>
             <p>Iterative usability testing cycles: refining the transition from a sidebar chat to a full-page view, adding conversation history, and improving in-product search.</p>
           </div>
+
+          <div class="proj-sub"><h4>Product Capabilities</h4>
+            <p>FourSight AI is FourKites' conversational analytics assistant — instead of digging through dashboards, menus, and filters, users ask a question in plain, natural language and get back an answer complete with the underlying metrics, deeper analysis, and a chart or visualization where relevant. It supports 24 languages, so global teams can work with it in their own language rather than translating queries into a fixed report format.</p>
+            <p>The experience spans two tiers. The free tier handles day-to-day shipment questions — status lookups, natural-language filtering across carriers, customers, and lanes, and disruption/risk queries — answered off real-time shipment data, plus general platform how-to questions from the knowledge base. The premium tier extends that same conversational layer across orders, inventory, yard operations, and appointments, adding predictive analysis and deeper historical, cross-module reporting.</p>
+            <p>A typical question looks like <em>"Which carriers have the most loads running late right now, broken down by carrier?"</em> or <em>"Show me all delayed shipments going to California this week."</em> The system classifies each question's intent behind the scenes, routing it to the right data source and tier automatically — the user never has to know or choose which system is answering.</p>
+          </div>
+
+          <div class="proj-subcard" id="p4-genui">
+            <span class="proj-eyebrow-sm">▸ Sub-project</span>
+            <h4 class="proj-subtitle">Generative UI (GenUI)</h4>
+            <p class="proj-oneliner">FourSight AI's newest capability — building the interface itself, in real time, based on what a user actually asks for.</p>
+
+            <div class="proj-sub"><h4>My Role</h4>
+              <ul>
+                <li>Designed the experience — the features available, the outcomes it delivers, and how it behaves.</li>
+                <li>Defined how each flow works, based on the customer's query.</li>
+              </ul>
+            </div>
+            <div class="proj-sub"><h4>What It Is</h4>
+              <p>Generative UI (GenUI) is FourSight AI's newest capability. Rather than a developer hard-coding every screen ahead of time, an AI model constructs the interface itself, in real time, based on what the user is actually asking for — adapting the layout, components, and data visualization to the specific request instead of forcing the request to fit a fixed, pre-built screen.</p>
+            </div>
+            <div class="proj-sub"><h4>How It Works Under FourSight</h4>
+              <p>Under FourSight, GenUI can generate dashboards, views, tables, reports, charts, widgets, and layouts on demand — or, for a simpler question like <em>"Where is my shipment?"</em>, just answer directly with the relevant data. Whatever a user asks, FourSight intelligently classifies the intent behind it and builds the right output in real time, whether that's a piece of data, a chart, a widget, or a full layout.</p>
+              <p>The conversation doesn't stop once a view is generated — users can keep refining it, asking FourSight to change a chart type, add or remove a widget, adjust a filter, or explain how a specific number was derived. A generated view can also be saved and reopened later, refreshing with current data rather than showing a frozen snapshot from when it was first created.</p>
+            </div>
+            <div class="proj-sub"><h4>Design Principle: Real Data, Never Guessed</h4>
+              <p>A core design principle behind GenUI: the AI only ever decides what to show and how to lay it out — never the underlying numbers. Every value in a generated view is pulled directly from live data, so nothing is fabricated or approximated to fill a gap; if the data isn't available, a widget simply stays empty rather than showing a guess.</p>
+            </div>
+            <div class="proj-sub"><h4>Impact &amp; Outcome</h4>
+              <p>The result is a UI that's effectively customized to each individual user, without routing every new page, dashboard, report, or layout through the usual design-and-build cycle — a process that's normally slow and resource-intensive to repeat for every use case.</p>
+              <p><strong>Status:</strong> currently in active development, with a general availability date already planned per internal product documentation — not yet released to customers.</p>
+            </div>
+          </div>
+
+          <div class="proj-sub"><h4>Known Limitations &amp; What's Next</h4>
+            <p>Today, FourSight AI's deeper analytics are scoped to shipments and orders — inventory, assets, appointments, and yard management aren't yet covered, though they're on the roadmap. The longer-term vision is to connect FourSight AI to FourKites' broader agent network, so a conversational query doesn't just return a report — it can trigger an action, like having an agent confirm an updated ETA with a carrier or reschedule an appointment automatically.</p>
+          </div>
+
+          <div class="proj-sub"><h4>Impact &amp; Outcome</h4>
+            <p>FourSight AI went generally available in November 2025 and is now live with 400+ enterprise customers, drawing on a network that tracks 3.2 million shipments a day. The pitch: think of it as a "Bloomberg Terminal for supply chain" — pairing each customer's own operational data with that broader network intelligence to turn a conversational question into a strategic, predictive answer.</p>
+          </div>
+
                   <div class="proj-sub">
             <h4>Photos</h4>
             <div class="proj-photo-grid">
@@ -922,43 +959,11 @@
           </div>
         </article>
 
-        <!-- 12 — PLATFORM IA -->
-        <article class="proj-entry" id="p12" data-group="additional">
-          <div class="proj-head"><span class="proj-num">12</span><h3>Platform-Wide IA &amp; Recommendation Engine</h3></div>
-          <p class="proj-oneliner">Company-wide information architecture, product-flow simplification, and a unified recommendation engine spanning every FourKites module.</p>
-
-          <div class="proj-sub"><h4>Context &amp; Problem Statement</h4>
-            <p>The Recommendation Engine gives users dynamic, real-time recommendations that can be acted on before a shipment is picked up or while it's in transit — helping teams improve on-time performance, reduce detention costs, and avoid missed appointment windows.</p>
-          </div>
-          <div class="proj-sub"><h4>My Role</h4>
-            <p>Owned the navigation and information-architecture restructuring across FourKites' entire product suite, in partnership with the product team on the Recommendation Engine specifically.</p>
-          </div>
-          <div class="proj-sub"><h4>Impact &amp; Outcome</h4>
-            <p>The Recommendation Engine reached <strong>$264K in annual recurring revenue with 14 paying customers</strong>, and was the third most-viewed page on the entire platform.</p>
-            <div class="proj-quote"><p>"They followed up on the recommendations received by our product and were able to SAVE 5 OF THE 6 LOADS indicated. This seemingly small improvement is equivalent to a 3% improvement in their on time delivery rate for Walmart in ONE DAY."</p><cite>Jason E. — USA Truck</cite></div>
-          </div>
-                  <div class="proj-sub">
-            <h4>Photos</h4>
-            <div class="proj-photo-grid">
-                <figure class="photo-card">
-                  <button class="photo-trigger" type="button" data-gallery="p12" aria-label="View larger: Navigation IA">
-                    <img src="https://placehold.co/600x400?text=Navigation+IA" alt="Navigation IA — placeholder image" width="600" height="400">
-                  </button>
-                </figure>
-                <figure class="photo-card">
-                  <button class="photo-trigger" type="button" data-gallery="p12" aria-label="View larger: Recommendation Card">
-                    <img src="https://placehold.co/600x400?text=Recommendation+Card" alt="Recommendation Card — placeholder image" width="600" height="400">
-                  </button>
-                </figure>
-            </div>
-          </div>
-        </article>
-
         <div class="proj-group" data-group="practice"><h2>How I Work</h2></div>
 
-        <!-- 13 — VIBE-CODING -->
-        <article class="proj-entry" id="p13" data-group="practice">
-          <div class="proj-head"><span class="proj-num">13</span><h3>Vibe-Coding with Claude</h3></div>
+        <!-- 12 — VIBE-CODING -->
+        <article class="proj-entry" id="p12" data-group="practice">
+          <div class="proj-head"><span class="proj-num">12</span><h3>Vibe-Coding with Claude</h3></div>
           <p class="proj-oneliner">An AI-native workflow for turning customer-reported issues into shipped production fixes — end to end, owned solo.</p>
 
           <div class="proj-sub"><h4>Context &amp; Problem Statement</h4>
@@ -998,17 +1003,17 @@
             <h4>Photos</h4>
             <div class="proj-photo-grid">
                 <figure class="photo-card">
-                  <button class="photo-trigger" type="button" data-gallery="p13" aria-label="View larger: Community Request">
+                  <button class="photo-trigger" type="button" data-gallery="p12" aria-label="View larger: Community Request">
                     <img src="https://placehold.co/600x400?text=Community+Request" alt="Community Request — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
-                  <button class="photo-trigger" type="button" data-gallery="p13" aria-label="View larger: Claude Code Session">
+                  <button class="photo-trigger" type="button" data-gallery="p12" aria-label="View larger: Claude Code Session">
                     <img src="https://placehold.co/600x400?text=Claude+Code+Session" alt="Claude Code Session — placeholder image" width="600" height="400">
                   </button>
                 </figure>
                 <figure class="photo-card">
-                  <button class="photo-trigger" type="button" data-gallery="p13" aria-label="View larger: Shipped Fix">
+                  <button class="photo-trigger" type="button" data-gallery="p12" aria-label="View larger: Shipped Fix">
                     <img src="https://placehold.co/600x400?text=Shipped+Fix" alt="Shipped Fix — placeholder image" width="600" height="400">
                   </button>
                 </figure>
@@ -1016,9 +1021,9 @@
           </div>
         </article>
 
-        <!-- 14 — MY DESIGN PROCESS -->
-        <article class="proj-entry" id="p14" data-group="practice">
-          <div class="proj-head"><span class="proj-num">14</span><h3>My Design Process</h3></div>
+        <!-- 13 — MY DESIGN PROCESS -->
+        <article class="proj-entry" id="p13" data-group="practice">
+          <div class="proj-head"><span class="proj-num">13</span><h3>My Design Process</h3></div>
           <p class="proj-oneliner">How I take an idea from a raw problem to a shipped product — before AI was part of my workflow, and after.</p>
 
           <div class="proj-sub"><h4>Context</h4>
@@ -1241,6 +1246,99 @@
           </div>
         </article>
 
+        <!-- 14 — UXAT -->
+        <article class="proj-entry" id="p14" data-group="practice">
+          <div class="proj-head">
+            <span class="proj-num">14</span>
+            <h3>UX Acceptance Testing (UXAT)</h3>
+          </div>
+          <p class="proj-oneliner">A structured quality-assurance process ensuring every UI/UX change gets a designer's sign-off before release — replacing an untracked, spreadsheet-based bug backlog with a clear, prioritized workflow.</p>
+
+          <div class="proj-sub">
+            <h4>Context &amp; Problem Statement</h4>
+            <ul>
+              <li>Features regularly shipped with UI issues — some simple, some complex — that went unfixed for a long time because they were categorized as low-priority. These "minor" bugs were a persistent source of friction for users.</li>
+              <li>There was no dedicated system for tracking UX bugs and defects. Most were tracked in a spreadsheet, which gave the product team no real visibility into what existed or its status.</li>
+              <li>Prioritizing these issues was difficult without that visibility, and they often sat in the backlog indefinitely.</li>
+            </ul>
+          </div>
+
+          <div class="proj-sub">
+            <h4>My Role</h4>
+            <p>Contributed input during the process's creation, which was primarily designed by another member of the UX team. Since its rollout, I've been one of its strongest advocates in practice — none of my own design work ships without going through a full, rigorous round of UXAT.</p>
+          </div>
+
+          <div class="proj-sub">
+            <h4>Design Strategy</h4>
+            <p>Every UI/UX-impacting change is checked against three things before it can ship:</p>
+            <ul>
+              <li><strong>End-to-end design flow &amp; use cases:</strong> does the shipped feature match the signed-off design screens, user flows, and responsive behavior?</li>
+              <li><strong>Design system compliance:</strong> does it correctly follow the design system's components, typography, spacing, layout, resolution, and color guidelines?</li>
+              <li><strong>Content &amp; language:</strong> consistent tone and correct copy across labels, menus, error messages, and CTAs — including spelling.</li>
+            </ul>
+          </div>
+
+          <div class="proj-sub">
+            <h4>Process</h4>
+            <ol>
+              <li>A mandatory "Is UX needed?" field was added to every ticket, flagging whether a change has any UI impact.</li>
+              <li>If flagged, the UX team is notified automatically once code is pushed for review — so UX review happens alongside code review, not as a later afterthought.</li>
+            </ol>
+          </div>
+
+          <figure class="proj-inline-figure proj-inline-figure--fit">
+            <button class="photo-trigger" type="button" aria-label="View larger: Is UX needed intake field">
+              <img src="projects/uxat/is-ux-needed-field.png" alt="The mandatory 'Is UX needed?' field added to every ticket">
+            </button>
+            <figcaption>The mandatory "Is UX needed?" field added to every ticket, flagging UI impact right at intake.</figcaption>
+          </figure>
+
+          <div class="proj-sub">
+            <ol start="3">
+              <li>Once QA is complete, every UI/UX-impacting ticket moves into a dedicated UXAT stage in the workflow.</li>
+              <li>A UX team member reviews the feature against the criteria above:
+                <ul>
+                  <li>If it meets expectations, it's marked approved and moved to "Ready for Release."</li>
+                  <li>If it doesn't, it's sent back to development with specific issues flagged, to be resolved before the sprint ends.</li>
+                </ul>
+              </li>
+            </ol>
+          </div>
+
+          <figure class="proj-inline-figure proj-inline-figure--fit">
+            <button class="photo-trigger" type="button" aria-label="View larger: UXAT workflow board">
+              <img src="projects/uxat/uxat-workflow-board.png" alt="The dedicated UXAT lane in the ticket workflow board">
+            </button>
+            <figcaption>The dedicated UXAT lane in the ticket workflow, sitting between QA and Ready for Release.</figcaption>
+          </figure>
+
+          <div class="proj-sub">
+            <ol start="5">
+              <li>If a UX bug is later found in staging or production, it's logged as a formal defect — tagged as a design/implementation miss — rather than left untracked, and prioritized directly with product and engineering during sprint planning.</li>
+              <li>The process also includes participating in Shift Left Testing — proactive QA collaboration sessions aimed at catching defects earlier in the delivery cycle, before they reach later stages.</li>
+            </ol>
+          </div>
+
+          <figure class="proj-inline-figure proj-inline-figure--fit">
+            <button class="photo-trigger" type="button" aria-label="View larger: Source of Issue dropdown">
+              <img src="projects/uxat/source-of-issue-dropdown.png" alt="The 'Source of Issue' dropdown, with 'Design/Implementation miss' selected when a UX bug is logged">
+            </button>
+            <figcaption>Logging a UX bug as a formal defect — tagged "Design/Implementation miss" under Source of Issue.</figcaption>
+          </figure>
+
+          <div class="proj-sub">
+            <h4>Impact &amp; Outcome</h4>
+            <ul>
+              <li>Replaced an invisible, spreadsheet-based bug backlog with a tracked, prioritized workflow built directly into the existing ticketing system, giving the product team real visibility into UX-specific issues for the first time.</li>
+              <li>New features and releases now align closely with what the UX team actually designs and hands off to engineering.</li>
+              <li>UI/UX issues are caught early, before they ever reach customers.</li>
+              <li>The process also surfaces technical limitations during review, letting the team redesign solutions that work better within real platform constraints — rather than discovering the mismatch after release.</li>
+              <li>Component states, interactions, and edge cases that used to get missed during implementation — often due to other interfering code elsewhere in the platform — are now caught before shipping to production.</li>
+              <li><strong>Design-to-code fidelity improved significantly:</strong> before this process, engineering's output rarely matched what UX designed and handed off, tracking at roughly 60% visual and behavioral alignment. Since UXAT became standard practice, that alignment has risen to <strong>over 90%</strong>.</li>
+            </ul>
+          </div>
+        </article>
+
       </div>
     </div>
   </section>
@@ -1252,33 +1350,23 @@
     <div class="footer-top">
       <div class="footer-brand">
         <a class="brand" href="index.html" aria-label="Kevin Miranda — home">
-          <span class="mono" aria-hidden="true">KM</span>
+          <img src="img/logo.svg" alt="Kevin Miranda logo" width="48" height="48" style="border-radius: 6px;"/>
           <span>Kevin&nbsp;Miranda<small>UX &amp; Interaction Designer</small></span>
         </a>
         <p>A UI/UX &amp; interaction designer with a keen eye for detail &amp; a knack for visualizing any idea put forth.</p>
         <ul class="socials" aria-label="Kevin on social platforms">
-          <li><a href="#" aria-label="Dribbble"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.8"/><path d="M5 8c4.5 2 9 2.5 13.5 1M8.5 4.5C12 8 14 13 14.5 19.5M18.8 14.5c-5-1.5-9.5-.3-12.6 3.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
-          <li><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/></svg></a></li>
-          <li><a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M8 10.5V17M8 7.6v.02M11.6 17v-3.6c0-1.4 1-2.4 2.3-2.4s2.1 1 2.1 2.4V17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
-          <li><a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 4l7.6 9.6L4.4 20M20 4l-7.5 8.2M20 20l-7.6-9.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+          <li><a href="https://dribbble.com/kevinmiranda" target="_blank" rel="noopener" aria-label="Dribbble"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.8"/><path d="M5 8c4.5 2 9 2.5 13.5 1M8.5 4.5C12 8 14 13 14.5 19.5M18.8 14.5c-5-1.5-9.5-.3-12.6 3.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
+          <li><a href="https://www.linkedin.com/in/thekevinmiranda/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M8 10.5V17M8 7.6v.02M11.6 17v-3.6c0-1.4 1-2.4 2.3-2.4s2.1 1 2.1 2.4V17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
         </ul>
       </div>
 
       <nav class="footer-col" aria-label="Site">
         <h4>Explore</h4>
         <a href="index.html#about">About</a>
+        <a href="index.html#experience">Experience</a>
         <a href="projects.html">Work</a>
-        <a href="index.html#services">Services</a>
-        <a href="index.html#voices">Testimonials</a>
+        <a href="index.html#impact">Impact</a>
         <a href="index.html#contact">Contact</a>
-      </nav>
-
-      <nav class="footer-col" aria-label="Services">
-        <h4>Services</h4>
-        <a href="index.html#services">Product design</a>
-        <a href="index.html#services">Brand &amp; identity</a>
-        <a href="index.html#services">Design systems</a>
-        <a href="index.html#services">Art direction</a>
       </nav>
     </div>
 

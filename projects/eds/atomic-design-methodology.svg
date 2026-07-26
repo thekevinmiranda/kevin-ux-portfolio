@@ -1,0 +1,92 @@
+<svg width="1360" height="300" viewBox="0 0 1360 300" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="adm-title adm-desc">
+  <title id="adm-title">Atomic Design methodology</title>
+  <desc id="adm-desc">Five stages flowing left to right: Atoms, Molecules, Organisms, Templates, and Pages.</desc>
+
+  <rect x="0" y="0" width="1360" height="300" fill="#FFFFFF"/>
+
+  <!-- ============================= ATOMS ============================= -->
+  <g>
+    <circle cx="100" cy="100" r="48" fill="#ECE7D9" stroke="#14231C" stroke-width="9"/>
+    <circle cx="87" cy="109" r="24" fill="#C0810A"/>
+    <circle cx="139" cy="61" r="10" fill="#E6A017" stroke="#14231C" stroke-width="3"/>
+  </g>
+
+  <!-- arrow 1 -->
+  <path d="M225,86 L251,100 L225,114 Z" fill="#58685F"/>
+
+  <!-- ============================ MOLECULES =========================== -->
+  <g>
+    <!-- bond points -->
+    <circle cx="364" cy="90" r="6" fill="#E6A017"/>
+    <circle cx="396" cy="90" r="6" fill="#E6A017"/>
+    <circle cx="380" cy="122" r="6" fill="#E6A017"/>
+    <!-- top mini-atom -->
+    <circle cx="380" cy="58" r="27" fill="#ECE7D9" stroke="#14231C" stroke-width="7"/>
+    <circle cx="380" cy="58" r="13" fill="#C0810A"/>
+    <!-- bottom-left mini-atom -->
+    <circle cx="348" cy="122" r="27" fill="#ECE7D9" stroke="#14231C" stroke-width="7"/>
+    <circle cx="348" cy="122" r="13" fill="#C0810A"/>
+    <!-- bottom-right mini-atom -->
+    <circle cx="412" cy="122" r="27" fill="#ECE7D9" stroke="#14231C" stroke-width="7"/>
+    <circle cx="412" cy="122" r="13" fill="#C0810A"/>
+  </g>
+
+  <!-- arrow 2 -->
+  <path d="M505,86 L531,100 L505,114 Z" fill="#58685F"/>
+
+  <!-- ============================ ORGANISMS =========================== -->
+  <g>
+    <!-- row A -->
+    <circle cx="602" cy="66" r="16" fill="#ECE7D9" stroke="#14231C" stroke-width="5"/>
+    <circle cx="602" cy="66" r="7" fill="#C0810A"/>
+    <circle cx="636" cy="66" r="16" fill="#ECE7D9" stroke="#14231C" stroke-width="5"/>
+    <circle cx="636" cy="66" r="7" fill="#C0810A"/>
+    <circle cx="670" cy="66" r="16" fill="#ECE7D9" stroke="#14231C" stroke-width="5"/>
+    <circle cx="670" cy="66" r="7" fill="#C0810A"/>
+    <circle cx="704" cy="66" r="16" fill="#ECE7D9" stroke="#14231C" stroke-width="5"/>
+    <circle cx="704" cy="66" r="7" fill="#C0810A"/>
+    <!-- row B (offset) -->
+    <circle cx="619" cy="100" r="16" fill="#ECE7D9" stroke="#14231C" stroke-width="5"/>
+    <circle cx="619" cy="100" r="7" fill="#E6A017"/>
+    <circle cx="653" cy="100" r="16" fill="#ECE7D9" stroke="#14231C" stroke-width="5"/>
+    <circle cx="653" cy="100" r="7" fill="#E6A017"/>
+    <circle cx="687" cy="100" r="16" fill="#ECE7D9" stroke="#14231C" stroke-width="5"/>
+    <circle cx="687" cy="100" r="7" fill="#E6A017"/>
+    <!-- row C -->
+    <circle cx="602" cy="134" r="16" fill="#ECE7D9" stroke="#14231C" stroke-width="5"/>
+    <circle cx="602" cy="134" r="7" fill="#C0810A"/>
+    <circle cx="636" cy="134" r="16" fill="#ECE7D9" stroke="#14231C" stroke-width="5"/>
+    <circle cx="636" cy="134" r="7" fill="#C0810A"/>
+    <circle cx="670" cy="134" r="16" fill="#ECE7D9" stroke="#14231C" stroke-width="5"/>
+    <circle cx="670" cy="134" r="7" fill="#C0810A"/>
+    <circle cx="704" cy="134" r="16" fill="#ECE7D9" stroke="#14231C" stroke-width="5"/>
+    <circle cx="704" cy="134" r="7" fill="#C0810A"/>
+  </g>
+
+  <!-- arrow 3 -->
+  <path d="M785,86 L811,100 L785,114 Z" fill="#58685F"/>
+
+  <!-- ============================ TEMPLATES =========================== -->
+  <rect x="890" y="46" width="100" height="112" rx="6" fill="none" stroke="#14231C" stroke-width="7" stroke-dasharray="13 10"/>
+
+  <!-- arrow 4 -->
+  <path d="M1065,86 L1091,100 L1065,114 Z" fill="#58685F"/>
+
+  <!-- ============================== PAGES ============================= -->
+  <g>
+    <!-- back sheet -->
+    <rect x="1204" y="44" width="72" height="98" rx="4" fill="#ECE7D9" stroke="#14231C" stroke-width="5"/>
+    <!-- front sheet with folded corner -->
+    <path d="M1180,58 H1230 L1250,78 V152 H1180 Z" fill="#F4F1E8" stroke="#14231C" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M1230,58 V78 H1250" fill="none" stroke="#14231C" stroke-width="5" stroke-linejoin="round"/>
+  </g>
+
+  <!-- ============================== LABELS ============================= -->
+  <g font-family="'Hanken Grotesk', system-ui, -apple-system, sans-serif" font-weight="700" font-size="25" letter-spacing="1.5" fill="#8A600D" text-anchor="middle">
+    <text x="100" y="248">ATOMS</text>
+    <text x="380" y="248">MOLECULES</text>
+    <text x="660" y="248">ORGANISMS</text>
+    <text x="940" y="248">TEMPLATES</text>
+    <text x="1220" y="248">PAGES</text>
+  </g>
+</svg>
