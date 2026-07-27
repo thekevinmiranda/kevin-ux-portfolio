@@ -536,6 +536,34 @@ main { display: block; }
 .hero-chip .lbl { font-size: .78rem; line-height: 1.25; color: var(--sage-d); }
 
 /* --------------------------------------------------------- marquee/logos --- */
+.logos-band {
+  padding-block: clamp(2.5rem, 5vw, 3.5rem);
+  background: var(--paper);
+  overflow: hidden;
+}
+.logos-label {
+  text-align: center;
+  font-weight: 600;
+  font-size: .8rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 1.5rem !important;
+}
+.logos-band .marquee-track { animation-duration: 30s; }
+.logo-chip {
+  display: inline-flex;
+  align-items: center;
+  height: clamp(2.2rem, 4vw, 2.8rem);
+  margin-right: clamp(2.5rem, 5vw, 4rem);
+  flex: none;
+}
+.logo-chip img {
+  height: 100%;
+  width: auto;
+  display: block;
+}
+
 .tools-band {
   padding-block: clamp(2.5rem, 5vw, 3.5rem);
   border-top: 1px solid var(--paper-line);
@@ -550,7 +578,7 @@ main { display: block; }
   letter-spacing: .18em;
   text-transform: uppercase;
   color: var(--sage);
-  margin-bottom: 1.6rem;
+  margin-bottom: 1.5rem !important;
 }
 .marquee { position: relative; width: 100%; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
 .marquee-track {
