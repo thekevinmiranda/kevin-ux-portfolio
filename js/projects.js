@@ -180,9 +180,23 @@
     }
   }
 
-  document.querySelectorAll(".dp-node, .dp-segment").forEach(function (el) {
+  // Scoped to #p12 — the Vibe-Coding project below reuses the same
+  // .dp-node/.dp-circle/.dp-detail styling for its own step rail, and an
+  // unscoped page-wide selector here would wire this widget's click
+  // handling onto that project's nodes too.
+  var allPhaseEls = Array.prototype.slice.call(document.querySelectorAll("#p12 .dp-node, #p12 .dp-segment"));
+
+  function setActivePhase(phase) {
+    allPhaseEls.forEach(function (el) {
+      el.classList.toggle("is-active", el.getAttribute("data-phase") === phase);
+    });
+  }
+
+  allPhaseEls.forEach(function (el) {
     el.addEventListener("click", function () {
-      showDetail(el.getAttribute("data-phase"));
+      var phase = el.getAttribute("data-phase");
+      setActivePhase(phase);
+      showDetail(phase);
     });
   });
 })();
@@ -252,5 +266,89 @@
 
   document.querySelectorAll("[data-compare-slider]").forEach(function (el) {
     try { setupSlider(el); } catch (err) { console.warn("Compare slider init failed silently:", err); }
+  });
+})();
+
+/* ============================================================================
+   Back to top — fixed circular button that appears once the user has
+   scrolled down a bit, and scrolls back to the top of the page on click.
+   ============================================================================ */
+(function () {
+  "use strict";
+
+  var btn = document.getElementById("backToTop");
+  if (!btn) return;
+
+  var SHOW_AFTER = 480; // px scrolled before the button appears
+
+  function toggleVisibility() {
+    var scrolled = window.scrollY || document.documentElement.scrollTop || 0;
+    btn.classList.toggle("is-visible", scrolled > SHOW_AFTER);
+  }
+
+  window.addEventListener("scroll", toggleVisibility, { passive: true });
+  toggleVisibility();
+
+  btn.addEventListener("click", function () {
+    try {
+      var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+    } catch (err) {
+      console.warn("Back to top scroll failed silently:", err);
+      window.scrollTo(0, 0);
+    }
+  });
+})();
+
+/* ============================================================================
+   Vibe-Coding process rail (Vibe-Coding with Claude — "Process"). Same
+   widget pattern as the Design Process project's Interactive Process Map
+   (click a node, render its detail into the panel below) — scoped to its
+   own #vcFlow/#vcDetail elements so the two widgets can't collide even
+   though they share the same .dp-node/.dp-detail styling.
+   ============================================================================ */
+(function () {
+  "use strict";
+
+  var flow = document.getElementById("vcFlow");
+  var detail = document.getElementById("vcDetail");
+  if (!flow || !detail) return;
+
+  var steps = {
+    1: { tag: "manual", title: "Analyze incoming requests", text: "Requests come from the community forum, or from long-outstanding UI/UX issues that never made it up the engineering priority list — done solo, no Claude involved." },
+    2: { tag: "solo", title: "Gather usage data with AI", text: "Before touching any code, use AI to pull usage data and other supporting evidence for the request." },
+    3: { tag: "solo", title: "Decide the right approach", text: "Decide the right approach based on that evidence — not a guess." },
+    4: { tag: "solo", title: "Design a solution", text: "Design the actual fix, shaping the UX before any code gets written." },
+    5: { tag: "solo", title: "Vibe-code it", text: "Vibe-code the solution directly in the app's repository, using Claude Code." },
+    6: { tag: "solo", title: "Test locally, raise a PR", text: "Test it locally, then raise a pull request — handing it to engineering as a ready-to-review change." },
+    7: { tag: "eng",  title: "Engineering reviews & releases", text: "Engineering reviews, merges, tests, and releases it to production." },
+    8: { tag: "manual", title: "Follow up with the customer", text: "Once it's live, follow up with the customer who posted the original request to let them know it's been delivered — done solo, no Claude involved." }
+  };
+
+  var tagLabels = { solo: "Solo · with Claude", manual: "Solo", eng: "Engineering" };
+
+  function showDetail(step) {
+    try {
+      var info = steps[step];
+      if (!info) return;
+      var isEng = info.tag === "eng";
+      var tagClass = isEng ? "dp-detail-tag dp-detail-tag--eng" : "dp-detail-tag";
+      var tagLabel = tagLabels[info.tag] || "Solo";
+      detail.innerHTML =
+        '<span class="' + tagClass + '">' + tagLabel + '</span>' +
+        '<p class="dp-detail-title">' + info.title + '</p>' +
+        '<p class="dp-detail-step">' + info.text + '</p>';
+    } catch (err) {
+      console.warn("Vibe-coding detail render failed silently:", err);
+    }
+  }
+
+  var nodes = Array.prototype.slice.call(flow.querySelectorAll(".dp-node"));
+
+  nodes.forEach(function (el) {
+    el.addEventListener("click", function () {
+      nodes.forEach(function (n) { n.classList.toggle("is-active", n === el); });
+      showDetail(el.getAttribute("data-vc-step"));
+    });
   });
 })();

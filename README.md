@@ -250,14 +250,13 @@ Two image sources are in play:
    work-teaser tile icons). Leave these as-is unless redesigning the homepage
    itself.
 2. **`projects/`** — real FourKites case-study screenshots, organized one
-   subfolder per project (e.g. `projects/workspace/fourkites-ia.png`). Some
-   projects still use a **placehold.co placeholder**
-   (`https://placehold.co/600x400?text=Label`) where a real screenshot hasn't
-   been sourced yet — check each project as you go rather than assuming. To
-   replace a placeholder: swap the `src` on the relevant `<img>` to the local
-   path, and update its `alt` text to describe the real image. No other markup
-   needs to change — same `<figure>`/`<button>` wrapper, same lightbox
-   behavior.
+   subfolder per project (e.g. `projects/workspace/fourkites-ia.png`). All
+   placehold.co placeholders have been removed sitewide — any project's
+   "Photos" section without real screenshots yet was removed along with them
+   rather than left empty. To add a new photo to a project: drop the image in
+   its `projects/<name>/` subfolder and add a `<figure>`/`<button>` block
+   (matching the pattern used elsewhere) with the real `src` and `alt` text —
+   same lightbox behavior applies automatically via `data-gallery`.
 
 ---
 

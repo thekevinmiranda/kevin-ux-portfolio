@@ -28,7 +28,7 @@ Static two-page site (`index.html` homepage + `projects.html` case-study library
 - Two pages share one design system (`css/style.css` + `css/projects.css`), driven by CSS custom properties on `:root` — a palette/type change should only ever need to happen in one place.
 - `projects.html` is single-project-at-a-time (sidebar switches visibility, not continuous scroll), with hash deep-linking (`projects.html#p9`).
 - Homepage's project-teaser filter taxonomy (Product/Systems/AI) must stay consistent with how the same project is categorized on `projects.html`.
-- Some case-study images are still `placehold.co` placeholders pending real screenshots — treat these as known gaps, not as content to invent around.
+- All `placehold.co` placeholders have been removed sitewide (including the homepage's placeholder-only Photography section) — a project's "Photos" section only exists where real screenshots are in place. Treat missing photo sections as known gaps to fill with real images, not as content to invent around.
 - Not currently open to new opportunities — the commented-out "Available for projects" badge in `index.html` is inert leftover template markup, not a fact to revive or treat as current messaging.
 
 ## Brand Commitments
