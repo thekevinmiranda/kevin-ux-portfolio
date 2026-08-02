@@ -39,6 +39,18 @@
   /* --- rhythm --- */
   --sp-section: clamp(4.5rem, 9vw, 8rem);
   --wrap: 1200px;
+
+  /* --- motion ---
+     One signature curve (--e) carries ~80% of the site: a decelerating
+     ease-out, which is what entrances and hovers want. --e-in is its mirror
+     for exits, --e-soft for ambient loops that must not "land". Durations are
+     a 3-step palette — anything outside it is a bug, not a decision. */
+  --e:      cubic-bezier(.22, .61, .36, 1);
+  --e-in:   cubic-bezier(.55, 0, 1, .45);
+  --e-soft: cubic-bezier(.4, 0, .2, 1);
+  --d-1: 140ms;  /* press, hover, micro-feedback */
+  --d-2: 260ms;  /* state change, card hover, nav */
+  --d-3: 520ms;  /* entrances, reveals, page-level */
 }
 
 /* --------------------------------------------------------------- base --- */
@@ -60,6 +72,19 @@ body {
   overflow-x: hidden;
 }
 
+/* Film grain. A single fixed layer over the whole page — breaks the digital
+   flatness of the flat paper/forest fills without touching any component.
+   Inline SVG turbulence so it costs no request and no image decode. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+  opacity: .05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
 h1, h2, h3, h4 {
   font-family: var(--f-display);
   font-weight: 700;
@@ -67,10 +92,27 @@ h1, h2, h3, h4 {
   letter-spacing: -0.02em;
   color: var(--ink);
   margin: 0;
+  text-wrap: balance; /* kills orphaned last words in headings */
 }
 
-p { margin: 0 0 1rem; }
+p { margin: 0 0 1rem; text-wrap: pretty; }
 p:last-child { margin-bottom: 0; }
+
+::selection { background: var(--marigold); color: var(--ink); }
+
+/* Cross-page fade. Native, opt-in, ignored where unsupported, so the jump
+   between index / projects / case studies stops flashing white. The default
+   root cross-fade is deliberately left alone — it also covers the in-page
+   work-filter transition, and a custom asymmetric curve there read as a
+   full-page flash. */
+@view-transition { navigation: auto; }
+@media (prefers-reduced-motion: reduce) {
+  /* browsers do not reliably suppress the nav cross-fade on their own */
+  @view-transition { navigation: none; }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) { animation: none !important; }
+}
 
 a { color: inherit; text-decoration: none; }
 
@@ -102,7 +144,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   font-weight: 700;
   padding: .7rem 1.1rem;
   border-radius: var(--r-sm);
-  transition: top .2s ease;
+  transition: top var(--d-2) var(--e);
 }
 .skip-link:focus { top: 1rem; }
 
@@ -167,11 +209,21 @@ ul { margin: 0; padding: 0; list-style: none; }
   background: var(--bg);
   color: var(--fg);
   cursor: pointer;
-  transition: transform .18s ease, background .18s ease, border-color .18s ease, color .18s ease;
+  transition: transform var(--d-1) var(--e), background var(--d-1) var(--e),
+              border-color var(--d-1) var(--e), color var(--d-1) var(--e),
+              box-shadow var(--d-2) var(--e);
   white-space: nowrap;
 }
-.btn2:hover { transform: translateY(-2px); background: var(--marigold-d); border-color: var(--marigold-d); }
-.btn2 svg { width: 18px; height: 18px; }
+.btn2:hover {
+  transform: translateY(-2px);
+  background: var(--marigold-d);
+  border-color: var(--marigold-d);
+  box-shadow: 0 10px 22px -12px rgba(192, 129, 10, .75); /* shadow tinted to the button, not black */
+}
+/* press: overshoot back past rest so the click has a floor to hit */
+.btn2:active { transform: translateY(1px) scale(.98); transition-duration: 60ms; box-shadow: none; }
+.btn2 svg { width: 18px; height: 18px; transition: transform var(--d-2) var(--e); }
+.btn2:hover svg { transform: translateX(3px); }
 
 .btn2--ghost {
   --bg: transparent;
@@ -191,9 +243,10 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: var(--ink);
   border-bottom: 2px solid var(--marigold);
   padding-bottom: 2px;
-  transition: gap .18s ease, color .18s ease;
+  transition: gap var(--d-2) var(--e), color var(--d-1) var(--e);
 }
 .text-link:hover { gap: .8rem; color: var(--marigold-d); }
+.text-link:active { gap: .55rem; transition-duration: 60ms; }
 .on-dark .text-link { color: #FBFAF4; }
 .on-dark .text-link:hover { color: var(--marigold); }
 
@@ -202,7 +255,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 1000;
-  transition: background .3s ease, box-shadow .3s ease;
+  transition: background var(--d-2) var(--e), box-shadow var(--d-2) var(--e);
   padding: .55rem 0;
 }
 .site-header.is-stuck {
@@ -263,7 +316,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   background: var(--marigold);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform .22s ease;
+  transition: transform var(--d-2) var(--e);
 }
 .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
 
@@ -285,7 +338,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   display: block;
   width: 20px; height: 2px;
   background: var(--ink);
-  transition: transform .25s ease, opacity .2s ease;
+  transition: transform var(--d-2) var(--e), opacity var(--d-1) var(--e);
 }
 .nav-toggle span::before { transform: translateY(-6px); position: absolute; width: 20px; }
 .nav-toggle span::after  { transform: translateY(6px);  position: absolute; width: 20px; }
@@ -320,6 +373,23 @@ main { display: block; }
   border-radius: 50%;
   will-change: transform;
 }
+/* Five 65vw layers under a 50px blur, transforming forever, are the most
+   expensive thing on the page. Once the hero leaves the viewport there is
+   nothing to look at — stop paying for it. main.js toggles the class. */
+.hero.is-offscreen .hero-blobs span { animation-play-state: paused; }
+
+/* Hero gets its own entrance rather than borrowing the generic scroll-reveal:
+   first thing seen, so it earns a wider stagger and more travel on the name.
+   NOTE: do not reveal this with a collapsing clip-path. A fully clipped
+   element reports isIntersecting = false to IntersectionObserver, so
+   .is-visible never lands and the name stays invisible forever. */
+.hero .reveal { transition-delay: calc(var(--i, 0) * 90ms); }
+#hero-name {
+  transform: translateY(34px);
+  transition: opacity 760ms var(--e), transform 760ms var(--e);
+}
+/* ID beats .reveal.is-visible, so the rest state has to be restated here */
+#hero-name.is-visible { transform: none; }
 .hero-blobs .b1 {
   left: -14%; bottom: -22%;
   width: 65vw; height: 65vw;
@@ -334,7 +404,7 @@ main { display: block; }
   max-width: 800px; max-height: 800px;
   background: radial-gradient(circle at 35% 35%, rgba(246,228,180,.78), transparent 70%);
   filter: blur(46px);
-  animation: heroFloat2 40s ease-in-out infinite 2s;
+  animation: heroFloat2 40s var(--e-soft) infinite 2s;
 }
 .hero-blobs .b3 {
   top: 44%; left: 40%;
@@ -350,7 +420,7 @@ main { display: block; }
   max-width: 450px; max-height: 450px;
   background: radial-gradient(circle at 50% 50%, rgba(192,129,10,.4), transparent 70%);
   filter: blur(34px);
-  animation: heroFloat4 23s ease-in-out infinite 4s;
+  animation: heroFloat4 23s var(--e-soft) infinite 4s;
 }
 .hero-blobs .b5 {
   bottom: 0%; right: 10%;
@@ -477,9 +547,11 @@ main { display: block; }
   border-radius: var(--r-sm);
   color: var(--ink);
   background: var(--paper);
-  transition: transform .18s ease, background .18s ease, color .18s ease, border-color .18s ease;
+  transition: transform var(--d-2) var(--e), background var(--d-1) var(--e),
+              color var(--d-1) var(--e), border-color var(--d-1) var(--e);
 }
 .socials a:hover { background: var(--ink); color: var(--marigold); border-color: var(--ink); transform: translateY(-3px); }
+.socials a:active { transform: translateY(0) scale(.94); transition-duration: 60ms; }
 .socials svg { width: 20px; height: 20px; }
 
 /* hero portrait */
@@ -587,7 +659,11 @@ main { display: block; }
   width: max-content;
   animation: marquee 34s linear infinite;
 }
-.marquee:hover .marquee-track { animation-play-state: paused; }
+/* pause on focus too — keyboard users had no way to stop the scroll */
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track { animation-play-state: paused; }
+/* and stop burning frames entirely once the band scrolls out of view (JS) */
+.marquee.is-offscreen .marquee-track { animation-play-state: paused; }
 /* There are three identical chip sets. Every chip owns its trailing gap, so
    each set has the exact same width and the loop can advance by one third. */
 @keyframes marquee { to { transform: translateX(-33.333333%); } }
@@ -761,15 +837,21 @@ main { display: block; }
   display: flex;
   flex-direction: column;
   gap: .6rem;
-  transition: transform .22s ease, border-color .22s ease;
+  transition: transform var(--d-2) var(--e), border-color var(--d-2) var(--e),
+              box-shadow var(--d-2) var(--e);
 }
-.impact-card:hover { transform: translateY(-4px); border-color: var(--marigold); }
+.impact-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--marigold);
+  box-shadow: 0 20px 40px -28px rgba(0, 0, 0, .85);
+}
 .impact-num {
   font-family: var(--f-display);
   font-weight: 800;
   font-size: clamp(1.8rem, 3.4vw, 2.4rem);
   color: var(--marigold);
   letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums; /* stats stop shifting width between values */
 }
 .impact-card p { font-size: .92rem; color: var(--sage-d); margin: 0; flex: 1; }
 .impact-link {
@@ -803,9 +885,12 @@ main { display: block; }
   background: transparent;
   color: var(--sage);
   cursor: pointer;
-  transition: all .18s ease;
+  /* named properties only — `all` was animating layout props too */
+  transition: color var(--d-1) var(--e), border-color var(--d-1) var(--e),
+              background var(--d-1) var(--e), transform var(--d-1) var(--e);
 }
-.filter-btn:hover { color: var(--ink); border-color: var(--ink); }
+.filter-btn:hover { color: var(--ink); border-color: var(--ink); transform: translateY(-1px); }
+.filter-btn:active { transform: scale(.96); transition-duration: 60ms; }
 .filter-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 
 .filter-bar .btn2 {
@@ -830,12 +915,15 @@ main { display: block; }
   aspect-ratio: 4/3;
   background: var(--paper-2);
   box-shadow: var(--shadow-sm);
+  transition: transform var(--d-2) var(--e), box-shadow var(--d-2) var(--e);
 }
+.work-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+.work-card:active { transform: translateY(-1px) scale(.995); transition-duration: 80ms; }
 .work-card.is-hidden { display: none; }
 .work-card img {
   width: 100%; height: 100%;
   object-fit: cover;
-  transition: transform .5s cubic-bezier(.2,.7,.2,1);
+  transition: transform 600ms var(--e);
 }
 .work-card:hover img { transform: scale(1.07); }
 .work-overlay {
@@ -847,7 +935,7 @@ main { display: block; }
   justify-content: flex-end;
   padding: 1.4rem;
   opacity: 0;
-  transition: opacity .3s ease;
+  transition: opacity var(--d-2) var(--e);
 }
 .work-card:hover .work-overlay,
 .work-card:focus-within .work-overlay { opacity: 1; }
@@ -858,14 +946,14 @@ main { display: block; }
   color: var(--marigold);
   font-weight: 700;
   transform: translateY(10px);
-  transition: transform .3s ease .04s;
+  transition: transform var(--d-2) var(--e) 40ms;
 }
 .work-overlay h3 {
   color: #fff;
   font-size: 1.35rem;
   margin-top: .3rem;
   transform: translateY(12px);
-  transition: transform .3s ease .07s;
+  transition: transform var(--d-2) var(--e) 70ms;
 }
 .work-card:hover .work-overlay .cat,
 .work-card:hover .work-overlay h3,
@@ -880,7 +968,10 @@ main { display: block; }
   color: var(--ink);
   display: grid; place-items: center;
   transform: scale(0) rotate(-30deg);
-  transition: transform .3s ease;
+  /* scale-from-zero plus the rotation is already enough character here; an
+     overshoot on top would be the only bouncy curve on an otherwise
+     straight-decelerating site. Stays on the signature ease. */
+  transition: transform 340ms var(--e) 60ms;
 }
 .work-card:hover .work-overlay .arrow,
 .work-card:focus-within .work-overlay .arrow { transform: scale(1) rotate(0); }
@@ -930,7 +1021,7 @@ main { display: block; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform .5s cubic-bezier(.2,.7,.2,1);
+  transition: transform 600ms var(--e);
 }
 .photography-card:hover img { transform: scale(1.04); }
 .photography-card figcaption {
@@ -995,7 +1086,7 @@ main { display: block; }
   background: rgba(255,255,255,.12);
   color: #fff;
   cursor: pointer;
-  transition: background .18s ease;
+  transition: background var(--d-1) var(--e);
 }
 .lightbox-close:hover,
 .lightbox-nav:hover { background: rgba(255,255,255,.24); }
@@ -1087,7 +1178,7 @@ main { display: block; }
 .footer-brand .socials a { background: transparent; border-color: rgba(255,255,255,.16); color: #fff; }
 .footer-brand .socials a:hover { background: var(--marigold); color: var(--ink); border-color: var(--marigold); }
 .footer-col h4 { color: #fff; font-family: var(--f-body); font-weight: 700; font-size: .82rem; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 1.1rem; }
-.footer-col a { display: block; padding: .35rem 0; color: var(--sage-d); font-size: .96rem; transition: color .16s ease; }
+.footer-col a { display: block; padding: .35rem 0; color: var(--sage-d); font-size: .96rem; transition: color var(--d-1) var(--e); }
 .footer-col a:hover { color: var(--marigold); }
 .footer-bottom {
   display: flex;
@@ -1101,18 +1192,28 @@ main { display: block; }
 .footer-bottom a { color: var(--marigold); font-weight: 600; }
 
 /* ------------------------------------------------------- scroll reveal --- */
+/* Entrance: 520ms / 18px. The old 700ms/26px overshot the card-entrance
+   budget, so the page always felt like it was catching up to the scroll.
+   Stagger comes from --i, which main.js sets per sibling group — the
+   hand-written data-delay attributes in the markup are inert now, because
+   they produced 1,2,1,2 in the work grid instead of a real cascade.
+   No will-change: transform/opacity are auto-promoted for the duration of a
+   transition anyway, and pinning it held 51 compositor layers forever. */
 .reveal {
   opacity: 0;
-  transform: translateY(26px);
-  transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);
-  will-change: opacity, transform;
+  transform: translateY(18px);
+  transition: opacity var(--d-3) var(--e), transform var(--d-3) var(--e);
+  transition-delay: calc(var(--i, 0) * 55ms);
 }
 .reveal.is-visible { opacity: 1; transform: none; }
-.reveal[data-delay="1"] { transition-delay: .08s; }
-.reveal[data-delay="2"] { transition-delay: .16s; }
-.reveal[data-delay="3"] { transition-delay: .24s; }
+
+/* Secondary layer: inside a revealed card, the content lands just after the
+   card itself rather than with it. Flat entrances are entrances missing this. */
+.reveal .work-overlay,
+.reveal .impact-num { transition-delay: calc(var(--i, 0) * 55ms + 90ms); }
+
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
+  .reveal { opacity: 1; transform: none; transition: none; transition-delay: 0s; }
 }
 
 /* --------------------------------------------------------- responsive --- */

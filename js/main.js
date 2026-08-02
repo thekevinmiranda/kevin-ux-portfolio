@@ -88,14 +88,23 @@
     });
     if (!sections.length) return;
 
+    /* One winner per callback. Looping and setting active on every
+       intersecting entry let the last entry in array order win, which is not
+       necessarily the topmost — the indicator flickered on fast scroll. */
+    var visible = new Set();
     var obs = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          links.forEach(function (l) { l.classList.remove("active"); });
-          var active = map[entry.target.id];
-          if (active) active.classList.add("active");
-        }
+        if (entry.isIntersecting) { visible.add(entry.target.id); }
+        else { visible.delete(entry.target.id); }
       });
+      if (!visible.size) return;
+      var top = sections
+        .filter(function (s) { return visible.has(s.id); })
+        .sort(function (a, b) {
+          return a.getBoundingClientRect().top - b.getBoundingClientRect().top;
+        })[0];
+      links.forEach(function (l) { l.classList.remove("active"); });
+      if (top && map[top.id]) map[top.id].classList.add("active");
     }, { rootMargin: "-45% 0px -50% 0px", threshold: 0 });
 
     sections.forEach(function (s) { obs.observe(s); });
@@ -103,12 +112,25 @@
 
   /* -------------------------------------------------- scroll reveal ---- */
   function initReveal() {
-    var els = document.querySelectorAll(".reveal");
+    var els = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
     if (!els.length) return;
     if (prefersReduced || !("IntersectionObserver" in window)) {
       els.forEach(function (el) { el.classList.add("is-visible"); });
       return;
     }
+
+    /* Stagger index, derived from position among revealing siblings rather
+       than the hand-written data-delay attributes — those gave the work grid
+       1,2,1,2 instead of a cascade. Capped at 5 so a long list never runs
+       past the ~500ms stagger budget. */
+    var seen = new Map();
+    els.forEach(function (el) {
+      var parent = el.parentNode;
+      var n = seen.get(parent) || 0;
+      seen.set(parent, n + 1);
+      el.style.setProperty("--i", Math.min(n, 5));
+    });
+
     var obs = new IntersectionObserver(function (entries, o) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
@@ -120,11 +142,33 @@
     els.forEach(function (el) { obs.observe(el); });
   }
 
+  /* ------------------------------------------ pause offscreen loops ---- */
+  /* The hero blobs (five blurred 65vw layers) and the logo marquee animate
+     forever. Neither is worth a single frame once it is scrolled past, and
+     the blobs are the biggest paint cost on the page. */
+  function initOffscreenPause() {
+    if (prefersReduced || !("IntersectionObserver" in window)) return;
+    var targets = document.querySelectorAll(".hero, .marquee");
+    if (!targets.length) return;
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        entry.target.classList.toggle("is-offscreen", !entry.isIntersecting);
+      });
+    }, { rootMargin: "120px" });
+    targets.forEach(function (t) { obs.observe(t); });
+  }
+
   /* ------------------------------------------------- work filtering ---- */
   function initFilters() {
     var buttons = document.querySelectorAll(".filter-btn");
     var cards = document.querySelectorAll(".work-card");
     if (!buttons.length || !cards.length) return;
+
+    /* Naming each card lets the View Transitions API morph survivors to their
+       new grid positions instead of snapping — real FLIP, no library. */
+    cards.forEach(function (card, i) {
+      card.style.viewTransitionName = "work-card-" + i;
+    });
 
     buttons.forEach(function (btn) {
       btn.addEventListener("click", function () {
@@ -135,10 +179,19 @@
         });
         btn.classList.add("active");
         btn.setAttribute("aria-pressed", "true");
-        cards.forEach(function (card) {
-          var match = filter === "all" || card.getAttribute("data-cat") === filter;
-          card.classList.toggle("is-hidden", !match);
-        });
+
+        var apply = function () {
+          cards.forEach(function (card) {
+            var match = filter === "all" || card.getAttribute("data-cat") === filter;
+            card.classList.toggle("is-hidden", !match);
+          });
+        };
+
+        if (!prefersReduced && document.startViewTransition) {
+          document.startViewTransition(apply);
+        } else {
+          apply();
+        }
       });
     });
   }
@@ -168,6 +221,7 @@
     initSmoothScroll();
     initScrollSpy();
     initReveal();
+    initOffscreenPause();
     initFilters();
     initImageProtection();
   }
