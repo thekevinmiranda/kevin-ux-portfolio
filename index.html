@@ -27,6 +27,7 @@
 <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="stylesheet" href="css/style.css">
+<noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
 </head>
 <body>
 
@@ -611,10 +612,12 @@
   <button class="lightbox-nav lightbox-next" id="lightboxNext" type="button" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 18 6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 </div>
 
+<!-- main.js drives .reveal visibility — loads first so a slow/blocked CDN
+     fetch below never delays the hero from appearing. -->
+<script src="js/main.js"></script>
 <script src="js/vendor/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="js/contact-map.js"></script>
-<script src="js/main.js"></script>
 <script src="js/lightbox.js"></script>
 <script>document.getElementById("year").innerHTML = new Date().getFullYear();</script>
 </body>

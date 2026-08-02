@@ -367,11 +367,15 @@ main { display: block; }
 /* ambient blobs, layered behind hero content — 5 independently-timed
    circles so their loops never sync up, reads as organic drifting rather
    than a mechanical loop */
-.hero-blobs { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.hero-blobs { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; contain: paint; }
 .hero-blobs span {
   position: absolute;
-  border-radius: 50%;
   will-change: transform;
+  /* backface-visibility forces its own compositor layer, which stops Safari's
+     well-known blur+transform flicker (the blurred edge re-rasterizes each
+     frame without it) — everywhere else it's a no-op since these never flip. */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 /* Five 65vw layers under a 50px blur, transforming forever, are the most
    expensive thing on the page. Once the hero leaves the viewport there is
@@ -394,7 +398,8 @@ main { display: block; }
   left: -14%; bottom: -22%;
   width: 65vw; height: 65vw;
   max-width: 950px; max-height: 950px;
-  background: radial-gradient(circle at center, rgba(230,160,23,.32), transparent 68%);
+  background: radial-gradient(circle at center, rgba(230,160,23,.32), transparent 92%);
+  border-radius: 42% 58% 65% 35% / 45% 40% 60% 55%;
   filter: blur(50px);
   animation: heroFloat1 34s cubic-bezier(.45,.05,.55,.95) infinite;
 }
@@ -402,7 +407,8 @@ main { display: block; }
   top: -18%; right: -14%;
   width: 60vw; height: 60vw;
   max-width: 800px; max-height: 800px;
-  background: radial-gradient(circle at 35% 35%, rgba(246,228,180,.78), transparent 70%);
+  background: radial-gradient(circle at 35% 35%, rgba(246,228,180,.78), transparent 92%);
+  border-radius: 60% 40% 38% 62% / 55% 62% 38% 45%;
   filter: blur(46px);
   animation: heroFloat2 40s var(--e-soft) infinite 2s;
 }
@@ -410,7 +416,8 @@ main { display: block; }
   top: 44%; left: 40%;
   width: 39vw; height: 39vw;
   max-width: 525px; max-height: 525px;
-  background: radial-gradient(circle at 50% 50%, rgba(206,110,20,.46), transparent 70%);
+  background: radial-gradient(circle at 50% 50%, rgba(206,110,20,.46), transparent 92%);
+  border-radius: 38% 62% 55% 45% / 62% 45% 55% 38%;
   filter: blur(38px);
   animation: heroFloat3 27s cubic-bezier(.37,0,.63,1) infinite 1s;
 }
@@ -418,7 +425,8 @@ main { display: block; }
   top: 4%; left: 15%;
   width: 34vw; height: 34vw;
   max-width: 450px; max-height: 450px;
-  background: radial-gradient(circle at 50% 50%, rgba(192,129,10,.4), transparent 70%);
+  background: radial-gradient(circle at 50% 50%, rgba(192,129,10,.4), transparent 92%);
+  border-radius: 55% 45% 40% 60% / 40% 55% 45% 60%;
   filter: blur(34px);
   animation: heroFloat4 23s var(--e-soft) infinite 4s;
 }
@@ -426,7 +434,8 @@ main { display: block; }
   bottom: 0%; right: 10%;
   width: 36vw; height: 36vw;
   max-width: 500px; max-height: 500px;
-  background: radial-gradient(circle at 50% 50%, rgba(216,124,24,.42), transparent 70%);
+  background: radial-gradient(circle at 50% 50%, rgba(216,124,24,.42), transparent 92%);
+  border-radius: 48% 52% 62% 38% / 52% 38% 62% 48%;
   filter: blur(36px);
   animation: heroFloat5 37s cubic-bezier(.42,0,.58,1) infinite 6s;
 }

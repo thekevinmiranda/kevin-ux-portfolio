@@ -142,6 +142,19 @@
     els.forEach(function (el) { obs.observe(el); });
   }
 
+  /* ------------------------------------------------ hero blob drift ---- */
+  /* Randomize each blob's starting phase so the loop never opens the same
+     way twice — pure CSS keeps driving the motion afterward, so this costs
+     one negative animation-delay per blob, once, and nothing at runtime. */
+  function initHeroBlobDrift() {
+    if (prefersReduced) return;
+    var blobs = document.querySelectorAll(".hero-blobs span");
+    blobs.forEach(function (b) {
+      var duration = parseFloat(getComputedStyle(b).animationDuration) || 30;
+      b.style.animationDelay = (-Math.random() * duration).toFixed(2) + "s";
+    });
+  }
+
   /* ------------------------------------------ pause offscreen loops ---- */
   /* The hero blobs (five blurred 65vw layers) and the logo marquee animate
      forever. Neither is worth a single frame once it is scrolled past, and
@@ -221,6 +234,7 @@
     initSmoothScroll();
     initScrollSpy();
     initReveal();
+    initHeroBlobDrift();
     initOffscreenPause();
     initFilters();
     initImageProtection();
