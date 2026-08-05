@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hero option A — Chaos → pattern</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/vendor/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+/* ============================================================
+   OPTION A — "Chaos → pattern"
+   Scattered nodes settle into an ordered grid, then breathe.
+   Lives in the hero figure slot. No image weight.
+   ============================================================ */
+
+.lab-note {
+  background: var(--ink); color: var(--soft-on-dark);
+  font-family: var(--f-body); font-size: .85rem;
+  padding: .6rem 0; text-align: center; letter-spacing: .02em;
+}
+.lab-note b { color: var(--marigold); font-weight: 600; }
+
+/* the figure gets more room than the stock hero split allows, so the
+   monogram reads clearly at a glance */
+.hero-grid { grid-template-columns: 1fr 1fr; }
+
+.pattern-figure {
+  position: relative;
+  justify-self: end;
+  width: 100%;
+  max-width: 540px;
+}
+
+/* No panel, no frame, no decoration — the dot system sits directly on the
+   hero background and is the only thing in this slot. aspect-ratio still
+   reserves the space so the hero grid doesn't collapse. */
+.pattern-stage {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  z-index: 2;
+}
+
+.pattern-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* Position is driven frame-by-frame by the physics loop, so only the
+   appearance transitions here — never transform/cx/cy. */
+.node {
+  transition: fill 520ms var(--e), r 520ms var(--e), stroke-width 520ms var(--e);
+}
+
+/* the route threading the network, drawn on after the nodes light up */
+.route {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: .78;
+}
+
+/* replay affordance — hidden until hover, so nothing but dots at rest */
+.pattern-replay {
+  position: absolute;
+  top: 6px; right: 6px;
+  z-index: 3;
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--paper-line);
+  background: rgba(244,241,232,.82);
+  color: var(--sage);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--d-2) var(--e), color var(--d-1) var(--e),
+              border-color var(--d-1) var(--e), transform var(--d-1) var(--e);
+}
+.pattern-figure:hover .pattern-replay,
+.pattern-replay:focus-visible { opacity: 1; }
+.pattern-replay:hover { color: var(--ink); border-color: var(--ink); }
+.pattern-replay:active { transform: scale(.92); }
+.pattern-replay svg { width: 16px; height: 16px; }
+
+@media (max-width: 991px) {
+  .pattern-figure { justify-self: start; margin-top: 1rem; grid-row: 1; max-width: 380px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .node, .route { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<p class="lab-note">Preview — <b>Option A: chaos → network route</b>, 13 × 13. Hover the figure and hit replay — the path is different every time.</p>
+
+<main id="main">
+  <section class="hero" id="home" aria-labelledby="hero-name">
+    <div class="hero-blobs" aria-hidden="true"><span class="b1"></span><span class="b2"></span><span class="b3"></span><span class="b4"></span><span class="b5"></span></div>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1 id="hero-name" class="reveal" data-delay="1">Kevin<br><span class="accent">Miranda.</span></h1>
+        <p class="role reveal" data-delay="2">Sr. UI/UX &amp; Interaction Designer — Chennai, India</p>
+        <p class="intro reveal" data-delay="2">A designer with a keen eye for detail &amp; a knack for visualizing any idea put forth.</p>
+
+        <div class="hero-cta reveal" data-delay="3">
+          <a class="btn2" href="#contact">
+            Get in touch
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn2 btn2--ghost" href="#projects">View work</a>
+        </div>
+
+        <ul class="socials reveal" data-delay="3" aria-label="Kevin on social platforms">
+          <li><a href="https://dribbble.com/kevinmiranda" target="_blank" rel="noopener" aria-label="Dribbble">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.8"/><path d="M5 8c4.5 2 9 2.5 13.5 1M8.5 4.5C12 8 14 13 14.5 19.5M18.8 14.5c-5-1.5-9.5-.3-12.6 3.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </a></li>
+          <li><a href="https://www.linkedin.com/in/thekevinmiranda/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M8 10.5V17M8 7.6v.02M11.6 17v-3.6c0-1.4 1-2.4 2.3-2.4s2.1 1 2.1 2.4V17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- ===== the option A figure ===== -->
+      <figure class="pattern-figure reveal" data-delay="2">
+        <div class="pattern-stage" id="stage">
+          <svg class="pattern-svg" viewBox="0 0 500 500" role="img" aria-label="An animated illustration: scattered points resolving into a network grid, with a route threading diagonally across it from one corner to the other.">
+            <path class="route" id="route" d=""></path>
+            <g id="nodes"></g>
+          </svg>
+          <button class="pattern-replay" type="button" id="replay" aria-label="Replay the animation">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12a8 8 0 1 1 2.6 5.9M4 12V6m0 6h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section"><div class="wrap"><p class="intro" style="color:var(--sage)">↓ rest of the page continues as normal</p></div></section>
+</main>
+
+<!-- the site's own JS drives .reveal — without it every revealed element stays at opacity 0 -->
+<script src="js/main.js"></script>
+
+<script>
+(function () {
+  /* ------------------------------------------------------------------
+     A 13x13 network of nodes with two physical regimes:
+
+       chaos   — free particles. Constant-velocity drift, elastic wall
+                 bounces, elastic equal-mass particle collisions resolved
+                 through a spatial hash. No damping, so the system keeps
+                 its energy and never goes still.
+       settle  — each particle becomes a damped harmonic oscillator pulled
+                 to its lattice site. Damping ratio is just under 1, so the
+                 dots arrive with a hint of overshoot instead of gliding in.
+
+     Positions are integrated in a rAF loop; CSS only ever animates colour
+     and radius. Everything is in viewBox units (500 x 500).
+     ------------------------------------------------------------------ */
+
+  var COLS = 13, ROWS = 13, W = 500, H = 500;
+  var padX = 42, padY = 42;
+  var stepX = (W - padX * 2) / (COLS - 1);
+  var stepY = (H - padY * 2) / (ROWS - 1);
+
+  var HOPS = 8, JITTER = 3;
+
+  var R_DOT = 3.2, R_LIT = 6.4;
+  var COLLIDE_R = 6.5;            // collision radius, generous vs the 3.2 visual
+  var WALL = 8;                   // keep particles off the very edge
+  var SPEED_MIN = 30, SPEED_MAX = 70;   // viewBox units per second
+  var CHAOS_MS = 2200;            // how long chaos runs before it resolves
+  var K = 130, ZETA = 0.78;       // spring constant + damping ratio for settle
+  var DT_MAX = 1 / 30;            // clamp dt so a stalled tab can't explode it
+
+  var nodesEl = document.getElementById('nodes');
+  var routeEl = document.getElementById('route');
+  var stage   = document.getElementById('stage');
+  var replay  = document.getElementById('replay');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function clamp(v, lo, hi) { return v < lo ? lo : (v > hi ? hi : v); }
+  function gx(c) { return padX + c * stepX; }
+  function gy(r) { return padY + r * stepY; }
+
+  /* ---------------------------------------------------------- route --- */
+  /* Walk bottom-left -> top-right. Each waypoint sits at fraction t along
+     the diagonal, pushed off it by a random perpendicular amount, then
+     forced monotonic — never left, never down — because unconstrained
+     jitter lets the path double back and cross itself, which reads as a
+     scribble rather than a route. */
+  function buildRoute() {
+    var out = [];
+    var prevC = 0, prevR = ROWS - 1;
+    for (var k = 0; k < HOPS; k++) {
+      var t = k / (HOPS - 1);
+      var c = t * (COLS - 1);
+      var r = (1 - t) * (ROWS - 1);
+      if (k > 0 && k < HOPS - 1) {
+        var j = (Math.random() * 2 - 1) * JITTER;
+        c += j; r += j;
+      }
+      c = clamp(Math.round(c), 0, COLS - 1);
+      r = clamp(Math.round(r), 0, ROWS - 1);
+      if (k > 0 && k < HOPS - 1) {
+        c = clamp(c, prevC, COLS - 1);
+        r = clamp(r, 0, prevR);
+      }
+      if (k === 0 || !(c === prevC && r === prevR)) out.push({ c: c, r: r });
+      prevC = c; prevR = r;
+    }
+    return out;
+  }
+
+  var route = [];
+  var routeLen = 0;
+
+  function applyRoute() {
+    var onRoute = {};
+    route.forEach(function (w) { onRoute[w.c + ',' + w.r] = true; });
+    pts.forEach(function (p) {
+      p.lit = !!onRoute[p.c + ',' + p.r];
+      p.el.setAttribute('class', 'node' + (p.lit ? ' is-lit' : ''));
+      if (p.lit) p.el.setAttribute('stroke', '#14231C');
+    });
+    routeEl.setAttribute('d', route.map(function (w, n) {
+      return (n ? 'L' : 'M') + gx(w.c).toFixed(1) + ' ' + gy(w.r).toFixed(1);
+    }).join(' '));
+    routeLen = routeEl.getTotalLength ? routeEl.getTotalLength() : 0;
+    routeEl.style.strokeDasharray = routeLen;
+  }
+
+  /* ------------------------------------------------------ particles --- */
+  var pts = [];
+  for (var r0 = 0; r0 < ROWS; r0++) {
+    for (var c0 = 0; c0 < COLS; c0++) {
+      var el = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      el.setAttribute('class', 'node');
+      el.setAttribute('r', R_DOT);
+      el.setAttribute('fill', '#58685F');
+      nodesEl.appendChild(el);
+      pts.push({
+        c: c0, r: r0,
+        tx: gx(c0), ty: gy(r0),
+        x: gx(c0), y: gy(r0),
+        vx: 0, vy: 0,
+        lit: false, el: el
+      });
+    }
+  }
+
+  function reseed() {
+    pts.forEach(function (p) {
+      p.x = WALL + Math.random() * (W - WALL * 2);
+      p.y = WALL + Math.random() * (H - WALL * 2);
+      var a = Math.random() * Math.PI * 2;
+      var sp = SPEED_MIN + Math.random() * (SPEED_MAX - SPEED_MIN);
+      p.vx = Math.cos(a) * sp;
+      p.vy = Math.sin(a) * sp;
+    });
+  }
+
+  /* --------------------------------------------------- appearance ----- */
+  function dim(p) {
+    p.el.setAttribute('r', R_DOT);
+    p.el.setAttribute('fill', '#58685F');
+    if (p.lit) p.el.setAttribute('stroke-width', '0');
+  }
+  function light(p) {
+    p.el.setAttribute('r', p.lit ? R_LIT : R_DOT);
+    // marigold alone is only ~1.8:1 on paper — the ink ring carries the
+    // 3:1 non-text contrast so the route nodes stay legible.
+    p.el.setAttribute('fill', p.lit ? '#E6A017' : '#58685F');
+    if (p.lit) p.el.setAttribute('stroke-width', '1.7');
+  }
+  function render() {
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+      p.el.setAttribute('cx', p.x.toFixed(2));
+      p.el.setAttribute('cy', p.y.toFixed(2));
+    }
+  }
+
+  /* ------------------------------------------------------- physics ---- */
+  /* Uniform-grid spatial hash. Bucket edge is one collision diameter, so a
+     particle can only touch something in its own or an adjacent bucket —
+     that turns the O(n^2) pair sweep into a handful of local checks. */
+  var CELL = COLLIDE_R * 2;
+  var GRID_W = Math.ceil(W / CELL) + 1;
+  var buckets = {};
+
+  function collide() {
+    buckets = {};
+    var i, p, key;
+    for (i = 0; i < pts.length; i++) {
+      p = pts[i];
+      key = ((p.x / CELL) | 0) + ((p.y / CELL) | 0) * GRID_W;
+      (buckets[key] || (buckets[key] = [])).push(p);
+    }
+    var minD = COLLIDE_R * 2, minD2 = minD * minD;
+    for (i = 0; i < pts.length; i++) {
+      var a = pts[i];
+      var bx = (a.x / CELL) | 0, by = (a.y / CELL) | 0;
+      for (var ox = -1; ox <= 1; ox++) {
+        for (var oy = -1; oy <= 1; oy++) {
+          var list = buckets[(bx + ox) + (by + oy) * GRID_W];
+          if (!list) continue;
+          for (var n = 0; n < list.length; n++) {
+            var b = list[n];
+            if (b === a) continue;
+            var dx = b.x - a.x, dy = b.y - a.y;
+            var d2 = dx * dx + dy * dy;
+            if (d2 >= minD2 || d2 === 0) continue;
+            var d = Math.sqrt(d2);
+            var nx = dx / d, ny = dy / d;
+            // push apart so they stop overlapping
+            var overlap = (minD - d) * 0.5;
+            a.x -= nx * overlap; a.y -= ny * overlap;
+            b.x += nx * overlap; b.y += ny * overlap;
+            // elastic impulse, equal masses, restitution 1
+            var rvn = (b.vx - a.vx) * nx + (b.vy - a.vy) * ny;
+            if (rvn >= 0) continue;          // already separating
+            var jImp = -rvn;                  // -(1+e)*rvn / (1/m + 1/m), m = 1
+            a.vx -= jImp * nx; a.vy -= jImp * ny;
+            b.vx += jImp * nx; b.vy += jImp * ny;
+          }
+        }
+      }
+    }
+  }
+
+  function stepChaos(dt) {
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+      p.x += p.vx * dt;
+      p.y += p.vy * dt;
+      if (p.x < WALL)     { p.x = WALL;     p.vx = Math.abs(p.vx); }
+      if (p.x > W - WALL) { p.x = W - WALL; p.vx = -Math.abs(p.vx); }
+      if (p.y < WALL)     { p.y = WALL;     p.vy = Math.abs(p.vy); }
+      if (p.y > H - WALL) { p.y = H - WALL; p.vy = -Math.abs(p.vy); }
+    }
+    collide();
+  }
+
+  function stepSettle(dt) {
+    var cDamp = 2 * ZETA * Math.sqrt(K);
+    var restX = 0, restV = 0;
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+      var ax = K * (p.tx - p.x) - cDamp * p.vx;
+      var ay = K * (p.ty - p.y) - cDamp * p.vy;
+      p.vx += ax * dt; p.vy += ay * dt;
+      p.x += p.vx * dt; p.y += p.vy * dt;
+      var dx = p.tx - p.x, dy = p.ty - p.y;
+      restX = Math.max(restX, Math.abs(dx), Math.abs(dy));
+      restV = Math.max(restV, Math.abs(p.vx), Math.abs(p.vy));
+    }
+    return restX < 0.35 && restV < 2.5;
+  }
+
+  /* ---------------------------------------------------- orchestration - */
+  var state = 'idle';       // idle | chaos | settle | done
+  var stateAt = 0;
+  var raf = null, last = 0;
+
+  function frame(now) {
+    raf = requestAnimationFrame(frame);
+    var dt = Math.min((now - last) / 1000, DT_MAX);
+    last = now;
+    if (dt <= 0) return;
+
+    if (state === 'chaos') {
+      stepChaos(dt);
+      if (now - stateAt > CHAOS_MS) { state = 'settle'; stateAt = now; }
+    } else if (state === 'settle') {
+      if (stepSettle(dt)) {
+        // snap to exact lattice, then reveal
+        for (var i = 0; i < pts.length; i++) {
+          pts[i].x = pts[i].tx; pts[i].y = pts[i].ty;
+          pts[i].vx = pts[i].vy = 0;
+        }
+        state = 'done';
+        pts.forEach(light);
+        routeEl.style.transition = 'stroke-dashoffset 1400ms var(--e) 420ms';
+        routeEl.style.strokeDashoffset = 0;
+        render();
+        stop();
+        return;
+      }
+    }
+    render();
+  }
+
+  function start() {
+    if (raf) return;
+    last = performance.now();
+    raf = requestAnimationFrame(frame);
+  }
+  function stop() {
+    if (raf) { cancelAnimationFrame(raf); raf = null; }
+  }
+
+  function settledNow() {
+    pts.forEach(function (p) { p.x = p.tx; p.y = p.ty; p.vx = p.vy = 0; });
+    pts.forEach(light);
+    routeEl.style.transition = 'none';
+    routeEl.style.strokeDashoffset = 0;
+    render();
+    state = 'done';
+  }
+
+  function run() {
+    stop();
+    route = buildRoute();
+    applyRoute();
+    if (reduced) { settledNow(); return; }
+    reseed();
+    pts.forEach(dim);
+    routeEl.style.transition = 'none';
+    routeEl.style.strokeDashoffset = routeLen;
+    render();
+    state = 'chaos';
+    stateAt = performance.now();
+    start();
+  }
+
+  // paint a valid settled state up front, so the figure is never empty even
+  // if the observer never fires
+  route = buildRoute();
+  applyRoute();
+  settledNow();
+
+  // only kick off the simulation once the figure is actually on screen
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { run(); io.disconnect(); } });
+    }, { threshold: .35 });
+    io.observe(stage);
+  } else { run(); }
+
+  // don't burn frames on a hidden tab
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) stop();
+    else if (state === 'chaos' || state === 'settle') start();
+  });
+
+  replay.addEventListener('click', run);
+})();
+</script>
+<script>
+/* Preview safety net: if main.js fails to boot for any reason, un-hide the
+   content anyway so this file can never render as a blank page. */
+setTimeout(function () {
+  document.querySelectorAll('.reveal:not(.is-visible)').forEach(function (el) {
+    el.classList.add('is-visible');
+  });
+}, 1200);
+</script>
+
+</body>
+</html>

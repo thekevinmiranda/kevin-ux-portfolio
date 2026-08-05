@@ -27,6 +27,66 @@
 <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="stylesheet" href="css/style.css">
+
+<style>
+/* ============================================================
+   ABOUT FIGURE — chaos → pattern
+   Mirrors the heading beside it. Two physical regimes on one
+   set of particles:
+
+     chaos    free bodies. Constant-velocity drift, elastic wall
+              bounces, elastic equal-mass collisions resolved
+              through a spatial hash. No damping, so the system
+              holds its energy and never settles on its own.
+     order    each body becomes a damped harmonic oscillator
+              pulled to its lattice site. Stiffness is jittered
+              per particle so they don't arrive in lockstep.
+
+   It then holds, releases with a radial impulse, and repeats.
+
+   The figure stretches to match the text column rather than
+   sitting at a fixed ratio, so the lattice is measured from the
+   real box at runtime and the dot count follows the area.
+   ============================================================ */
+
+.about-grid { align-items: stretch; }
+
+.chaos-figure {
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-width: 460px;
+  margin: 0;
+}
+.chaos-stage {
+  position: relative;
+  flex: 1;
+  min-height: 340px;
+}
+.chaos-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* position is set frame-by-frame, so only appearance transitions here */
+.chaos-node { transition: fill 640ms var(--e), r 640ms var(--e), stroke-width 640ms var(--e); }
+
+.chaos-link {
+  stroke: var(--forest);
+  stroke-width: 1;
+  opacity: 0;
+  transition: opacity 680ms var(--e);
+  transition-delay: calc(var(--i) * 20ms);
+}
+.chaos-stage.is-ordered .chaos-link { opacity: .11; }
+
+@media (max-width: 991px) {
+  /* single column — nothing to match, so fall back to a square */
+  .about-grid { align-items: start; }
+  .chaos-figure { max-width: 380px; margin-top: 1rem; }
+  .chaos-stage { min-height: 0; aspect-ratio: 1 / 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chaos-node, .chaos-link { transition: none; }
+}
+</style>
 <noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
 </head>
 <body>
@@ -91,7 +151,7 @@
 
       <figure class="hero-figure reveal" data-delay="2">
         <div class="frame">
-          <img src="https://placehold.co/470x600/ECE7D9/14231C?text=Kevin+Portrait" alt="Portrait of Kevin Miranda, Senior UX & Interaction designer, in natural light" width="460" height="575">
+          <img src="img/kevin-profile.png" alt="Portrait of Kevin Miranda, Senior UI/UX and Interaction Designer" width="460" height="575">
         </div>
         <div class="hero-chip" aria-hidden="true">
           <span class="num">10+</span>
@@ -148,13 +208,13 @@
   <!-- =========================================================== ABOUT -->
   <section class="section" id="about" aria-labelledby="about-h">
     <div class="wrap about-grid">
-      <figure class="about-figure reveal">
-        <div class="frame">
-          <img src="img/kevin-profile.png" alt="Kevin Miranda presenting FourKites' visibility platform to attendees at the Visibility customer conference" width="460" height="575">
-        </div>
-        <div class="about-chip" aria-hidden="true">
-          <span class="num">10+</span>
-          <span class="lbl">years of designing<br>digital products</span>
+      <figure class="chaos-figure reveal" aria-hidden="true">
+        <div class="chaos-stage" id="chaosStage">
+          <svg class="chaos-svg" role="img"
+               aria-label="A looping animation: scattered points colliding freely, then resolving into an ordered lattice.">
+            <g id="chaosLinks"></g>
+            <g id="chaosNodes"></g>
+          </svg>
         </div>
       </figure>
       <div class="about-body">
@@ -620,6 +680,306 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="js/contact-map.js"></script>
 <script src="js/lightbox.js"></script>
+<script>
+(function () {
+  var stage = document.getElementById('chaosStage');
+  if (!stage) return;
+  var svg     = stage.querySelector('.chaos-svg');
+  var nodesEl = document.getElementById('chaosNodes');
+  var linksEl = document.getElementById('chaosLinks');
+
+  /* The figure now stretches to the height of the copy beside it, so the
+     lattice can't be a fixed 8x8. Both the viewBox and the dot count are
+     derived from the measured box: CELL sets the spacing, and columns and
+     rows fall out of it, which keeps cells square at any aspect ratio and
+     adds dots as the column gets taller. */
+  var CELL = 42;                   // target spacing between dots
+  var MAX_DOTS = 340;              // ceiling, so a tall column can't run away
+  var PAD = 30;
+
+  var W = 0, H = 0, COLS = 0, ROWS = 0, stepX = 0, stepY = 0;
+
+  var R_DOT = 3.4, R_ACC = 5.2;
+  var COLLIDE_R = 8, WALL = 10;
+  var SPEED_MIN = 26, SPEED_MAX = 58;
+  var CHAOS_MS = 4200, HOLD_MS = 3200;
+  var K = 120, ZETA = 0.72;
+  var DT_MAX = 1 / 30;
+
+  var SAGE = '#58685F', GOLD = '#E6A017', INK = '#14231C';
+
+  var pts = [];
+  var state = 'chaos', stateAt = 0, raf = null, last = 0, onScreen = false;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function gx(c) { return PAD + c * stepX; }
+  function gy(r) { return PAD + r * stepY; }
+
+  /* ------------------------------------------------------- layout --- */
+  function build() {
+    while (nodesEl.firstChild) nodesEl.removeChild(nodesEl.firstChild);
+    while (linksEl.firstChild) linksEl.removeChild(linksEl.firstChild);
+    pts = [];
+
+    for (var r = 0; r < ROWS; r++) {
+      for (var c = 0; c < COLS; c++) {
+        // accents fall on diagonals, so the resolved state reads as a
+        // deliberate pattern rather than a plain grid
+        var acc = (r + c) % 7 === 2;
+        var el = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        el.setAttribute('class', 'chaos-node');
+        el.setAttribute('r', R_DOT);
+        el.setAttribute('fill', SAGE);
+        // marigold is only ~1.8:1 on paper — the ink ring carries the 3:1
+        // non-text contrast so the accents stay legible
+        if (acc) el.setAttribute('stroke', INK);
+        nodesEl.appendChild(el);
+        pts.push({
+          tx: gx(c), ty: gy(r),
+          x: gx(c), y: gy(r), vx: 0, vy: 0,
+          acc: acc,
+          k: K * (0.92 + Math.random() * 0.16),   // per-particle stiffness
+          el: el
+        });
+      }
+    }
+
+    var li = 0;
+    function line(x1, y1, x2, y2) {
+      var el = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      el.setAttribute('x1', x1); el.setAttribute('y1', y1);
+      el.setAttribute('x2', x2); el.setAttribute('y2', y2);
+      el.setAttribute('class', 'chaos-link');
+      el.style.setProperty('--i', li++);
+      linksEl.appendChild(el);
+    }
+    for (var i = 0; i < ROWS; i++) line(gx(0), gy(i), gx(COLS - 1), gy(i));
+    for (var j = 0; j < COLS; j++) line(gx(j), gy(0), gx(j), gy(ROWS - 1));
+  }
+
+  function measure() {
+    var rect = stage.getBoundingClientRect();
+    var w = Math.max(220, Math.round(rect.width));
+    var h = Math.max(220, Math.round(rect.height));
+    if (w === W && h === H) return false;
+
+    W = w; H = h;
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+
+    var cols = Math.max(5, Math.round((W - PAD * 2) / CELL) + 1);
+    var rows = Math.max(5, Math.round((H - PAD * 2) / CELL) + 1);
+    while (cols * rows > MAX_DOTS) { if (cols >= rows) cols--; else rows--; }
+
+    COLS = cols; ROWS = rows;
+    stepX = (W - PAD * 2) / (COLS - 1);
+    stepY = (H - PAD * 2) / (ROWS - 1);
+    build();
+    return true;
+  }
+
+  /* --------------------------------------------------- appearance --- */
+  function dim(p) {
+    p.el.setAttribute('r', R_DOT);
+    p.el.setAttribute('fill', SAGE);
+    if (p.acc) p.el.setAttribute('stroke-width', '0');
+  }
+  function light(p) {
+    p.el.setAttribute('r', p.acc ? R_ACC : R_DOT);
+    p.el.setAttribute('fill', p.acc ? GOLD : SAGE);
+    if (p.acc) p.el.setAttribute('stroke-width', '1.6');
+  }
+  function render() {
+    for (var n = 0; n < pts.length; n++) {
+      pts[n].el.setAttribute('cx', pts[n].x.toFixed(2));
+      pts[n].el.setAttribute('cy', pts[n].y.toFixed(2));
+    }
+  }
+
+  /* ------------------------------------------------------ physics --- */
+  /* Uniform-grid spatial hash: bucket edge is one collision diameter, so a
+     particle can only touch something in its own or an adjacent bucket.
+     That turns the O(n^2) pair sweep into a few local checks — which is
+     what lets the dot count scale with the column height. */
+  function collide() {
+    var C = COLLIDE_R * 2;
+    var gw = Math.ceil(W / C) + 1;
+    var buckets = {}, i, p, key;
+    for (i = 0; i < pts.length; i++) {
+      p = pts[i];
+      key = ((p.x / C) | 0) + ((p.y / C) | 0) * gw;
+      (buckets[key] || (buckets[key] = [])).push(p);
+    }
+    var minD = C, minD2 = minD * minD;
+    for (i = 0; i < pts.length; i++) {
+      var a = pts[i];
+      var bx = (a.x / C) | 0, by = (a.y / C) | 0;
+      for (var ox = -1; ox <= 1; ox++) {
+        for (var oy = -1; oy <= 1; oy++) {
+          var list = buckets[(bx + ox) + (by + oy) * gw];
+          if (!list) continue;
+          for (var n = 0; n < list.length; n++) {
+            var b = list[n];
+            if (b === a) continue;
+            var dx = b.x - a.x, dy = b.y - a.y;
+            var d2 = dx * dx + dy * dy;
+            if (d2 >= minD2 || d2 === 0) continue;
+            var d = Math.sqrt(d2), nx = dx / d, ny = dy / d;
+            var overlap = (minD - d) * 0.5;
+            a.x -= nx * overlap; a.y -= ny * overlap;
+            b.x += nx * overlap; b.y += ny * overlap;
+            var rvn = (b.vx - a.vx) * nx + (b.vy - a.vy) * ny;
+            if (rvn >= 0) continue;             // already separating
+            var imp = -rvn;                     // equal mass, restitution 1
+            a.vx -= imp * nx; a.vy -= imp * ny;
+            b.vx += imp * nx; b.vy += imp * ny;
+          }
+        }
+      }
+    }
+  }
+
+  function stepChaos(dt) {
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+      p.x += p.vx * dt; p.y += p.vy * dt;
+      if (p.x < WALL)     { p.x = WALL;     p.vx =  Math.abs(p.vx); }
+      if (p.x > W - WALL) { p.x = W - WALL; p.vx = -Math.abs(p.vx); }
+      if (p.y < WALL)     { p.y = WALL;     p.vy =  Math.abs(p.vy); }
+      if (p.y > H - WALL) { p.y = H - WALL; p.vy = -Math.abs(p.vy); }
+    }
+    collide();
+  }
+
+  function stepSettle(dt) {
+    var restX = 0, restV = 0;
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+      var damp = 2 * ZETA * Math.sqrt(p.k);
+      p.vx += (p.k * (p.tx - p.x) - damp * p.vx) * dt;
+      p.vy += (p.k * (p.ty - p.y) - damp * p.vy) * dt;
+      p.x += p.vx * dt; p.y += p.vy * dt;
+      restX = Math.max(restX, Math.abs(p.tx - p.x), Math.abs(p.ty - p.y));
+      restV = Math.max(restV, Math.abs(p.vx), Math.abs(p.vy));
+    }
+    return restX < 0.3 && restV < 2.2;
+  }
+
+  function scatter() {
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+      p.x = WALL + Math.random() * (W - WALL * 2);
+      p.y = WALL + Math.random() * (H - WALL * 2);
+      var a = Math.random() * Math.PI * 2;
+      var s = SPEED_MIN + Math.random() * (SPEED_MAX - SPEED_MIN);
+      p.vx = Math.cos(a) * s; p.vy = Math.sin(a) * s;
+    }
+  }
+
+  /* Leaving the pattern is a push outward from the centre rather than a
+     re-randomise, so the order visibly comes apart instead of cutting. */
+  function release() {
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+      var dx = p.x - W / 2, dy = p.y - H / 2;
+      var d = Math.sqrt(dx * dx + dy * dy) || 1;
+      var s = SPEED_MIN + Math.random() * (SPEED_MAX - SPEED_MIN);
+      p.vx = (dx / d) * s + (Math.random() - .5) * 24;
+      p.vy = (dy / d) * s + (Math.random() - .5) * 24;
+    }
+  }
+
+  function settleNow() {
+    for (var i = 0; i < pts.length; i++) {
+      pts[i].x = pts[i].tx; pts[i].y = pts[i].ty;
+      pts[i].vx = pts[i].vy = 0;
+      light(pts[i]);
+    }
+    stage.classList.add('is-ordered');
+    render();
+  }
+
+  /* ------------------------------------------------ orchestration --- */
+  function frame(now) {
+    var dt = Math.min((now - last) / 1000, DT_MAX);
+    last = now;
+
+    if (state === 'chaos') {
+      if (dt > 0) stepChaos(dt);
+      if (now - stateAt > CHAOS_MS) { state = 'settle'; stateAt = now; }
+    } else if (state === 'settle') {
+      if (dt > 0 && stepSettle(dt)) {
+        state = 'hold'; stateAt = now;
+        settleNow();
+      }
+    } else if (state === 'hold') {
+      if (now - stateAt > HOLD_MS) {
+        state = 'chaos'; stateAt = now;
+        stage.classList.remove('is-ordered');
+        pts.forEach(dim);
+        release();
+      }
+    }
+    render();
+    raf = requestAnimationFrame(frame);
+  }
+
+  function start() {
+    if (raf || !onScreen || document.hidden || reduced) return;
+    last = performance.now();
+    raf = requestAnimationFrame(frame);
+  }
+  function stop() { if (raf) { cancelAnimationFrame(raf); raf = null; } }
+
+  measure();
+
+  /* A perpetual loop is exactly what reduced-motion is for: show the
+     resolved pattern and never move. */
+  if (reduced) { settleNow(); return; }
+
+  scatter();
+  pts.forEach(dim);
+  render();
+  stateAt = performance.now();
+
+  /* Re-measuring on resize rebuilds the lattice, so the run restarts from
+     chaos rather than trying to reconcile old particles with new sites. */
+  function relayout() {
+    if (!measure()) return;
+    stop();
+    scatter();
+    pts.forEach(dim);
+    stage.classList.remove('is-ordered');
+    render();
+    state = 'chaos';
+    stateAt = performance.now();
+    start();
+  }
+
+  if ('ResizeObserver' in window) {
+    var rt = null;
+    new ResizeObserver(function () {
+      clearTimeout(rt);
+      rt = setTimeout(relayout, 180);
+    }).observe(stage);
+  } else {
+    window.addEventListener('resize', function () { relayout(); });
+  }
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        onScreen = e.isIntersecting;
+        if (onScreen) { stateAt = performance.now(); start(); } else stop();
+      });
+    }, { threshold: .2 });
+    io.observe(stage);
+  } else { onScreen = true; start(); }
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) stop(); else { last = performance.now(); start(); }
+  });
+})();
+</script>
 <script>document.getElementById("year").innerHTML = new Date().getFullYear();</script>
 </body>
 </html>

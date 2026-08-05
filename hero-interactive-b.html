@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hero interactive B — Wireframe to hi-fi</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/vendor/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+/* ============================================================
+   INTERACTIVE B — Wireframe → Structure → Hi-fi
+
+   One set of DOM nodes, three fidelity stages. Every difference
+   between stages is a CSS custom property on the figure, so
+   moving between them is a real property transition, never a
+   crossfade between separate mockups.
+
+   Choreography — the morph is sequenced, not simultaneous:
+     0ms    layout    corners, borders, surfaces
+     90ms   content   skeleton bars out
+     210ms  type      real copy in
+     330ms  accent    status colour, route, avatar
+
+   Structural note: every box here is a <div>. An earlier pass
+   used <span>, which left .wf-slot inline — an inline element
+   is not a containing block for the absolutely-positioned copy
+   layered inside it, so the text detached from its row.
+   ============================================================ */
+
+.lab-note {
+  background: var(--ink); color: var(--soft-on-dark);
+  font-family: var(--f-body); font-size: .85rem;
+  padding: .6rem 0; text-align: center; letter-spacing: .02em;
+}
+.lab-note b { color: var(--marigold); font-weight: 600; }
+
+.wf-figure {
+  position: relative;
+  justify-self: end;
+  width: 100%;
+  max-width: 500px;
+}
+.wf-figure::before {
+  content: "";
+  position: absolute;
+  right: -18px; top: -18px;
+  width: 58%; height: 48%;
+  background: var(--marigold);
+  border-radius: var(--r-lg);
+  z-index: 0;
+}
+
+/* ---------------------------------------------------- stage tokens --- */
+.wf-figure[data-stage="0"] .wf {          /* wireframe */
+  --ink-c:      #B4AD9C;
+  --sub-c:      #B4AD9C;
+  --fill-c:     #DEDACB;
+  --line-c:     #C6BFAC;
+  --accent-c:   #C9C2AF;
+  --on-accent:  #6A6355;
+  --accent2-c:  #C9C2AF;
+  --on-accent2: #6A6355;
+  --track-c:    #C6BFAC;
+  --radius:     3px;
+  --copy:       0;
+  --skel:       1;
+  --shadow-c:   none;
+  --anno:       1;
+}
+.wf-figure[data-stage="1"] .wf {          /* structure — designed, no colour */
+  --ink-c:      #2E3A32;
+  --sub-c:      #6B7469;
+  --fill-c:     #FBF9F3;
+  --line-c:     #D3CCBA;
+  --accent-c:   #DDD6C4;
+  --on-accent:  #3F4740;
+  --accent2-c:  #DDD6C4;
+  --on-accent2: #3F4740;
+  --track-c:    #C6BFAC;
+  --radius:     9px;
+  --copy:       1;
+  --skel:       0;
+  --shadow-c:   0 5px 16px -14px rgba(20,35,28,.55);
+  --anno:       .5;
+}
+.wf-figure[data-stage="2"] .wf {          /* hi-fi */
+  --ink-c:      #14231C;
+  --sub-c:      #58685F;
+  --fill-c:     #FFFDF7;
+  --line-c:     #E2DCCC;
+  --accent-c:   #E6A017;
+  --on-accent:  #412402;
+  --accent2-c:  #1C3A2E;
+  --on-accent2: #E7E3D4;
+  --track-c:    #C8D3CB;
+  --radius:     9px;
+  --copy:       1;
+  --skel:       0;
+  --shadow-c:   0 12px 28px -18px rgba(20,35,28,.55);
+  --anno:       0;
+}
+
+/* ---------------------------------------------------------- stage --- */
+.wf {
+  position: relative;
+  z-index: 2;
+  background: var(--paper-2);
+  border: 1px solid var(--paper-line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow);
+  padding: 1.1rem 1.1rem 1.2rem;
+}
+
+/* toolbar */
+.wf-toolbar {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  margin-bottom: .8rem;
+}
+.wf-chip {
+  height: 24px;
+  min-width: 96px;
+  border-radius: 20px;
+  background: var(--fill-c);
+  border: 1px solid var(--line-c);
+  position: relative;
+  flex: none;
+  transition: background-color 560ms var(--e), border-color 560ms var(--e);
+}
+.wf-chip .t {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .65rem;
+  color: var(--ink-c);
+  opacity: var(--copy);
+  transition: opacity 460ms var(--e) 210ms, color 560ms var(--e) 210ms;
+}
+.wf-spacer { flex: 1; }
+.wf-count {
+  font-size: .64rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--sub-c);
+  opacity: var(--copy);
+  transition: opacity 460ms var(--e) 210ms, color 560ms var(--e) 210ms;
+}
+
+/* cards — position:relative so the redlines anchor to the card, not the panel */
+.wf-card {
+  position: relative;
+  background: var(--fill-c);
+  border: 1px solid var(--line-c);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-c);
+  padding: .8rem .85rem .85rem;
+  transition: background-color 560ms var(--e), border-color 560ms var(--e),
+              border-radius 560ms var(--e), box-shadow 560ms var(--e);
+}
+.wf-card + .wf-card { margin-top: .6rem; }
+
+.wf-head {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+
+.wf-avatar {
+  width: 32px; height: 32px;
+  flex: none;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--accent-c);
+  border-radius: var(--radius);
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: .62rem;
+  letter-spacing: .02em;
+  color: var(--on-accent);
+  transition: background-color 560ms var(--e) 330ms,
+              border-radius 560ms var(--e),
+              color 560ms var(--e) 330ms;
+}
+.wf-avatar > span { opacity: var(--copy); transition: opacity 460ms var(--e) 210ms; }
+
+.wf-titles { display: block; flex: 1; min-width: 0; }
+
+/* Each row stacks a skeleton bar and the real string, so the box never
+   changes height as one fades out and the other fades in. */
+.wf-slot { display: block; position: relative; height: 15px; }
+.wf-slot + .wf-slot { margin-top: .3rem; height: 13px; }
+.wf-skel {
+  display: block;
+  height: 10px;
+  margin-top: 2px;
+  background: var(--ink-c);
+  border-radius: var(--radius);
+  opacity: var(--skel);
+  transition: opacity 420ms var(--e) 90ms, background-color 560ms var(--e),
+              border-radius 560ms var(--e);
+}
+.wf-slot + .wf-slot .wf-skel { height: 8px; }
+.wf-copy {
+  position: absolute; inset: 0;
+  display: flex; align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: var(--copy);
+  transition: opacity 460ms var(--e) 210ms, color 560ms var(--e) 210ms;
+}
+.wf-copy--title {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: .86rem;
+  color: var(--ink-c);
+}
+.wf-copy--sub { font-size: .7rem; color: var(--sub-c); }
+
+.wf-pill {
+  flex: none;
+  position: relative;
+  min-width: 68px;
+  height: 22px;
+  border-radius: 20px;
+  background: var(--accent-c);
+  transition: background-color 560ms var(--e) 330ms;
+}
+.wf-pill .t {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .63rem;
+  font-weight: 500;
+  color: var(--on-accent);
+  opacity: var(--copy);
+  transition: opacity 460ms var(--e) 210ms, color 560ms var(--e) 330ms;
+}
+/* second status reads differently once colour arrives */
+.wf-pill--alt { background: var(--accent2-c); }
+.wf-pill--alt .t { color: var(--on-accent2); }
+
+/* route strip — plain boxes, not a stretched SVG. A viewBox with
+   preserveAspectRatio="none" squashed the circles into ovals. */
+.wf-route {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 22px;
+  margin-top: .7rem;
+  padding: 0 3px;
+}
+.wf-route::before {
+  content: "";
+  position: absolute;
+  left: 6px; right: 6px; top: 50%;
+  height: 2px;
+  margin-top: -1px;
+  background: var(--track-c);
+  border-radius: 2px;
+  transition: background-color 560ms var(--e) 330ms;
+}
+.wf-node {
+  position: relative;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--accent-c);
+  transition: background-color 560ms var(--e) 330ms;
+}
+.wf-node--muted { width: 7px; height: 7px; background: var(--track-c); }
+
+.wf-rows { display: grid; gap: .4rem; margin-top: .7rem; }
+.wf-line {
+  display: block;
+  height: 8px;
+  background: var(--ink-c);
+  border-radius: var(--radius);
+  opacity: calc(var(--skel) * .45);
+  transition: opacity 420ms var(--e) 90ms, background-color 560ms var(--e),
+              border-radius 560ms var(--e);
+}
+
+/* --------------------------------------------------- redline marks --- */
+.wf-anno {
+  position: absolute;
+  opacity: var(--anno);
+  transition: opacity 460ms var(--e);
+  pointer-events: none;
+  font-family: var(--f-body);
+  font-size: .56rem;
+  letter-spacing: .06em;
+  color: #4E5B52;
+  white-space: nowrap;
+}
+.wf-anno--radius { top: 5px; right: 7px; }
+.wf-anno--gap {
+  left: 50%;
+  transform: translateX(-50%);
+  top: calc(-.6rem - 1px);
+  height: .6rem;
+  display: flex; align-items: center;
+  padding-left: 12px;
+}
+.wf-anno--gap::before {
+  content: "";
+  position: absolute;
+  left: 3px; top: 50%;
+  width: 7px; height: 1px;
+  background: currentColor;
+  opacity: .6;
+}
+
+/* ------------------------------------------------ segmented control --- */
+/* Deliberately quiet. The panel above is the subject; this is only a
+   scrubber, so it gets no container chrome, no filled indicator and no
+   border — the running segment is identified by its own fill alone. */
+.wf-controls { margin-top: .85rem; display: flex; justify-content: center; }
+
+.wf-stages {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.wf-stages button {
+  position: relative;
+  isolation: isolate;          /* keeps the -1 fill inside this button */
+  overflow: hidden;            /* clips the fill to the pill radius */
+  background: none;
+  border: 0;
+  padding: .34rem .8rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: var(--f-body);
+  font-size: .63rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--sage);
+  transition: color var(--d-2) var(--e), background-color var(--d-2) var(--e);
+}
+/* the light track only appears under the segment that's running */
+.wf-stages button[aria-checked="true"] {
+  color: var(--ink);
+  font-weight: 600;
+  background: rgba(20, 35, 28, .055);
+}
+.wf-stages button:hover { color: var(--ink); }
+.wf-stages button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+/* ------------------------------------------------------- countdown --- */
+/* A darker wash growing left to right across the active segment, rather
+   than a separate bar. Negative z-index paints it above the button's own
+   background but below the label, so the text never dims as it passes. */
+.wf-seg-fill {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: rgba(20, 35, 28, .135);
+  transform-origin: left center;
+  transform: scaleX(0);
+  will-change: transform;
+  transition: background-color var(--d-2) var(--e);
+}
+/* held — the loop is paused by hover or focus */
+.wf-stages.is-held .wf-seg-fill { background: rgba(20, 35, 28, .075); }
+
+.wf-seg-label { position: relative; }
+
+@media (max-width: 991px) {
+  .wf-figure { justify-self: start; margin-top: 1rem; grid-row: 1; max-width: 440px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wf-card, .wf-avatar, .wf-avatar > span, .wf-pill, .wf-pill .t,
+  .wf-skel, .wf-line, .wf-copy, .wf-chip, .wf-chip .t, .wf-count,
+  .wf-anno, .wf-stages button,
+  .wf-route::before, .wf-node { transition: none; }
+  .wf-seg-fill { display: none; }
+}
+</style>
+</head>
+<body>
+
+<p class="lab-note">Preview — <b>Interactive B</b>, looping every 4s, the active segment fills as it counts. Hover pauses; clicking a stage restarts from there.</p>
+
+<main id="main">
+  <section class="hero" id="home" aria-labelledby="hero-name">
+    <div class="hero-blobs" aria-hidden="true"><span class="b1"></span><span class="b2"></span><span class="b3"></span><span class="b4"></span><span class="b5"></span></div>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1 id="hero-name" class="reveal" data-delay="1">Kevin<br><span class="accent">Miranda.</span></h1>
+        <p class="role reveal" data-delay="2">Sr. UI/UX &amp; Interaction Designer — Chennai, India</p>
+        <p class="intro reveal" data-delay="2">A designer with a keen eye for detail &amp; a knack for visualizing any idea put forth.</p>
+
+        <div class="hero-cta reveal" data-delay="3">
+          <a class="btn2" href="#contact">
+            Get in touch
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn2 btn2--ghost" href="#projects">View work</a>
+        </div>
+
+        <ul class="socials reveal" data-delay="3" aria-label="Kevin on social platforms">
+          <li><a href="https://dribbble.com/kevinmiranda" target="_blank" rel="noopener" aria-label="Dribbble">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.8"/><path d="M5 8c4.5 2 9 2.5 13.5 1M8.5 4.5C12 8 14 13 14.5 19.5M18.8 14.5c-5-1.5-9.5-.3-12.6 3.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </a></li>
+          <li><a href="https://www.linkedin.com/in/thekevinmiranda/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M8 10.5V17M8 7.6v.02M11.6 17v-3.6c0-1.4 1-2.4 2.3-2.4s2.1 1 2.1 2.4V17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- ===== interactive B figure ===== -->
+      <figure class="wf-figure reveal" data-delay="2" data-stage="0" id="wfFig">
+        <div class="wf" id="wf">
+
+          <div class="wf-toolbar">
+            <div class="wf-chip"><span class="t">All shipments</span></div>
+            <div class="wf-spacer"></div>
+            <div class="wf-count">211 results</div>
+          </div>
+
+          <div class="wf-card">
+            <div class="wf-head">
+              <div class="wf-avatar"><span>AIR</span></div>
+              <div class="wf-titles">
+                <div class="wf-slot">
+                  <span class="wf-skel" style="width:60%"></span>
+                  <span class="wf-copy wf-copy--title">L-503984700</span>
+                </div>
+                <div class="wf-slot">
+                  <span class="wf-skel" style="width:46%"></span>
+                  <span class="wf-copy wf-copy--sub">Chennai → Bangkok</span>
+                </div>
+              </div>
+              <div class="wf-pill"><span class="t">On time</span></div>
+            </div>
+
+            <div class="wf-route">
+              <span class="wf-node"></span>
+              <span class="wf-node wf-node--muted"></span>
+              <span class="wf-node"></span>
+              <span class="wf-node wf-node--muted"></span>
+            </div>
+
+            <span class="wf-anno wf-anno--radius">r 9</span>
+          </div>
+
+          <div class="wf-card">
+            <div class="wf-head">
+              <div class="wf-avatar"><span>OCN</span></div>
+              <div class="wf-titles">
+                <div class="wf-slot">
+                  <span class="wf-skel" style="width:52%"></span>
+                  <span class="wf-copy wf-copy--title">SHIP-76543</span>
+                </div>
+                <div class="wf-slot">
+                  <span class="wf-skel" style="width:56%"></span>
+                  <span class="wf-copy wf-copy--sub">Shanghai → São Paulo</span>
+                </div>
+              </div>
+              <div class="wf-pill wf-pill--alt"><span class="t">Delivered</span></div>
+            </div>
+
+            <div class="wf-rows">
+              <span class="wf-line" style="width:86%"></span>
+              <span class="wf-line" style="width:62%"></span>
+            </div>
+
+            <span class="wf-anno wf-anno--gap">10</span>
+          </div>
+
+        </div>
+
+        <div class="wf-controls">
+          <div class="wf-stages" role="radiogroup" aria-label="Design fidelity" id="wfStages">
+            <button type="button" role="radio" aria-checked="true"  tabindex="0"  data-stage="0">
+              <span class="wf-seg-fill" aria-hidden="true"></span>
+              <span class="wf-seg-label">Wireframe</span>
+            </button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-stage="1">
+              <span class="wf-seg-fill" aria-hidden="true"></span>
+              <span class="wf-seg-label">Structure</span>
+            </button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-stage="2">
+              <span class="wf-seg-fill" aria-hidden="true"></span>
+              <span class="wf-seg-label">Hi-fi</span>
+            </button>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section"><div class="wrap"><p class="intro" style="color:var(--sage)">↓ rest of the page continues as normal</p></div></section>
+</main>
+
+<!-- the site's own JS drives .reveal — without it every revealed element stays at opacity 0 -->
+<script src="js/main.js"></script>
+
+<script>
+(function () {
+  var fig    = document.getElementById('wfFig');
+  var stages = document.getElementById('wfStages');
+  if (!fig || !stages) return;
+
+  var btns  = Array.prototype.slice.call(stages.querySelectorAll('button'));
+  var fills = btns.map(function (b) { return b.querySelector('.wf-seg-fill'); });
+  var LOOP_MS = 4000;
+
+  var current  = 0;
+  var elapsed  = 0;        // ms spent on the current stage
+  var running  = false;
+  var onScreen = false;
+  var raf      = null;
+  var lastTs   = 0;
+
+  function set(i, focus) {
+    current = (i + btns.length) % btns.length;   // wraps hi-fi -> wireframe
+    fig.setAttribute('data-stage', String(current));
+    btns.forEach(function (b, n) {
+      var on = n === current;
+      b.setAttribute('aria-checked', on ? 'true' : 'false');
+      // roving tabindex: only the checked radio is in the tab order
+      b.setAttribute('tabindex', on ? '0' : '-1');
+      if (on && focus) b.focus();
+    });
+  }
+
+  /* Only the active segment fills, left to right. The others are reset to
+     empty so whichever runs next starts from zero rather than inheriting
+     the tail of the previous stage. */
+  function paint(p) {
+    for (var n = 0; n < fills.length; n++) {
+      if (!fills[n]) continue;
+      var v = n === current ? p : 0;
+      fills[n].style.transform = 'scaleX(' + v.toFixed(4) + ')';
+    }
+  }
+
+  /* The countdown is driven off real elapsed time rather than a CSS
+     animation, so pausing holds the bar exactly where it is and resuming
+     carries on from there instead of snapping back to full. */
+  function frame(ts) {
+    if (!running) return;
+    if (!lastTs) lastTs = ts;
+    var dt = ts - lastTs;
+    lastTs = ts;
+    elapsed += dt;
+    if (elapsed >= LOOP_MS) {
+      elapsed = 0;
+      set(current + 1, false);
+    }
+    paint(elapsed / LOOP_MS);
+    raf = requestAnimationFrame(frame);
+  }
+
+  function play() {
+    if (running || !onScreen || document.hidden) return;
+    running = true;
+    lastTs = 0;
+    stages.classList.remove('is-held');
+    raf = requestAnimationFrame(frame);
+  }
+
+  function pause() {
+    running = false;
+    lastTs = 0;
+    if (raf) { cancelAnimationFrame(raf); raf = null; }
+    stages.classList.add('is-held');
+  }
+
+  /* Clicking a stage jumps there and restarts the countdown from full —
+     the loop keeps running rather than handing over permanently. */
+  function jump(i, focus) {
+    set(i, focus);
+    elapsed = 0;
+    paint(0);
+    lastTs = 0;
+    play();
+  }
+
+  stages.addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (!b) return;
+    jump(btns.indexOf(b), false);
+  });
+
+  stages.addEventListener('keydown', function (e) {
+    var handled = true;
+    switch (e.key) {
+      case 'ArrowLeft':  case 'ArrowUp':   jump(current - 1, true); break;
+      case 'ArrowRight': case 'ArrowDown': jump(current + 1, true); break;
+      case 'Home': jump(0, true); break;
+      case 'End':  jump(btns.length - 1, true); break;
+      default: handled = false;
+    }
+    if (handled) e.preventDefault();
+  });
+
+  // hovering or tabbing in holds the current stage so it can be read
+  fig.addEventListener('mouseenter', pause);
+  fig.addEventListener('mouseleave', play);
+  fig.addEventListener('focusin',    pause);
+  fig.addEventListener('focusout',   play);
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) pause(); else play();
+  });
+
+  /* A perpetually cycling animation is exactly what reduced-motion is for:
+     skip the loop and show the finished design. */
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    set(2, false);
+    return;
+  }
+
+  paint(0);
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        onScreen = e.isIntersecting;
+        if (onScreen) play(); else pause();
+      });
+    }, { threshold: .35 });
+    io.observe(fig);
+  } else {
+    onScreen = true;
+    play();
+  }
+})();
+</script>
+
+<script>
+/* Preview safety net: if main.js fails to boot for any reason, un-hide the
+   content anyway so this file can never render as a blank page. */
+setTimeout(function () {
+  document.querySelectorAll('.reveal:not(.is-visible)').forEach(function (el) {
+    el.classList.add('is-visible');
+  });
+}, 1200);
+</script>
+</body>
+</html>
