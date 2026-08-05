@@ -22,3 +22,6 @@ Thumbs.db
 # Impeccable live-mode session state (local recovery data, not project source)
 .impeccable/live/sessions/
 .impeccable/hook.cache.json
+.claude/.headroom_wrap_marker.json
+/.playwright-mcp
+/.serena
