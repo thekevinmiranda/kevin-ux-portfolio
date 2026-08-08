@@ -126,7 +126,9 @@
   // Support deep-linking: if the page was loaded with a hash matching one
   // of the sidebar links (e.g. shared as projects.html#p9), open straight
   // to that project. Otherwise default to the first one.
-  var initialHref = "#p1";
+  // Default to whatever the first sidebar link points at, so reordering the
+  // groups in projects.html doesn't leave a stale hard-coded default here.
+  var initialHref = links[0].getAttribute("href") || "#p1";
   if (window.location.hash) {
     var matchesKnownLink = links.some(function (l) { return l.getAttribute("href") === window.location.hash; });
     if (matchesKnownLink) initialHref = window.location.hash;

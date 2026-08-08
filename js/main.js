@@ -227,6 +227,149 @@
     });
   }
 
+  /* ------------------------------------------------- impact card glow --
+     A spotlight that tracks the cursor across each Quantifiable Impact card,
+     like a torch played over the surface.
+
+     Lives here rather than in js/motion.js on purpose: this is a hover
+     affordance, not a motion flourish, so it must not disappear when the
+     GSAP CDN is blocked. It needs no library — two custom properties per
+     pointermove, and CSS draws the gradient.
+
+     Skipped entirely on touch and under reduced motion. In both cases
+     --gx/--gy keep their CSS defaults of 50%, so hovering (or focusing via
+     keyboard) still lights the card from its centre — the effect degrades to
+     a static glow rather than vanishing. */
+  function initImpactGlow() {
+    if (prefersReduced) return;
+    if (window.matchMedia && !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+    var cards = Array.prototype.slice.call(document.querySelectorAll(".impact-card"));
+    if (!cards.length) return;
+
+    function track(card, e) {
+      /* Measured per event rather than cached: these cards shift on every
+         scroll, and a stale rect leaves the glow trailing the cursor. */
+      var r = card.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      card.style.setProperty("--gx", (((e.clientX - r.left) / r.width) * 100).toFixed(2) + "%");
+      card.style.setProperty("--gy", (((e.clientY - r.top) / r.height) * 100).toFixed(2) + "%");
+    }
+
+    cards.forEach(function (card) {
+      /* Set the position on ENTER as well as move, so the glow fades up
+         exactly where the cursor crossed the edge instead of showing one
+         stale frame at wherever it was last time. */
+      card.addEventListener("pointerenter", function (e) { track(card, e); }, { passive: true });
+      card.addEventListener("pointermove", function (e) { track(card, e); }, { passive: true });
+
+      /* Deliberately NO pointerleave reset. Clearing --gx/--gy on exit snaps
+         the gradient back to its 50% default instantly, while the opacity is
+         still fading out over --d-2 (260ms) — so you see the light jump to
+         the middle of the card as it dims. Leaving the values alone lets it
+         fade out exactly where the cursor left, which is what a torch being
+         carried off the edge actually looks like. */
+    });
+  }
+
+  /* ------------------------------------------- hero name letter fill ---
+     "Miranda." holds as an outline, then fills one letter at a time. This
+     only flips a class; CSS owns the stagger via a per-letter
+     transition-delay (see #hero-name.is-lit in css/style.css).
+
+     The 1s is measured from the moment the name has actually APPEARED, not
+     from DOMContentLoaded. The h1 fades in over 760ms via .reveal, so timing
+     from document load would spend most of the outline phase behind an
+     element still at opacity 0 — the reader would never see it. Waiting for
+     .is-visible guarantees a full second of visible outline.
+
+     Under reduced motion nothing is scheduled: the CSS already lands the
+     letters filled, so adding the class would be a no-op anyway. */
+  function initHeroNameFill() {
+    var name = document.getElementById("hero-name");
+    if (!name) return;
+    if (prefersReduced) { name.classList.add("is-lit"); return; }
+
+    var HOLD = 1000;
+    var timer = null;
+
+    function light() {
+      if (timer) return;
+      timer = window.setTimeout(function () { name.classList.add("is-lit"); }, HOLD);
+    }
+
+    if (name.classList.contains("is-visible")) {
+      light();
+      return;
+    }
+    /* initReveal() adds .is-visible from an IntersectionObserver callback, so
+       watch the attribute rather than racing it. */
+    if (!("MutationObserver" in window)) { light(); return; }
+    var obs = new MutationObserver(function () {
+      if (name.classList.contains("is-visible")) { obs.disconnect(); light(); }
+    });
+    obs.observe(name, { attributes: true, attributeFilter: ["class"] });
+
+    /* Belt and braces: if .is-visible somehow never lands (observer support
+       quirk, element clipped), fill anyway rather than leaving the name
+       outlined forever at 1:1 contrast against the page. */
+    window.setTimeout(function () { obs.disconnect(); light(); }, 3000);
+  }
+
+  /* ------------------------------------------------- scroll progress ---
+     Thin marigold line across the bottom of the fixed header, tracking how
+     far down the document you are.
+
+     Lives here rather than in js/motion.js because it needs to work on EVERY
+     page. projects.html and 404.html deliberately never load GSAP — none of
+     motion.js's other targets exist on them — so a GSAP-driven bar appeared
+     on index.html only, and vanished when you navigated. This version costs
+     one element and one rAF-throttled scroll listener.
+
+     The element is created here rather than sitting in the markup so it
+     simply does not exist when it cannot work — nothing decorative left in
+     the DOM for a screen reader to meet. */
+  function initScrollProgress() {
+    if (prefersReduced) return;
+    var header = document.getElementById("siteHeader");
+    if (!header) return;
+    if (document.querySelector(".scroll-progress")) return;   // never double-inject
+
+    var bar = document.createElement("div");
+    bar.className = "scroll-progress";
+    bar.setAttribute("aria-hidden", "true");
+    header.appendChild(bar);
+
+    var queued = null;
+
+    function update() {
+      queued = null;
+      /* scrollHeight is read every time on purpose. projects.html shows one
+         project at a time, so the document height changes whenever you switch
+         — caching the max here would leave the bar reporting the previous
+         project's length. */
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+      bar.style.transform = "scaleX(" + p.toFixed(4) + ")";
+    }
+
+    function schedule() {
+      if (queued) return;
+      queued = window.requestAnimationFrame(update);
+    }
+
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule, { passive: true });
+
+    /* Height changes that are not scrolls or resizes: switching project on
+       projects.html, opening the mobile nav, a lazy image landing. */
+    if ("ResizeObserver" in window) {
+      new ResizeObserver(schedule).observe(document.body);
+    }
+
+    update();
+  }
+
   /* ----------------------------------------------------------- boot ---- */
   function boot() {
     initStickyHeader();
@@ -238,6 +381,9 @@
     initOffscreenPause();
     initFilters();
     initImageProtection();
+    initImpactGlow();
+    initHeroNameFill();
+    initScrollProgress();
   }
 
   if (document.readyState === "loading") {

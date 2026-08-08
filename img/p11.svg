@@ -1,0 +1,73 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="p11-title p11-desc">
+  <title id="p11-title">Vibe-Coding with Claude</title>
+  <desc id="p11-desc">A three-step flow — a reported issue, an AI-assisted design-and-build step, and a pull request handed to engineering — above a code editor window showing an added line of code.</desc>
+
+  <rect x="0" y="0" width="800" height="600" fill="#FFFFFF"/>
+
+  <!-- ============================================== CONNECTORS ============================================== -->
+  <path d="M262,128 L288,140 L262,152 Z" fill="#58685F"/>
+  <path d="M512,128 L538,140 L512,152 Z" fill="#58685F"/>
+
+  <!-- ============================================== 01 ISSUE ============================================== -->
+  <g>
+    <circle cx="150" cy="140" r="52" fill="#F4F1E8" stroke="#14231C" stroke-width="7"/>
+    <g transform="translate(128,118) scale(1.833333)" fill="none" stroke="#14231C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3.5 21.5 20H2.5L12 3.5Z"/>
+      <path d="M12 10v4"/>
+      <path d="M12 17.2v.1"/>
+    </g>
+  </g>
+  <text x="150" y="220" font-family="'Hanken Grotesk', system-ui, -apple-system, sans-serif" font-weight="700" font-size="21" letter-spacing="1" fill="#8A600D" text-anchor="middle">01 &#183; ISSUE</text>
+
+  <!-- ============================================== 02 VIBE-CODE (AI-assisted) ============================================== -->
+  <g>
+    <circle cx="400" cy="140" r="52" fill="#F6E4B4" stroke="#C0810A" stroke-width="7"/>
+    <g transform="translate(378,118) scale(1.833333)" fill="none" stroke="#14231C" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8.5 8 5 11.5 8.5 15"/>
+      <path d="M15.5 8 19 11.5 15.5 15"/>
+      <path d="M12 2.2 13.15 6.05 17 7.2l-3.85 1.15L12 12.2l-1.15-3.85L7 7.2l3.85-1.15L12 2.2Z" fill="#14231C" stroke="none"/>
+      <path d="M17.6 15.1 18.2 17l1.9.6-1.9.6-.6 1.9-.6-1.9-1.9-.6 1.9-.6.6-1.9Z" fill="#14231C" stroke="none"/>
+    </g>
+  </g>
+  <text x="400" y="220" font-family="'Hanken Grotesk', system-ui, -apple-system, sans-serif" font-weight="700" font-size="21" letter-spacing="1" fill="#8A600D" text-anchor="middle">02 &#183; VIBE-CODE</text>
+
+  <!-- ============================================== 03 PULL REQUEST ============================================== -->
+  <g>
+    <circle cx="650" cy="140" r="52" fill="#F4F1E8" stroke="#14231C" stroke-width="7"/>
+    <g transform="translate(628,118) scale(1.833333)" fill="none" stroke="#14231C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="6.5" cy="5.5" r="2.5"/>
+      <circle cx="6.5" cy="18.5" r="2.5"/>
+      <circle cx="17.5" cy="12" r="2.5"/>
+      <path d="M6.5 8v8"/>
+      <path d="M17.5 14.5v1.5a2.5 2.5 0 0 1-2.5 2.5H9"/>
+      <path d="M17.5 9.5V8a2.5 2.5 0 0 0-2.5-2.5H9"/>
+    </g>
+  </g>
+  <text x="650" y="220" font-family="'Hanken Grotesk', system-ui, -apple-system, sans-serif" font-weight="700" font-size="21" letter-spacing="1" fill="#8A600D" text-anchor="middle">03 &#183; PULL REQUEST</text>
+
+  <!-- ============================================== CODE WINDOW ============================================== -->
+  <rect x="100" y="272" width="600" height="248" rx="16" fill="#F4F1E8" stroke="#14231C" stroke-width="5"/>
+
+  <!-- window chrome -->
+  <circle cx="134" cy="304" r="7" fill="#E6A017"/>
+  <circle cx="158" cy="304" r="7" fill="#A9BBAF"/>
+  <circle cx="182" cy="304" r="7" fill="#A9BBAF"/>
+  <path d="M100 336 H700" stroke="#14231C" stroke-width="3" opacity=".35"/>
+
+  <!-- code lines -->
+  <rect x="132" y="366" width="18" height="12" rx="6" fill="#58685F" opacity=".45"/>
+  <rect x="164" y="366" width="228" height="12" rx="6" fill="#58685F" opacity=".45"/>
+
+  <rect x="156" y="398" width="18" height="12" rx="6" fill="#58685F" opacity=".45"/>
+  <rect x="188" y="398" width="286" height="12" rx="6" fill="#58685F" opacity=".45"/>
+
+  <!-- highlighted added line -->
+  <rect x="112" y="424" width="576" height="36" rx="8" fill="#F6E4B4"/>
+  <path d="M136 442 H152 M144 434 V450" stroke="#8A600D" stroke-width="3.4" stroke-linecap="round"/>
+  <rect x="180" y="436" width="150" height="12" rx="6" fill="#C0810A"/>
+  <rect x="342" y="436" width="94" height="12" rx="6" fill="#C0810A" opacity=".55"/>
+  <rect x="448" y="432" width="9" height="20" rx="2" fill="#14231C"/>
+
+  <rect x="156" y="478" width="18" height="12" rx="6" fill="#58685F" opacity=".45"/>
+  <rect x="188" y="478" width="172" height="12" rx="6" fill="#58685F" opacity=".45"/>
+</svg>

@@ -187,6 +187,38 @@ All colors/fonts are CSS custom properties on `:root` in `style.css` —
 sheet's intentionally-separate token block), so a palette change only ever needs
 to happen in one place.
 
+### Rule: the Component Sticker Sheet is always Lato
+
+**Every piece of type inside `.sticker-sheet` must render in Lato**, because the
+sheet is a live reproduction of the real Elemental Design System and Lato is that
+system's official typeface. The site's own fonts (`--f-display` /
+`--f-body` — Bricolage Grotesque and Hanken Grotesk) must never appear inside
+the sheet.
+
+This is enforced by a single scoped rule near the top of the sticker-sheet block
+in `projects.css`:
+
+```css
+.sticker-sheet,
+.sticker-sheet * { font-family: 'Lato', sans-serif; }
+```
+
+Consequences for future edits:
+
+- New components added to the sheet **do not** need their own `font-family`
+  declaration — they inherit Lato automatically.
+- Never override `font-family` inside `.sticker-sheet` with a site font or a
+  `var(--f-*)` token.
+- Don't delete the rule on the assumption it's redundant. It isn't: several
+  sheet elements (`.sticker-group-label`, `.eds-approx`, `.eds-caption`,
+  `.swatch-name`, `.swatch-hex`, `.eds-caret`) have no `font-family` of their own
+  and would silently fall back to the site's body font without it.
+- Lato is loaded via the Google Fonts `<link>` in **`projects.html`'s `<head>`
+  only** — that's the only page the sticker sheet lives on. `index.html` does
+  not load Lato and doesn't need to. If a sticker sheet is ever added to another
+  page, add Lato to that page's font link too, or the whole sheet silently falls
+  back to a system sans.
+
 ---
 
 ## Known CSS gotchas

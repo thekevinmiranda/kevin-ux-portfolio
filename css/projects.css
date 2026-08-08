@@ -75,8 +75,20 @@
   flex-shrink: 0;
 }
 .proj-head h3 { font-size: clamp(1.5rem, 2.6vw, 2rem); margin: 0; }
-.proj-tagline { font-weight: 600; color: var(--sage); font-size: .98rem; margin: .3rem 0 0; }
-.proj-oneliner { max-width: 52rem; margin: .85rem 0 0; font-size: 1.02rem; }
+/* Standard project subtitle pair — EVERY .proj-entry carries both, in this
+   order: a Title Case outcome tagline, then the sentence-case one-liner that
+   explains what the project actually is. Keep the two visually distinct
+   (weight + color + size) so the pair reads as an intentional hierarchy
+   rather than two competing subtitles. */
+.proj-tagline {
+  max-width: 52rem;
+  font-weight: 600;
+  color: var(--marigold-text);
+  font-size: .92rem;
+  letter-spacing: .005em;
+  margin: .45rem 0 0;
+}
+.proj-oneliner { max-width: 52rem; margin: .5rem 0 0; font-size: 1.02rem; color: var(--sage); }
 
 .proj-callout {
   margin-top: 1.15rem;
@@ -502,6 +514,28 @@
   background: #FAFAFA;
   border: 1px solid #E9EAEB;
   border-radius: 12px;
+}
+
+/* RULE: every piece of type inside the sticker sheet renders in Lato —
+   the official EDS typeface. The sheet is a live reproduction of the real
+   design system, so the portfolio site's own display/body fonts
+   (Bricolage Grotesque / Hanken Grotesk, via --f-display / --f-body) must
+   never leak into it. This single scoped rule covers group labels,
+   captions, swatch names/hexes, and anything added to the sheet later, so
+   new sticker-sheet components do not each need their own font-family
+   declaration. Do not remove this or override font-family inside
+   .sticker-sheet with a site font. */
+.sticker-sheet,
+.sticker-sheet * {
+  font-family: 'Lato', sans-serif;
+}
+/* Headings need their own guard: `.proj-sub h4` (0,1,1) outranks
+   `.sticker-sheet *` (0,1,0), so a heading placed inside the sheet would
+   otherwise fall back to the site body font. This selector matches that
+   specificity and, sitting later in the file, wins the tie. */
+.sticker-sheet h1, .sticker-sheet h2, .sticker-sheet h3,
+.sticker-sheet h4, .sticker-sheet h5, .sticker-sheet h6 {
+  font-family: 'Lato', sans-serif;
 }
 
 .sticker-group-label {

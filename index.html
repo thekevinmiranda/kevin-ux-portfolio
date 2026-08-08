@@ -370,7 +370,14 @@
 .wf-seg-label { position: relative; }
 
 @media (max-width: 991px) {
-  .wf-figure { justify-self: start; margin-top: 1rem; grid-row: 1; max-width: 440px; }
+  /* Single column below 991px. NO grid-row here on purpose: the figure must
+     fall in DOM order, which puts the copy first. `grid-row: 1` used to pin
+     the wireframe to the top of the stack, so on a phone the first thing you
+     saw was a UI mockup rather than whose portfolio it is.
+
+     No margin-top either — .hero-grid's own `gap` already separates the two
+     rows, and the margin stacked on top of it. */
+  .wf-figure { justify-self: start; max-width: 440px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .wf-card, .wf-avatar, .wf-avatar > span, .wf-pill, .wf-pill .t,
@@ -388,9 +395,25 @@
               bounces, elastic equal-mass collisions resolved
               through a spatial hash. No damping, so the system
               holds its energy and never settles on its own.
+              Each mark also tumbles, faster the harder it was hit.
      order    each body becomes a damped harmonic oscillator
               pulled to its lattice site. Stiffness is jittered
-              per particle so they don't arrive in lockstep.
+              per particle so they don't arrive in lockstep. Spin
+              bleeds off and the angle is drawn to the nearest
+              quarter-turn, so every mark lands upright.
+
+   Marks are plus signs, not dots, so the resolved state reads as
+   grid intersections. Two colours, fixed for the whole loop: the
+   gold ones are gold while they tumble, so what the settle reveals
+   is WHERE they were always heading — clean diagonals — rather
+   than a recolour on arrival.
+
+   Once ordered, the cursor rotates and darkens whatever it passes
+   over, and holds the pattern together for as long as it stays on
+   the figure. NOTE: a plus is 4-fold symmetric, so only a 45deg
+   offset is visible at rest — any multiple of 90 is
+   indistinguishable from upright, which is why the hover rotation
+   travels 135deg to land on a visible 45.
 
    It then holds, releases with a radial impulse, and repeats.
 
@@ -431,20 +454,27 @@
 }
 .chaos-svg { position: relative; z-index: 1; inset: 0; width: 100%; height: 100%; display: block; }
 
-/* position is set frame-by-frame, so only appearance transitions here */
-.chaos-node { transition: fill 640ms var(--e), r 640ms var(--e), stroke-width 640ms var(--e); }
-/* accent dots glow once lit — cheap drop-shadow keyed off the JS-driven
-   stroke-width, no extra class or filter defs needed */
-.chaos-node[stroke-width="2"] { filter: drop-shadow(0 0 4px rgba(255, 218, 52, .6)); }
+/* Each mark is a plus, not a dot. ALL of its visual state — position,
+   rotation, scale and fill — is written per frame by the sim's render(), so
+   there are deliberately no transitions here: a transition on any of those
+   would fight a value that changes every 16ms.
 
-.chaos-link {
-  stroke: var(--forest);
-  stroke-width: 1;
-  opacity: 0;
-  transition: opacity 680ms var(--e);
-  transition-delay: calc(var(--i) * 20ms);
-}
-.chaos-stage.is-ordered .chaos-link { opacity: .11; }
+   Appearance is animated by tweening the particle's plain JS model and
+   letting render() pick the values up, never by animating the DOM node. That
+   keeps exactly one writer per attribute.
+
+   Deliberately NO will-change: there are ~130 of these, and the note on
+   .reveal in css/style.css records what happened last time this codebase
+   promoted a large set of elements — 51 compositor layers pinned forever.
+   These are SVG paths sharing one canvas; they do not need promoting. */
+
+/* Gold marks glow ONCE THEY HAVE LANDED. [data-lit] is set at settle, not at
+   build, so during the chaos phase the gold plusses tumble un-glowed and the
+   glow becomes the arrival cue. Roughly 19 filter regions at diagonal
+   density, which is affordable; if the diagonal is ever made denser than
+   about 1-in-4, drop this — SVG drop-shadow is per-element and does not
+   batch. */
+.chaos-node[data-lit="1"] { filter: drop-shadow(0 0 5px rgba(255, 218, 52, .55)); }
 
 @media (max-width: 991px) {
   /* single column — nothing to match, so fall back to a square */
@@ -454,13 +484,48 @@
 }
 @media (max-width: 480px) {
   .chaos-figure { max-width: 100%; }
+
+  /* THE mobile horizontal-overflow fix.
+
+     .chaos-stage::before is the ambient glow, positioned `inset: -12%` so it
+     bleeds softly past the panel. Percentage insets resolve against the
+     stage's width, and the rule above removes the 380px cap — so on a phone
+     the stage becomes full-width and that -12% turns into a real ~22px of
+     document overflow on the right (measured: +18px at 360w, +22px at 390w,
+     +33px at 480w).
+
+     Nothing clipped it: `overflow-x: hidden` is set on `body` only, and body
+     overflow is not propagated to the viewport, so <html> kept growing. The
+     visible symptom was a strip of page background down the right edge of
+     EVERY section, because the document was wider than the viewport.
+
+     Clipping at the stage is invisible: the gradient reaches full
+     transparency at 68% of its radius, well inside this box, so there is no
+     hard edge to see. Scoped to <=480px on purpose — above that the stage is
+     capped at 380px, the bleed lands inside the viewport, and the soft
+     overhang is worth keeping. */
+  .chaos-stage { overflow: hidden; }
 }
+/* When GSAP is present it drives node appearance and link drawing directly,
+   so the CSS transitions above must stand down — otherwise every value GSAP
+   writes each frame would ALSO be transitioned, smearing the animation and
+   making the stagger look mushy. The class is added by the figure's script
+   only after it confirms window.gsap exists, so without GSAP the CSS
+   transitions above remain the (perfectly good) fallback. */
+.chaos-stage.is-gsap .chaos-node { transition: none; }
+
 @media (prefers-reduced-motion: reduce) {
-  .chaos-node, .chaos-link { transition: none; }
+  .chaos-node { transition: none; }
   .chaos-stage::before { animation: none; }
 }
 </style>
-<noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
+<noscript><style>
+  .reveal { opacity: 1 !important; transform: none !important; }
+  /* Without JS the hero name never gets .is-visible, so "Miranda." would sit
+     in its outline state forever — a transparent fill means the glyph
+     interior is literally the page background. Land it filled. */
+  .hero h1 .accent .l { color: var(--marigold) !important; -webkit-text-stroke-color: transparent !important; }
+</style></noscript>
 </head>
 <body>
 
@@ -500,7 +565,12 @@
     <div class="wrap hero-grid">
       <div class="hero-copy">
         <!-- <span class="hero-badge reveal"><span class="dot" aria-hidden="true"></span> Available for projects — Autumn 2026</span> -->
-        <h1 id="hero-name" class="reveal" data-delay="1">Kevin<br><span class="accent">Miranda.</span></h1>
+        <!-- "Miranda." is split per character so the outline can fill one letter at
+             a time. aria-label carries the real text, so the h1 still announces
+             "Kevin Miranda" rather than being spelled out span by span. The spans
+             stay `inline` (never inline-block) so splitting adds no layout of its
+             own — only `color` and the stroke colour ever change. -->
+        <h1 id="hero-name" class="reveal" data-delay="1" aria-label="Kevin Miranda">Kevin<br><span class="accent"><span class="l" style="--i:0">M</span><span class="l" style="--i:1">i</span><span class="l" style="--i:2">r</span><span class="l" style="--i:3">a</span><span class="l" style="--i:4">n</span><span class="l" style="--i:5">d</span><span class="l" style="--i:6">a</span><span class="l" style="--i:7">.</span></span></h1>
         <p class="role reveal" data-delay="2">Sr. UI/UX &amp; Interaction Designer — Chennai, India</p>
         <p class="intro reveal" data-delay="2">A designer with a keen eye for detail &amp; a knack for visualizing any idea put forth.</p>
 
@@ -522,7 +592,12 @@
         </ul>
       </div>
 
-      <figure class="wf-figure reveal" data-delay="2" data-stage="0" id="wfFig">
+      <!-- No .reveal here on purpose: js/motion.js owns this element's entrance AND
+           its scroll parallax. Two systems writing `transform` to the same node
+           fight (.reveal.is-visible sets transform:none, GSAP writes inline), and
+           the inline style wins, silently killing the entrance. If GSAP is absent
+           the figure simply renders in place, unanimated. -->
+      <figure class="wf-figure" data-stage="0" id="wfFig">
         <div class="wf" id="wf">
 
           <div class="wf-toolbar">
@@ -653,8 +728,7 @@
       <figure class="chaos-figure reveal" aria-hidden="true">
         <div class="chaos-stage" id="chaosStage">
           <svg class="chaos-svg" role="img"
-               aria-label="A looping animation: scattered points colliding freely, then resolving into an ordered lattice.">
-            <g id="chaosLinks"></g>
+               aria-label="A looping animation: scattered plus-shaped marks tumbling and colliding freely, then settling upright into an ordered grid.">
             <g id="chaosNodes"></g>
           </svg>
         </div>
@@ -685,7 +759,7 @@
             <div class="tl-content">
               <h3>Senior Interaction Designer</h3>
               <p class="tl-meta"><a href="https://www.fourkites.com/" target="_blank" rel="noopener">FourKites India Pvt. Ltd.</a></p>
-              <p>Led UI/UX across FourKites' core tracking redesign, the Elemental Design System, My Workspace, and FourSight AI — plus redesigns of Address Manager, Global Map View, and Unified User Management, and many others.</p>
+              <p>Led UI/UX across the core tracking redesign, the Elemental Design System, My Workspace, and FourSight AI — plus redesigns of Address Manager, Global Map View, and Unified User Management, and many others.</p>
               <p class="tl-range">September 2019 - Present</p>
             </div>
           </div>
@@ -755,8 +829,8 @@
         <div class="lead-col reveal" data-delay="1">
           <h3>Awards &amp; recognition</h3>
           <ul>
-            <li><strong>FourKites Dream Team Award</strong> (2019, 2021) — recognized for "visually intuitive designs" across the FourKites Redesign and Elemental Design System.</li>
-            <li><strong>Leadership recognition</strong> — named by FourKites leadership, including CEO & CPO, among the team whose Redesign work customers praised at the 2020 Visibility customer conference.</li>
+            <li><strong>FourKites Dream Team Award</strong> (2019, 2021) — recognized for "visually intuitive designs" across the Shipment Tracking Redesign and Elemental Design System.</li>
+            <li><strong>Leadership recognition</strong> — named by company leadership, including CEO & CPO, among the team whose Redesign work customers praised at the 2020 Visibility customer conference.</li>
             <li><strong>Inatech Above &amp; Beyond Award</strong> (Q3 2018) — recognized for exceptional performance.</li>
           </ul>
         </div>
@@ -770,7 +844,7 @@
       <div class="section-head reveal">
         <span class="eyebrow">Selected projects</span>
         <h2 id="projects-h">A few things I'm proud of</h2>
-        <p>Six flagship case studies from my time at FourKites, spanning product design, systems, and AI. Hover any tile for a closer look.</p>
+        <p>Six selected case studies spanning how I work, product design, systems, and AI. Hover any tile for a closer look.</p>
       </div>
 
       <div class="filter-bar reveal" role="group" aria-label="Filter work by category">
@@ -787,64 +861,64 @@
       </div>
 
       <div class="work-grid">
-        <article class="work-card reveal" data-cat="systems">
-          <img src="projects/eds/eds-cover.jpg" alt="Elemental Design System — FourKites' company-wide design system" width="800" height="600">
-          <div class="work-overlay">
-            <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M17 7H8M17 7v9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <h3 class="cat">Systems · Design System</h3>
-            <span class="name">Elemental Design System</span>
-          </div>
-          <a href="projects.html#p1" aria-label="View full case study on Work page"></a>
-        </article>
-
-        <article class="work-card reveal" data-cat="product" data-delay="1">
-          <img src="projects/workspace/workspace-exec-preview.png" alt="My Workspace — FourKites customer landing page dashboard" width="800" height="600">
-          <div class="work-overlay">
-            <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M17 7H8M17 7v9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <h3 class="cat">Product · Dashboard</h3>
-            <span class="name">My Workspace</span>
-          </div>
-          <a href="projects.html#p2" aria-label="View full case study on Work page"></a>
-        </article>
-
-        <article class="work-card reveal" data-cat="product" data-delay="2">
-          <img src="projects/redesign/saved-views.png" alt="FourKites Redesign — core shipment-tracking experience" width="800" height="600">
-          <div class="work-overlay">
-            <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M17 7H8M17 7v9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <h3 class="cat">Product · Redesign</h3>
-            <span class="name">FourKites Redesign</span>
-          </div>
-          <a href="projects.html#p3" aria-label="View full case study on Work page"></a>
-        </article>
-
         <article class="work-card reveal" data-cat="ai">
-          <img src="projects/foursight/foursight-home.png" alt="FourSight AI — FourKites' AI assistant experience" width="800" height="600">
+          <img loading="lazy" src="img/p13.svg" alt="A six-phase design process flow, from Discover through Ship, shown pre-AI and AI-assisted." width="800" height="600">
           <div class="work-overlay">
             <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M17 7H8M17 7v9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <h3 class="cat">AI · Assistant</h3>
-            <span class="name">FourSight AI</span>
+            <h3 class="cat">Design Process</h3>
+            <span class="name">Practice · How I Work</span>
           </div>
-          <a href="projects.html#p4" aria-label="View full case study on Work page"></a>
+          <a href="projects.html#p12" aria-label="View the Design Process case study"></a>
         </article>
 
         <article class="work-card reveal" data-cat="ai" data-delay="1">
-          <img src="img/p13.svg" alt="My Design Process — a six-phase flow from Discover through Ship, pre-AI and AI-assisted" width="800" height="600">
+          <img loading="lazy" src="img/p11.svg" alt="A three-step flow from reported issue to AI-assisted build to pull request, above a code editor window." width="800" height="600">
           <div class="work-overlay">
             <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M17 7H8M17 7v9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <h3 class="cat">Practice · Process</h3>
-            <span class="name">My Design Process</span>
+            <h3 class="cat">Vibe Coding</h3>
+            <span class="name">Practice · AI-Assisted Build</span>
           </div>
-          <a href="projects.html#p12" aria-label="View full case study on Work page"></a>
+          <a href="projects.html#p11" aria-label="View the Vibe Coding case study"></a>
         </article>
 
         <article class="work-card reveal" data-cat="systems" data-delay="2">
-          <img src="projects/ums/roles-list.png" alt="Unified User Management — unifying FourKites' per-product user systems" width="800" height="600">
+          <img loading="lazy" src="projects/eds/eds-cover.jpg" alt="A design system component library of colors, typography, buttons and form controls." width="800" height="600">
           <div class="work-overlay">
             <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M17 7H8M17 7v9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <h3 class="cat">Systems · User Management</h3>
-            <span class="name">Unified User Management</span>
+            <h3 class="cat">Design System</h3>
+            <span class="name">Systems · Platform-Wide</span>
           </div>
-          <a href="projects.html#p6" aria-label="View full case study on Work page"></a>
+          <a href="projects.html#p1" aria-label="View the Design System case study"></a>
+        </article>
+
+        <article class="work-card reveal" data-cat="product">
+          <img loading="lazy" src="projects/workspace/workspace-exec-preview.png" alt="A persona-based executive dashboard showing performance, risk and licensed-product widgets on one page." width="800" height="600">
+          <div class="work-overlay">
+            <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M17 7H8M17 7v9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <h3 class="cat">Executive Dashboard</h3>
+            <span class="name">Product · Persona Dashboard</span>
+          </div>
+          <a href="projects.html#p2" aria-label="View the Executive Dashboard case study"></a>
+        </article>
+
+        <article class="work-card reveal" data-cat="product" data-delay="1">
+          <img loading="lazy" src="projects/redesign/saved-views.png" alt="A redesigned shipment tracking interface with saved filter and column views." width="800" height="600">
+          <div class="work-overlay">
+            <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M17 7H8M17 7v9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <h3 class="cat">Tracking Redesign</h3>
+            <span class="name">Product · Core Experience</span>
+          </div>
+          <a href="projects.html#p3" aria-label="View the Tracking Redesign case study"></a>
+        </article>
+
+        <article class="work-card reveal" data-cat="ai" data-delay="2">
+          <img loading="lazy" src="projects/foursight/foursight-home.png" alt="A conversational analytics assistant answering a plain-language question with metrics and a chart." width="800" height="600">
+          <div class="work-overlay">
+            <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M17 7H8M17 7v9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <h3 class="cat">AI Assistant</h3>
+            <span class="name">AI · Conversational Analytics</span>
+          </div>
+          <a href="projects.html#p4" aria-label="View the AI Assistant case study"></a>
         </article>
       </div>
     </div>
@@ -878,17 +952,17 @@
         <div class="impact-card reveal">
           <div class="impact-num">4–5X</div>
           <p>Increase in self-service sign-up page visits after the carrier funnel fix.</p>
-          <a class="impact-link" href="projects.html#p7">FourKites Connect →</a>
+          <a class="impact-link" href="projects.html#p7">FK Connect →</a>
         </div>
         <div class="impact-card reveal" data-delay="1">
           <div class="impact-num">286%</div>
           <p>Quarter-over-quarter growth in carrier accounts created.</p>
-          <a class="impact-link" href="projects.html#p7">FourKites Connect →</a>
+          <a class="impact-link" href="projects.html#p7">FK Connect →</a>
         </div>
         <div class="impact-card reveal" data-delay="2">
           <div class="impact-num">90%+</div>
           <p>Design-to-code fidelity after UXAT — up from roughly 60% before.</p>
-          <a class="impact-link" href="projects.html#p14">UX Acceptance Testing (UXAT) →</a>
+          <a class="impact-link" href="projects.html#p13">UX Acceptance Testing (UXAT) →</a>
         </div>
       </div>
     </div>
@@ -1067,7 +1141,7 @@
 
       <figure class="about-figure reveal">
         <div class="frame">
-          <img src="img/kevin-profile.png" alt="Kevin Miranda presenting FourKites' visibility platform to attendees at the Visibility customer conference" width="460" height="575">
+          <img loading="lazy" src="img/kevin-profile.png" alt="Kevin Miranda presenting a supply chain visibility platform to attendees at a customer conference" width="460" height="575">
         </div>
         <div class="about-chip" aria-hidden="true">
           <span class="num">10+</span>
@@ -1084,7 +1158,7 @@
     <div class="footer-top">
       <div class="footer-brand">
         <a class="brand" href="#top" aria-label="Kevin Miranda — home">
-          <img src="img/logo.svg" alt="Kevin Miranda logo" width="48" height="48" style="border-radius: 6px;"/>
+          <img loading="lazy" src="img/logo.svg" alt="Kevin Miranda logo" width="48" height="48" style="border-radius: 6px;"/>
           <span>Kevin&nbsp;Miranda<small>UX &amp; Interaction Designer</small></span>
         </a>
         <p>A UI/UX &amp; interaction designer with a keen eye for detail &amp; a knack for visualizing any idea put forth.</p>
@@ -1113,7 +1187,7 @@
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" aria-hidden="true">
   <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close image viewer"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <button class="lightbox-nav lightbox-prev" id="lightboxPrev" type="button" aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 18-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-  <figure class="lightbox-figure"><img class="lightbox-img" id="lightboxImg" src="" alt=""><figcaption class="lightbox-caption" id="lightboxCaption"></figcaption></figure>
+  <figure class="lightbox-figure"><img loading="lazy" class="lightbox-img" id="lightboxImg" src="" alt=""><figcaption class="lightbox-caption" id="lightboxCaption"></figcaption></figure>
   <button class="lightbox-nav lightbox-next" id="lightboxNext" type="button" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 18 6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 </div>
 
@@ -1122,6 +1196,14 @@
 <script src="js/main.js"></script>
 <script src="js/vendor/bootstrap.bundle.min.js"></script>
 <script src="js/lightbox.js"></script>
+
+<!-- Optional motion layer. GSAP is loaded AFTER main.js and without defer so
+     that a blocked or slow CDN can never hold up the core experience — if
+     these two fetches fail, js/motion.js simply returns and the site behaves
+     exactly as it did before. Nothing below is load-bearing. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js" crossorigin="anonymous"></script>
+<script src="js/motion.js"></script>
 <script>
 (function () {
   var fig    = document.getElementById('wfFig');
@@ -1261,7 +1343,6 @@
   if (!stage) return;
   var svg     = stage.querySelector('.chaos-svg');
   var nodesEl = document.getElementById('chaosNodes');
-  var linksEl = document.getElementById('chaosLinks');
 
   /* The figure now stretches to the height of the copy beside it, so the
      lattice can't be a fixed 8x8. Both the viewBox and the dot count are
@@ -1274,8 +1355,35 @@
 
   var W = 0, H = 0, COLS = 0, ROWS = 0, stepX = 0, stepY = 0;
 
-  var R_DOT = 3.4, R_ACC = 6.4;
-  var ACC_STAGGER = 90; // ms between each accent dot lighting up in sequence
+  /* Plus geometry, drawn once as a <path> centred on the origin so the sim
+     can place it purely with transform. ARM is half the overall span, BAR
+     half the stroke thickness. */
+  /* Span is 2*ARM. Keep it under COLLIDE_R * 2 (16) or marks will visibly
+     overlap during chaos, since collision keeps centres 16 apart. */
+  var ARM = 6.5, BAR = 1.7;
+  var PLUS_D = 'M' + -BAR + ' ' + -ARM + 'H' + BAR + 'V' + -BAR + 'H' + ARM +
+               'V' + BAR + 'H' + BAR + 'V' + ARM + 'H' + -BAR + 'V' + BAR +
+               'H' + -ARM + 'V' + -BAR + 'H' + -BAR + 'Z';
+
+  /* Gold marks tumble at the same size as everything else during chaos and
+     only grow once they have landed, so the size change reads as "this one
+     found its place" rather than as a permanent difference. */
+  var S_DOT = 1, S_ACC = 1.55;
+  /* 45deg is the ONLY rotation that reads on a plus. A plus is 4-fold
+     symmetric, so 90/180/270 are visually identical to 0 — the reference
+     demo's `--grade * 90deg` only ever shows during its transition, never at
+     rest. Ours holds the offset while the cursor is near, so it must be 45. */
+  /* 135 = 90 + 45. A plus is 4-fold symmetric, so it comes to REST looking
+     like 45deg (the only distinguishable angle) but travels three times as
+     far to get there, which is what makes the rotation actually read. Going
+     to a bare 45 was too subtle; add 90 per extra turn you want to see. */
+  var HOVER_ROT = 135, HOVER_R = 92;
+  /* Per-mark delay in the light-up sweep, and the total budget it must fit
+     inside. With half the grid now gold, a flat 90ms each would take ~6s to
+     sweep 66 marks — longer than HOLD_MS, so the pattern would break apart
+     before the sweep finished and the cursor would never arm. The effective
+     stagger is derived from this budget at runtime instead. */
+  var ACC_STAGGER = 90, ACC_SWEEP_MS = 1800;
   var COLLIDE_R = 8, WALL = 10;
   var SPEED_MIN = 26, SPEED_MAX = 58;
   var CHAOS_MS = 4200, HOLD_MS = 5200;
@@ -1285,10 +1393,22 @@
                                    // dots can't tunnel through each other
   var POINTER_R = 70, POINTER_FORCE = 2200; // desktop cursor repulsion
 
-  var SAGE = '#58685F', GOLD = '#E6A017', GOLD_LIGHT = '#FFDA34';
+  var SAGE = '#58685F', GOLD = '#E6A017';
+  var SAGE_RGB = [88, 104, 95], GOLD_RGB = [230, 160, 23];
+  /* Hover DARKENS rather than brightens, and each family darkens into its
+     own colour — grey marks toward ink, gold marks toward the dark gold that
+     still meets contrast on paper. Both are existing palette tokens
+     (--ink and --marigold-text), so the figure stays inside the system. */
+  var SAGE_DARK = [20, 35, 28], GOLD_DARK = [138, 96, 13];
+
+  /* Optional GSAP enhancement layer. Everything below degrades: if the CDN
+     is blocked, G stays null and the original setTimeout/CSS-transition
+     paths run exactly as before. The physics itself never depends on GSAP. */
+  var G = window.gsap || null;
 
   var pts = [];
   var state = 'chaos', stateAt = 0, raf = null, last = 0, onScreen = false;
+  var hoverArmed = false;   // cursor response is ordered-state only
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   var pointer = { x: -9999, y: -9999, active: false };
@@ -1299,41 +1419,41 @@
   /* ------------------------------------------------------- layout --- */
   function build() {
     while (nodesEl.firstChild) nodesEl.removeChild(nodesEl.firstChild);
-    while (linksEl.firstChild) linksEl.removeChild(linksEl.firstChild);
     pts = [];
 
     for (var r = 0; r < ROWS; r++) {
       for (var c = 0; c < COLS; c++) {
-        // accents fall on diagonals, so the resolved state reads as a
-        // deliberate pattern rather than a plain grid
+        /* Gold marks fall on diagonals. Derived from the lattice coordinates,
+           so a mark always returns to the same site and the diagonals come
+           back identically every cycle. */
         var acc = (r + c) % 7 === 2;
-        var el = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        var el = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         el.setAttribute('class', 'chaos-node');
-        el.setAttribute('r', R_DOT);
+        el.setAttribute('d', PLUS_D);
         el.setAttribute('fill', SAGE);
-        if (acc) el.setAttribute('stroke', GOLD_LIGHT);
         nodesEl.appendChild(el);
         pts.push({
           tx: gx(c), ty: gy(r),
           x: gx(c), y: gy(r), vx: 0, vy: 0,
           acc: acc,
           k: K * (0.92 + Math.random() * 0.16),   // per-particle stiffness
+          /* Visual model. render() is the only writer to the DOM; anything
+             that wants to animate appearance tweens THESE numbers instead,
+             so there is never more than one writer per attribute. */
+          rot: Math.random() * 360,
+          spin: (Math.random() - 0.5) * 260,  // deg/sec while tumbling
+          scale: S_DOT,
+          near: 0,                            // 0..1 cursor proximity
+          lit: false,
+          _t: '', _f: '',                     // last written transform / fill
           el: el
         });
       }
     }
 
-    var li = 0;
-    function line(x1, y1, x2, y2) {
-      var el = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-      el.setAttribute('x1', x1); el.setAttribute('y1', y1);
-      el.setAttribute('x2', x2); el.setAttribute('y2', y2);
-      el.setAttribute('class', 'chaos-link');
-      el.style.setProperty('--i', li++);
-      linksEl.appendChild(el);
-    }
-    for (var i = 0; i < ROWS; i++) line(gx(0), gy(i), gx(COLS - 1), gy(i));
-    for (var j = 0; j < COLS; j++) line(gx(j), gy(0), gx(j), gy(ROWS - 1));
+    /* Lattice lines removed: a grid of plus marks already reads as the
+       intersections of a grid, so drawing the lines as well was redundant
+       and cluttered the resolved state. */
   }
 
   function measure() {
@@ -1357,20 +1477,47 @@
   }
 
   /* --------------------------------------------------- appearance --- */
+  /* dim/light only touch the MODEL. render() is the sole DOM writer. */
   function dim(p) {
-    p.el.setAttribute('r', R_DOT);
-    p.el.setAttribute('fill', SAGE);
-    if (p.acc) p.el.setAttribute('stroke-width', '0');
+    p.scale = S_DOT;
+    p.lit = false;
+    if (p.el.getAttribute('data-lit')) p.el.removeAttribute('data-lit');
   }
   function light(p) {
-    p.el.setAttribute('r', p.acc ? R_ACC : R_DOT);
-    p.el.setAttribute('fill', p.acc ? GOLD : SAGE);
-    if (p.acc) p.el.setAttribute('stroke-width', '2');
+    p.scale = p.acc ? S_ACC : S_DOT;
+    p.lit = !!p.acc;
+    if (p.acc) p.el.setAttribute('data-lit', '1');
   }
+
+  function mix(a, b, t) { return (a + (b - a) * t) | 0; }
+
+  /* One write per attribute per frame, and only when the value actually
+     changed — a mark sitting still in the ordered phase costs nothing. */
   function render() {
     for (var n = 0; n < pts.length; n++) {
-      pts[n].el.setAttribute('cx', pts[n].x.toFixed(2));
-      pts[n].el.setAttribute('cy', pts[n].y.toFixed(2));
+      var p = pts[n];
+
+      var t = 'translate(' + p.x.toFixed(1) + ' ' + p.y.toFixed(1) + ')' +
+              ' rotate(' + p.rot.toFixed(1) + ')' +
+              (p.scale !== 1 ? ' scale(' + p.scale.toFixed(3) + ')' : '');
+      if (t !== p._t) { p.el.setAttribute('transform', t); p._t = t; }
+
+      /* Colour is keyed to `acc`, NOT to `lit` — a gold mark is gold for the
+         whole loop, tumbling through the chaos phase already coloured. The
+         payoff at settle is therefore positional: the gold ones you have been
+         watching scatter resolve into clean diagonals. Recolouring them on
+         arrival instead would give away nothing about where they were going.
+
+         The cursor darkens whatever it is over, each family into its own end
+         of the palette — grey toward ink, gold toward dark gold. */
+      var base = p.acc ? GOLD_RGB : SAGE_RGB;
+      var dark = p.acc ? GOLD_DARK : SAGE_DARK;
+      var f = p.near > 0.004
+        ? 'rgb(' + mix(base[0], dark[0], p.near) + ',' +
+                   mix(base[1], dark[1], p.near) + ',' +
+                   mix(base[2], dark[2], p.near) + ')'
+        : (p.acc ? GOLD : SAGE);
+      if (f !== p._f) { p.el.setAttribute('fill', f); p._f = f; }
     }
   }
 
@@ -1430,6 +1577,10 @@
         }
       }
       p.x += p.vx * dt; p.y += p.vy * dt;
+      /* Tumbling. Spin tracks speed a little, so a mark that just took a hard
+         bounce visibly whips round while a drifting one turns lazily. */
+      var spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+      p.rot += p.spin * (0.45 + spd / SPEED_MAX * 0.55) * dt;
       if (p.x < WALL)     { p.x = WALL;     p.vx =  Math.abs(p.vx); }
       if (p.x > W - WALL) { p.x = W - WALL; p.vx = -Math.abs(p.vx); }
       if (p.y < WALL)     { p.y = WALL;     p.vy =  Math.abs(p.vy); }
@@ -1452,6 +1603,14 @@
       p.vx += (p.k * (p.tx - p.x) - damp * p.vx) * dt;
       p.vy += (p.k * (p.ty - p.y) - damp * p.vy) * dt;
       p.x += p.vx * dt; p.y += p.vy * dt;
+
+      /* Rotation settles alongside position: the spin bleeds off while the
+         angle is drawn to the nearest upright quarter-turn. Because a plus is
+         4-fold symmetric, snapping to the NEAREST multiple of 90 means the
+         mark never has to unwind more than 45deg to look upright. */
+      p.spin *= Math.pow(0.06, dt);
+      var q = Math.round(p.rot / 90) * 90;
+      p.rot += (q - p.rot) * Math.min(1, dt * 7) + p.spin * dt;
       restX = Math.max(restX, Math.abs(p.tx - p.x), Math.abs(p.ty - p.y));
       restV = Math.max(restV, Math.abs(p.vx), Math.abs(p.vy));
     }
@@ -1482,6 +1641,30 @@
     }
   }
 
+  /* Tear down the ordered look. Under GSAP this must kill the settle tweens
+     first: a half-finished stagger left running would keep writing r/fill
+     onto dots that have already been flung back into the chaos phase. */
+  function undecorate() {
+    hoverArmed = false;
+    if (G) {
+      var accPts = [], i;
+      for (i = 0; i < pts.length; i++) if (pts[i].acc) accPts.push(pts[i]);
+      G.killTweensOf(accPts);
+      G.to(accPts, {
+        scale: S_DOT,
+        duration: 0.4,
+        ease: 'power2.in',
+        stagger: { each: 0.008, from: 'edges' }
+      });
+      for (i = 0; i < pts.length; i++) dim(pts[i]);
+    } else {
+      pts.forEach(dim);
+    }
+    /* Nearness decays on its own in the loop; zero it so nothing stays warm
+       into the next chaos phase. */
+    for (var n = 0; n < pts.length; n++) pts[n].near = 0;
+  }
+
   var accTimers = [];
   function clearAccTimers() {
     for (var i = 0; i < accTimers.length; i++) clearTimeout(accTimers[i]);
@@ -1491,23 +1674,124 @@
   /* Accent dots light up one at a time, bottom row first — rather than
      all popping together. Plain dots settle instantly since dim()
      already left them at rest appearance. */
+  /* Keep the light-up sweep inside its time budget however many gold marks
+     there are. At the old flat 90ms, 66 marks took ~6s — longer than the
+     5.2s hold — so the pattern released mid-sweep and hoverArmed never
+     fired. Capped at ACC_STAGGER so a small grid still gets a visible beat
+     between marks rather than an instant flash. */
+  function sweepStep(count) {
+    if (count < 2) return 0;
+    return Math.min(ACC_STAGGER, ACC_SWEEP_MS / count);
+  }
+
   function settleNow() {
     clearAccTimers();
+
+    /* Reduced motion: land everything on its final appearance in one go and
+       leave the cursor response disarmed. No stagger, no tweens, no timers —
+       a staggered light-up is still motion, and rotating marks under the
+       cursor is exactly what someone with a vestibular disorder switched
+       this off to avoid. */
+    if (reduced) {
+      for (var z = 0; z < pts.length; z++) {
+        var q = pts[z];
+        q.x = q.tx; q.y = q.ty; q.vx = q.vy = 0;
+        q.spin = 0; q.rot = 0; q.near = 0;
+        light(q);
+      }
+      stage.classList.add('is-ordered');
+      render();
+      return;
+    }
+
     var accPts = [];
     for (var i = 0; i < pts.length; i++) {
       var p = pts[i];
       p.x = p.tx; p.y = p.ty;
       p.vx = p.vy = 0;
-      if (p.acc) accPts.push(p); else light(p);
+      p.spin = 0;
+      if (p.acc) accPts.push(p); else { p.rot = 0; light(p); }
     }
-    accPts.sort(function (a, b) { return b.ty - a.ty; }); // larger y = lower on screen = first
-    for (var k = 0; k < accPts.length; k++) {
-      (function (pt, delay) {
-        accTimers.push(setTimeout(function () { light(pt); }, delay));
-      })(accPts[k], k * ACC_STAGGER);
+    accPts.sort(function (a, b) { return b.ty - a.ty; }); // lower on screen first
+
+    if (G) {
+      /* GSAP animates the particle MODEL; render() writes the DOM. That is
+         the whole reason this composes — transform is set every frame by the
+         sim, so tweening the element directly would mean two writers racing
+         on one attribute. Tweening plain objects sidesteps it entirely. */
+      G.killTweensOf(accPts);
+      G.to(accPts, {
+        scale: S_ACC,
+        rot: 0,
+        duration: 0.55,
+        ease: 'back.out(2.2)',
+        stagger: { each: sweepStep(accPts.length) / 1000, from: 'start' },
+        onStart: function () {
+          /* `this.targets()` is the batch this tween owns. */
+          var ts = this.targets();
+          for (var n = 0; n < ts.length; n++) { ts[n].lit = true; ts[n].el.setAttribute('data-lit', '1'); }
+        },
+        /* Only hand rot/scale over to the cursor once the settle stagger has
+           finished, or the two would write the same fields on the same frame. */
+        onComplete: function () { hoverArmed = true; }
+      });
+    } else {
+      var stepMs = sweepStep(accPts.length);
+      for (var k = 0; k < accPts.length; k++) {
+        (function (pt, delay) {
+          accTimers.push(setTimeout(function () { pt.rot = 0; light(pt); }, delay));
+        })(accPts[k], k * stepMs);
+      }
+      accTimers.push(setTimeout(function () { hoverArmed = true; },
+                                accPts.length * stepMs + 60));
     }
+
     stage.classList.add('is-ordered');
     render();
+  }
+
+  /* ---------------------------------------------- cursor response ----
+     Ordered state only. During chaos the pointer already does something
+     else entirely — it shoves the marks around (stepChaos) — so the two
+     regimes give the cursor two distinct meanings rather than competing.
+
+     Each mark carries `near` (0..1) from cursor distance. It rises fast and
+     falls slowly, which is what produces a trail behind the cursor rather
+     than a hard spotlight. Rotation and colour are both derived from it, so
+     the whole interaction is one number per particle.
+
+     Why 45deg and not the reference's multiples of 90: a plus is 4-fold
+     symmetric, so 90/180/270 look identical to 0. At 45deg it reads. */
+  function stepHover(dt) {
+    if (!hoverArmed) return;
+
+    var rise = Math.min(1, dt * 14);   // toward the cursor: quick
+    var fall = Math.min(1, dt * 2.6);  // away from it: lingering
+    var R2 = HOVER_R * HOVER_R;
+
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i], target = 0;
+
+      if (pointer.active) {
+        var dx = p.x - pointer.x, dy = p.y - pointer.y;
+        var d2 = dx * dx + dy * dy;
+        if (d2 < R2) {
+          var f = 1 - Math.sqrt(d2) / HOVER_R;
+          target = f * f;              // squared: tighter, less mushy falloff
+        }
+      }
+
+      p.near += (target - p.near) * (target > p.near ? rise : fall);
+      if (p.near < 0.002) p.near = 0;
+
+      /* Absolute, never relative. Deriving the rest angle from p.rot would
+         compound: near*45 pushes rot to 45, and next frame
+         round(45/90)*90 snaps it to 90, so the marks would creep round
+         forever. settleNow() leaves every mark at rot 0, so 0 is the rest
+         angle and the offset is applied fresh each frame. */
+      p.rot = p.near * HOVER_ROT;
+      p.scale = (p.acc ? S_ACC : S_DOT) + p.near * 0.45;
+    }
   }
 
   /* ------------------------------------------------ orchestration --- */
@@ -1527,24 +1811,70 @@
         settleNow();
       }
     } else if (state === 'hold') {
+      stepHover(dt);
+      /* Don't yank the pattern apart while someone is actively playing with
+         it. HOLD_MS is only 5.2s, which is barely time to notice the cursor
+         does anything — so while the pointer is over the stage the hold
+         timer keeps resetting and the grid stays put. It releases as normal
+         a few seconds after the cursor leaves. */
+      if (pointer.active) stateAt = now;
       if (now - stateAt > HOLD_MS) {
         state = 'chaos'; stateAt = now;
         stage.classList.remove('is-ordered');
         clearAccTimers();
-        pts.forEach(dim);
+        undecorate();
         release();
       }
     }
     render();
-    raf = requestAnimationFrame(frame);
+    /* Only self-schedule on the fallback path — gsap.ticker re-invokes us. */
+    if (!G) raf = requestAnimationFrame(frame);
   }
 
+  /* Clock. With GSAP present the figure rides gsap.ticker instead of owning
+     a second requestAnimationFrame loop, which means:
+       - ONE rAF for the whole page (ScrollTrigger in js/motion.js is already
+         on this ticker), so the two never interleave or double-schedule
+       - lagSmoothing, on by default, caps a stalled tab at 33ms of apparent
+         elapsed time. DT_MAX already clamped dt, so this is belt-and-braces,
+         but it also keeps the figure in step with every other animation.
+     gsap.ticker passes time in SECONDS; frame() wants a millisecond stamp
+     like rAF gives, hence the *1000. */
+  var running = false;
+
+  /* Single source of truth for "now", in milliseconds. gsap.ticker.time is
+     measured from when GSAP initialised, performance.now() from navigation
+     start — mixing the two makes (now - stateAt) wildly negative and the
+     chaos/settle/hold machine silently stops advancing. Every timing read
+     in this IIFE must go through here. */
+  function nowMs() { return G ? G.ticker.time * 1000 : performance.now(); }
+
+  function tickGsap(time) { frame(time * 1000); }
+
   function start() {
-    if (raf || !onScreen || document.hidden || reduced) return;
-    last = performance.now();
-    raf = requestAnimationFrame(frame);
+    if (!onScreen || document.hidden || reduced) return;
+    if (G) {
+      if (running) return;
+      running = true;
+      last = nowMs();
+      G.ticker.add(tickGsap);
+    } else {
+      if (raf) return;
+      last = nowMs();
+      raf = requestAnimationFrame(frame);
+    }
   }
-  function stop() { if (raf) { cancelAnimationFrame(raf); raf = null; } }
+
+  function stop() {
+    if (G) {
+      if (!running) return;
+      running = false;
+      G.ticker.remove(tickGsap);
+    } else if (raf) {
+      cancelAnimationFrame(raf);
+      raf = null;
+    }
+  }
 
   measure();
 
@@ -1552,10 +1882,12 @@
      resolved pattern and never move. */
   if (reduced) { settleNow(); return; }
 
+  if (G) stage.classList.add('is-gsap');
+
   scatter();
   pts.forEach(dim);
   render();
-  stateAt = performance.now();
+  stateAt = nowMs();
 
   /* Re-measuring on resize rebuilds the lattice, so the run restarts from
      chaos rather than trying to reconcile old particles with new sites. */
@@ -1568,7 +1900,7 @@
     stage.classList.remove('is-ordered');
     render();
     state = 'chaos';
-    stateAt = performance.now();
+    stateAt = nowMs();
     start();
   }
 
@@ -1598,14 +1930,14 @@
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         onScreen = e.isIntersecting;
-        if (onScreen) { stateAt = performance.now(); start(); } else stop();
+        if (onScreen) { stateAt = nowMs(); start(); } else stop();
       });
     }, { threshold: .2 });
     io.observe(stage);
   } else { onScreen = true; start(); }
 
   document.addEventListener('visibilitychange', function () {
-    if (document.hidden) stop(); else { last = performance.now(); start(); }
+    if (document.hidden) stop(); else { last = nowMs(); start(); }
   });
 })();
 </script>

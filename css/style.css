@@ -258,6 +258,56 @@ ul { margin: 0; padding: 0; list-style: none; }
   transition: background var(--d-2) var(--e), box-shadow var(--d-2) var(--e);
   padding: .55rem 0;
 }
+/* ---------------------------------------------------- 3D hero (EXPERIMENT) --
+   Only index-3d.html contains a .hero-3d element, so these rules are inert
+   on the real site. Safe to delete along with index-3d.html and js/hero-3d.js.
+
+   The canvas host starts fully transparent and is only faded in once
+   hero-3d.js has rendered a real frame (.is-live). .has-hero3d is set on
+   <body> at the same moment to retire the CSS blob backdrop — so if WebGL
+   is unavailable, blocked, or reduced-motion is on, the blobs simply stay
+   and the hero looks exactly like index.html. */
+.hero-3d {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 900ms var(--e);
+  contain: paint;
+}
+.hero-3d.is-live { opacity: 1; }
+.hero-3d canvas { display: block; width: 100%; height: 100%; }
+
+/* Cross-fade rather than cut: the blobs ease out as the canvas eases in. */
+body.has-hero3d .hero-blobs { opacity: 0; transition: opacity 900ms var(--e); }
+
+@media (prefers-reduced-motion: reduce) {
+  /* Belt and braces — hero-3d.js already refuses to start under reduced
+     motion, but if it ever did, this keeps the canvas hidden and the static
+     blob backdrop in place. */
+  .hero-3d { display: none; }
+  body.has-hero3d .hero-blobs { opacity: 1; }
+}
+
+/* Scroll progress — the element is injected by js/main.js (NOT motion.js, so
+   it works on projects.html and 404.html, neither of which loads GSAP) and
+   only exists when JS ran and the user has not requested reduced motion. So
+   there is no no-JS state to style here. Kept to 2px and the accent tint so
+   it reads as a quiet position indicator, not a loading bar. */
+.scroll-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--marigold);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+  will-change: transform;
+}
+
 .site-header.is-stuck {
   background: rgba(244, 241, 232, .5);
   backdrop-filter: saturate(140%) blur(12px);
@@ -394,6 +444,63 @@ main { display: block; }
 }
 /* ID beats .reveal.is-visible, so the rest state has to be restated here */
 #hero-name.is-visible { transform: none; }
+
+/* ---------------------------------------------- hero name outline -> fill --
+   "Miranda." holds as a marigold outline while the page settles, then fills
+   solid one letter at a time.
+
+   Driven by .is-lit, which js/main.js adds 1s after the name appears — NOT by
+   a CSS animation. An animation with `fill-mode: both` would also work, but
+   animation declarations outrank normal ones in the cascade, so its held end
+   state would then beat every other rule touching .accent colour. A class
+   plus a staggered transition keeps everything at normal-declaration weight,
+   and therefore predictable.
+
+   Letters are `inline`, never inline-block, so splitting the word adds no
+   layout of its own. Only colour changes, which is paint-only. */
+.hero h1 .accent .l {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--marigold);
+  transition: color 520ms var(--e), -webkit-text-stroke-color 520ms var(--e);
+}
+
+/* The fill. --i is set per letter in the markup; 110ms apart reads as
+   deliberate rather than as a wipe. Eight letters means the last one starts
+   770ms after the first, finishing about 1.3s after the sequence begins.
+
+   Qualified with #hero-name so it outranks the base rule above regardless of
+   where either ends up in the file — that ordering trap has bitten this
+   stylesheet repeatedly. The stroke fades as the fill lands so the finished
+   word weighs the same as "Kevin"; a 2px stroke left under a solid fill
+   reads as a heavier weight. */
+#hero-name.is-lit .accent .l {
+  color: var(--marigold);
+  -webkit-text-stroke-color: transparent;
+  transition-delay: calc(var(--i, 0) * 110ms);
+}
+
+/* Windows High Contrast strips stroke painting but keeps `color:
+   transparent`, which would leave the name invisible. Force a solid system
+   colour in every state. */
+@media (forced-colors: active) {
+  .hero h1 .accent .l,
+  #hero-name.is-lit .accent .l {
+    color: CanvasText !important;
+    -webkit-text-stroke: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* No outline phase and no stagger: land filled and stay there. */
+  .hero h1 .accent .l,
+  #hero-name.is-lit .accent .l {
+    color: var(--marigold);
+    -webkit-text-stroke-color: transparent;
+    transition: none;
+    transition-delay: 0s;
+  }
+}
+
 .hero-blobs .b1 {
   left: -14%; bottom: -22%;
   width: 65vw; height: 65vw;
@@ -535,7 +642,12 @@ main { display: block; }
   letter-spacing: -0.035em;
   margin: 0 0 1.3rem;
 }
-.hero h1 .accent { color: var(--marigold); }
+/* NOTE: the resting marigold for .accent is set by #hero-name.is-visible
+   .accent further up this file, as part of the outline -> fill treatment.
+   A plain `.hero h1 .accent { color: var(--marigold) }` used to live HERE,
+   and because it has the same specificity (0,2,1) but sits later in the
+   file, it silently overrode the outline state — the fill never rendered at
+   all. Do not reintroduce it. */
 .hero .role {
   font-family: var(--f-display);
   font-weight: 600;
@@ -735,7 +847,12 @@ main { display: block; }
   left: 50%;
   width: 1px;
   background: rgba(255, 255, 255, .16);
-  transform: translateX(-50%);
+  /* --draw is animated 0 -> 1 by js/motion.js so the rail draws downward as
+     each entry scrolls in. It defaults to 1, so with JS disabled, GSAP
+     blocked, or reduced motion on, the rail is simply fully drawn. Do not
+     remove the default. */
+  transform: translateX(-50%) scaleY(var(--draw, 1));
+  transform-origin: top center;
 }
 .tl-item:last-child .tl-rail::before { display: none; }
 .tl-dot {
@@ -835,8 +952,66 @@ main { display: block; }
   gap: .6rem;
   transition: transform var(--d-2) var(--e), border-color var(--d-2) var(--e),
               box-shadow var(--d-2) var(--e);
+
+  /* Cursor spotlight — see .impact-card::before below. --gx/--gy are the
+     cursor's position inside the card as percentages, written by main.js.
+     They default to the centre, so with JS off, on touch, or under reduced
+     motion the hover state is a plain centred glow rather than nothing. */
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  --gx: 50%;
+  --gy: 50%;
 }
-.impact-card:hover {
+
+/* The glow itself. A lighter tint of the card's own --forest-2 surface, so it
+   reads as light falling on the card rather than a coloured wash. Painted as
+   a pseudo-element rather than a background-image so the fade in/out can be a
+   plain opacity transition. */
+.impact-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--d-2) var(--e);
+  background: radial-gradient(circle 230px at var(--gx) var(--gy),
+              rgba(86, 144, 113, .38) 0%,
+              rgba(86, 144, 113, .14) 42%,
+              rgba(86, 144, 113, 0) 72%);
+}
+.impact-card:hover::before,
+.impact-card:focus-within::before { opacity: 1; }
+
+/* CONTRAST, and why the copy brightens too.
+   --sage-d body text sits at only 4.92:1 on the unlit card — barely over the
+   4.5:1 floor — so lightening the surface at all pushes it under. At the .38
+   glow above, the brightest point is #37644F, where --sage-d drops to 3.36:1.
+
+   Lowering the glow until the old colour passed would have meant an alpha so
+   low the effect stopped reading. Brightening the text instead is both the
+   accessible answer AND the physically truthful one: shine a light on a
+   surface and everything on it gets brighter, ink included.
+
+   Measured against #37644F (worst case, cursor directly on the text):
+     body #CBD6CF  4.54:1  (needs 4.5)
+     num  #E6A017  3.04:1  (needs 3.0 — 28px+ at weight 800 is large text)
+     link #F6E4B4  5.38:1  (needs 4.5)
+   If you raise the glow alpha, re-check these three or the copy goes muddy. */
+.impact-card:hover p,
+.impact-card:focus-within p { color: #CBD6CF; }
+.impact-card p { transition: color var(--d-2) var(--e); }
+
+/* Card content sits above the glow layer. Without this the absolutely
+   positioned ::before paints over the in-flow text. */
+.impact-card > * { position: relative; z-index: 1; }
+/* Qualified with .impact-grid on purpose. Unqualified, `.impact-card:hover`
+   is (0,2,0) — exactly the same as `.reveal.is-visible { transform: none }`
+   further down this file, which therefore won and silently killed this lift.
+   Any hover/active transform on an element that also carries .reveal needs
+   the same treatment. */
+.impact-grid .impact-card:hover {
   transform: translateY(-4px);
   border-color: var(--marigold);
   box-shadow: 0 20px 40px -28px rgba(0, 0, 0, .85);
@@ -913,8 +1088,9 @@ main { display: block; }
   box-shadow: var(--shadow-sm);
   transition: transform var(--d-2) var(--e), box-shadow var(--d-2) var(--e);
 }
-.work-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
-.work-card:active { transform: translateY(-1px) scale(.995); transition-duration: 80ms; }
+/* Same fix as .impact-card:hover above — see the note there. */
+.work-grid .work-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+.work-grid .work-card:active { transform: translateY(-1px) scale(.995); transition-duration: 80ms; }
 .work-card.is-hidden { display: none; }
 .work-card img {
   width: 100%; height: 100%;
@@ -1222,7 +1398,12 @@ main { display: block; }
 /* --------------------------------------------------------- responsive --- */
 @media (max-width: 991px) {
   .hero-grid { grid-template-columns: 1fr; }
-  .hero-figure { justify-self: start; margin-top: 1rem; grid-row: 1; max-width: 380px; }
+  /* .hero-figure is dead — the hero's framed portrait was replaced by the
+     wireframe figure (.wf-figure, styled in index.html's inline block). The
+     rule that used to live here carried `grid-row: 1`, which is exactly what
+     was forcing the figure above the copy on mobile. Kept as a note so it
+     isn't reintroduced; the remaining .hero-figure rules elsewhere in this
+     file are inert for the same reason. */
   .about-grid { grid-template-columns: 1fr; }
   .about-figure { max-width: 380px; margin-top: 1rem; }
   .contact-grid { grid-template-columns: 1fr; }
